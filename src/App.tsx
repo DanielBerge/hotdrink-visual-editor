@@ -3,6 +3,7 @@ import {Canvas} from './Canvas';
 import {Column} from "./sides/Column";
 import {Components} from "./sides/Components";
 import {Properties} from "./sides/Properties";
+import {useRete} from "./rete/useRete";
 
 export enum ElemType {
     Input = "input",
@@ -44,6 +45,7 @@ export const ElementContext = React.createContext<any>({})
 export const CurrentContext = React.createContext<any>({});
 
 function App() {
+    const [setContainer] = useRete();
     const json = JSON.stringify(initialElements);
     const fromJson: Elem[] = JSON.parse(json);
     const [elements, setElements] = useState(fromJson)
@@ -72,6 +74,13 @@ function App() {
                     </Column>
                     <div className="flex-1">
                         <Canvas/>
+                        <div
+                            style={{
+                                width: "20vw",
+                                height: "20vh"
+                            }}
+                            ref={(ref) => ref && setContainer(ref)}
+                        />
                     </div>
                     <Column>
                         <Properties/>
