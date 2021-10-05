@@ -1,17 +1,48 @@
-import React, {FC} from 'react';
-import {Layer, Rect, Stage} from 'react-konva';
-import {Elem, ElemType} from "./App";
+import React, {FC, useContext} from 'react';
+import {Arrow, Group, Layer, Line, Rect, Stage, Text} from 'react-konva';
+import {CurrentContext, Elem, ElementContext, ElemType} from "./App";
+import {KonvaEventObject} from "konva/lib/Node";
 
-interface Props {
-    elements: Elem[];
-}
+export const Canvas: FC = () => {
+    const {elements, __, updateElement} = useContext(ElementContext);
+    const {_, setCurrent} = useContext(CurrentContext);
 
-export const Canvas: FC<Props> = ({elements}) => {
+    function onClick(element: Elem) {
+        setCurrent(element);
+    }
+
+    function onDragEnd(e: KonvaEventObject<DragEvent>, elem: Elem) {
+        updateElement(elem, {
+            ...elem,
+            x: e.target.x(),
+            y: e.target.y(),
+        })
+    }
+
     return (
-        <div className="w-screen h-screen">
-            <Stage width={500} height={500} className="bg-gray-100">
+        <div className="">
+            <Stage
+                width={1000}
+                height={window.innerHeight}
+                className="bg-gray-100"
+            >
                 <Layer>
-                    {elements.map((element: Elem, key) => {
+                    <Group>
+                        <Line
+
+                            points={[elements[0].x, elements[0].y, elements[1].x, elements[1].y]}
+                            stroke="red"
+                            strokeWidth={2}
+                        />
+                        <Arrow
+                            points={[elements[0].x, elements[0].y]}
+                            stroke="red"
+                            fill="red"
+                        />
+                    </Group>
+                </Layer>
+                <Layer>
+                    {elements.map((element: Elem, key: number) => {
                         switch (element.type) {
                             case ElemType.Input:
                                 return (
@@ -19,21 +50,39 @@ export const Canvas: FC<Props> = ({elements}) => {
                                         key={key}
                                         width={element.width}
                                         height={element.height}
+                                        draggable
                                         x={element.x}
                                         y={element.y}
-                                        fill="grey"
+                                        fill="white"
+                                        stroke="black"
+                                        onClick={() => onClick(element)}
+                                        onDragEnd={(e) => onDragEnd(e, element)}
                                     />
                                 )
                             case ElemType.Button:
                                 return (
-                                    <Rect
+                                    <Group
                                         key={key}
-                                        width={element.width}
-                                        height={element.height}
                                         x={element.x}
                                         y={element.y}
-                                        fill="green"
-                                    />
+                                        draggable
+                                        onClick={() => onClick(element)}
+                                        onDragEnd={(e) => onDragEnd(e, element)}
+                                    >
+                                        <Rect
+                                            width={element.width}
+                                            height={element.height}
+                                            fill="black"
+                                        />
+                                        <Text
+                                            text={element.value}
+                                            fill="white"
+                                            align="center"
+                                            width={element.width}
+                                            padding={15}
+                                            fontSize={16}
+                                        />
+                                    </Group>
                                 )
                             default:
                                 return null;
