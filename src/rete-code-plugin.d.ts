@@ -1,0 +1,1 @@
+declare module 'rete-code-plugin';
