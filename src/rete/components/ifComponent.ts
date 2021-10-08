@@ -1,6 +1,6 @@
 import Rete, {Node} from "rete";
 import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
-import {boolSocket, numSocket} from "./sockets";
+import {boolSocket, numSocket} from "../sockets";
 
 export class IfComponent extends Rete.Component {
     constructor() {

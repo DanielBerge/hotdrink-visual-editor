@@ -1,6 +1,6 @@
 import Rete, {Node, NodeEditor} from "rete";
 import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
-import {numSocket} from "./sockets";
+import {numSocket} from "../sockets";
 
 /**
 class NumControl extends Rete.Control {

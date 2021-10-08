@@ -1,5 +1,5 @@
 import Rete, {Node, NodeEditor} from "rete";
-import {boolSocket, numSocket} from "./sockets";
+import {boolSocket, numSocket} from "../sockets";
 import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
 
 export class ReturnBooleanComponent extends Rete.Component {

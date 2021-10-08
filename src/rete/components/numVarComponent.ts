@@ -1,5 +1,5 @@
 import Rete, {Node} from "rete";
-import {numSocket} from "./sockets";
+import {numSocket} from "../sockets";
 import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
 
 export class NumVarComponent extends Rete.Component {

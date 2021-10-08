@@ -3,10 +3,10 @@ import Rete, {Component, Engine, Node, NodeEditor} from "rete";
 import ReactRenderPlugin from "rete-react-render-plugin";
 import ConnectionPlugin from "rete-connection-plugin";
 import {generateCode} from "./generateCode";
-import {IsPositiveComponent} from "./positiveComponent";
+import {IsPositiveComponent} from "./components/positiveComponent";
 import ContextMenuPlugin from 'rete-context-menu-plugin';
-import {ReturnBooleanComponent} from "./returnBooleanComponent";
-import {NumVarComponent} from "./numVarComponent";
+import {ReturnBooleanComponent} from "./components/returnBooleanComponent";
+import {NumVarComponent} from "./components/numVarComponent";
 
 
 export async function createEditor(container: HTMLElement): Promise<NodeEditor> {
