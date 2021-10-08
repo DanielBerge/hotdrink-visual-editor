@@ -5,7 +5,7 @@ import ConnectionPlugin from "rete-connection-plugin";
 import {generateCode} from "./generateCode";
 import {IsPositiveComponent} from "./components/positiveComponent";
 import ContextMenuPlugin from 'rete-context-menu-plugin';
-import {ReturnBooleanComponent} from "./components/returnBooleanComponent";
+import {ReturnAnyComponent} from "./components/returnAnyComponent";
 import {NumVarComponent} from "./components/numVarComponent";
 
 
@@ -20,7 +20,7 @@ export async function createEditor(container: HTMLElement): Promise<NodeEditor> 
     //const ifComponent: IfComponent = new IfComponent();
     const numComponent: NumVarComponent = new NumVarComponent("num");
     const positiveComponent: IsPositiveComponent = new IsPositiveComponent(editor);
-    const returnBoolComponent: ReturnBooleanComponent = new ReturnBooleanComponent(editor);
+    const returnBoolComponent: ReturnAnyComponent = new ReturnAnyComponent(editor);
     const components: Component[] = [numComponent, positiveComponent, returnBoolComponent]
 
 

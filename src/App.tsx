@@ -45,7 +45,6 @@ export const ElementContext = React.createContext<any>({})
 export const CurrentContext = React.createContext<any>({});
 
 function App() {
-    const [setContainer] = useRete();
     const json = JSON.stringify(initialElements);
     const fromJson: Elem[] = JSON.parse(json);
     const [elements, setElements] = useState(fromJson)
@@ -74,13 +73,6 @@ function App() {
                     </Column>
                     <div className="flex-1">
                         <Canvas/>
-                        <div
-                            style={{
-                                width: "20vw",
-                                height: "20vh"
-                            }}
-                            ref={(ref) => ref && setContainer(ref)}
-                        />
                     </div>
                     <Column>
                         <Properties/>

@@ -1,9 +1,13 @@
-import React, {FC, useContext} from 'react';
+import React, {FC, useContext, useState} from 'react';
 import {Arrow, Group, Layer, Line, Rect, Stage, Text} from 'react-konva';
 import {CurrentContext, Elem, ElementContext, ElemType} from "./App";
 import {KonvaEventObject} from "konva/lib/Node";
+import {Modal} from "@mui/material";
+import {useRete} from "./rete/useRete";
 
 export const Canvas: FC = () => {
+    const [setContainer] = useRete();
+    const [open, setOpen] = useState(false);
     const {elements, __, updateElement} = useContext(ElementContext);
     const {_, setCurrent} = useContext(CurrentContext);
 
@@ -27,12 +31,13 @@ export const Canvas: FC = () => {
                 className="bg-gray-100"
             >
                 <Layer>
-                    <Group>
+                    <Group
+                        onClick={() => setOpen(true)}
+                    >
                         <Line
-
                             points={[elements[0].x, elements[0].y, elements[1].x, elements[1].y]}
                             stroke="red"
-                            strokeWidth={2}
+                            strokeWidth={5}
                         />
                         <Arrow
                             points={[elements[0].x, elements[0].y]}
@@ -90,6 +95,21 @@ export const Canvas: FC = () => {
                     })}
                 </Layer>
             </Stage>
+            <Modal
+                open={open}
+                onClose={() => setOpen(false)}
+                color="white"
+                className="w-2/3 h-2/3 bg-white p-20"
+            >
+                <div
+                    style={{
+                        width: "20vw",
+                        height: "20vh",
+                        backgroundColor: "white"
+                    }}
+                    ref={(ref) => ref && setContainer(ref)}
+                />
+            </Modal>
         </div>
     );
 };
