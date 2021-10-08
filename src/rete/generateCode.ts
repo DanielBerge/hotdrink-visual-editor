@@ -16,7 +16,7 @@ export async function generateCode(engine: Engine, data: Data): Promise<string> 
                     return;
                 }
 
-                const varName = `${name}${node.id}`;
+                const varName = `${name}`;
 
                 file += `const ${varName} = ${expression};\n`;
                 outputs[name] = varName;

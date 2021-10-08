@@ -2,7 +2,7 @@ import Rete, {Node, NodeEditor} from "rete";
 import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
 import {numSocket} from "./sockets";
 
-
+/**
 class NumControl extends Rete.Control {
     emitter: NodeEditor | null;
     component: ({value, onChange}: any) => JSX.Element;
@@ -45,25 +45,27 @@ class NumControl extends Rete.Control {
         this.getNode().update()
     }
 }
-
+**/
 
 export class NumComponent extends Rete.Component {
-    constructor() {
+    private readonly variable: string;
+
+    constructor(variable: string) {
         super("Number");
+        this.variable = variable;
     }
 
     async builder(node: Node): Promise<void>{
-        const out1 = new Rete.Output("num", "Number", numSocket);
-        const ctrl = new NumControl(this.editor, "num", node);
+        const output = new Rete.Output(this.variable, "Number", numSocket);
 
-        node.addOutput(out1);
+        node.addOutput(output);
     }
 
     worker(node: NodeData, inputs: WorkerInputs, outputs: WorkerOutputs) {
-        outputs["num"] = node.data.num;
+        outputs["variable"] = node.data.variable;
     }
 
     code(node: NodeData, inputs: WorkerInputs, add: (name: string, expression?: any) => void) { // 'node' parameter as in worker()
-        add('num', node.data.num); // add a variable with the value "node.data.num"
+        add(this.variable, node.data.variable); // add a variable with the value "node.data.num"
     }
 }

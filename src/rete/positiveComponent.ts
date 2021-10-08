@@ -1,16 +1,19 @@
-import Rete, {Node} from "rete";
+import Rete, {Node, NodeEditor} from "rete";
 import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
 import {boolSocket, numSocket} from "./sockets";
 
 
 export class IsPositiveComponent extends Rete.Component {
-    constructor() {
+    editor: NodeEditor;
+
+    constructor(editor: NodeEditor) {
         super("Number is positive");
+        this.editor = editor;
     }
 
-    async builder(node: Node): Promise<void>{
+    async builder(node: Node): Promise<void> {
         const out = new Rete.Output("bool", "Boolean", boolSocket);
-        const inp = new Rete.Input("num", "Number", numSocket);
+        const inp = new Rete.Input("numKey", "Number", numSocket);
 
         node.addInput(inp).addOutput(out);
     }
@@ -20,8 +23,8 @@ export class IsPositiveComponent extends Rete.Component {
     }
 
     code(node: NodeData, inputs: WorkerInputs, add: (name: string, expression?: any) => void) { // 'node' parameter as in worker()
-        console.log(inputs);
-        console.log(inputs["num"]);
-        add(""); // add a variable with the value "node.data.num"
+        const inpIndex = node.inputs["numKey"].connections[0].node;
+        const variable = this.editor.nodes[inpIndex - 1].data["variableName"];
+        add("positive", `${variable} >= 0`); // add a variable with the value "node.data.num"
     }
 }
