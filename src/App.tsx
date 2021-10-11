@@ -39,13 +39,15 @@ const initialConstraints: Constraint[] = [
 export const ElementContext = React.createContext<any>({})
 export const ConstraintContext = React.createContext<any>({})
 export const CurrentContext = React.createContext<any>({});
+export const NewConstraintContext = React.createContext<any>(false);
 
 function App() {
     const json = JSON.stringify(initialElements);
     const fromJson: Elem[] = JSON.parse(json);
     const [elements, setElements] = useState(fromJson)
-    const [constraints, setConstraints] = useState(initialConstraints);
     const [current, setCurrent] = useState(undefined);
+    const [constraints, setConstraints] = useState(initialConstraints);
+    const [newConstraint, setNewConstraint] = useState(false);
 
     function addElement(element: Elem) {
         setElements([
@@ -74,18 +76,20 @@ function App() {
         <ElementContext.Provider value={{elements, addElement, updateElement, getElementById}}>
             <ConstraintContext.Provider value={{constraints, setConstraints}}>
                 <CurrentContext.Provider value={{current, setCurrent}}>
-                    <div className="flex space-x-3 h-screen">
-                        <Column>
-                            <Components/>
-                            <Constraints/>
-                        </Column>
-                        <div className="flex-1">
-                            <Canvas/>
+                    <NewConstraintContext.Provider value={{newConstraint, setNewConstraint}}>
+                        <div className="flex space-x-3 h-screen">
+                            <Column>
+                                <Components/>
+                                <Constraints/>
+                            </Column>
+                            <div className="flex-1">
+                                <Canvas/>
+                            </div>
+                            <Column>
+                                <Properties/>
+                            </Column>
                         </div>
-                        <Column>
-                            <Properties/>
-                        </Column>
-                    </div>
+                    </NewConstraintContext.Provider>
                 </CurrentContext.Provider>
             </ConstraintContext.Provider>
         </ElementContext.Provider>

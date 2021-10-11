@@ -1,10 +1,12 @@
 import React, {FC, useContext, useState} from 'react';
 import {Arrow, Group, Layer, Line, Rect, Stage, Text} from 'react-konva';
-import {ConstraintContext, CurrentContext, ElementContext} from "./App";
+import {ConstraintContext, CurrentContext, ElementContext, NewConstraintContext} from "./App";
 import {KonvaEventObject} from "konva/lib/Node";
 import {Modal} from "@mui/material";
 import {useRete} from "./rete/useRete";
 import {Constraint, Elem, ElemType} from "./types";
+
+let constraintIds: Array<string> = [];
 
 export const Canvas: FC = () => {
     const [setContainer] = useRete();
@@ -12,8 +14,26 @@ export const Canvas: FC = () => {
     const {elements, __, updateElement, getElementById} = useContext(ElementContext);
     const {_, setCurrent} = useContext(CurrentContext);
     const {constraints, setConstraints} = useContext(ConstraintContext);
+    const {newConstraint, setNewConstraint} = useContext(NewConstraintContext);
 
     function onClick(element: Elem) {
+        if (newConstraint) {
+            if (constraintIds.length < 2) {
+                constraintIds.push(element.id);
+            }
+            if (constraintIds.length === 2) {
+                setNewConstraint(false);
+                setConstraints([
+                    ...constraints,
+                    {
+                        fromId: constraintIds[0],
+                        toId: constraintIds[1],
+                        code: "",
+                    }
+                ])
+                constraintIds = [];
+            }
+        }
         setCurrent(element);
     }
 
@@ -33,7 +53,7 @@ export const Canvas: FC = () => {
                 className="bg-gray-100"
             >
                 <Layer>
-                    {constraints?.map((constraint: Constraint) => {
+                    {constraints.map((constraint: Constraint) => {
                         const from = getElementById(constraint.fromId)
                         const to = getElementById(constraint.toId);
                         return (
