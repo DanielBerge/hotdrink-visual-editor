@@ -1,5 +1,6 @@
 import React, {FC, useContext} from "react";
-import {ElementContext, ElemType} from "../App";
+import {ElementContext} from "../App";
+import {ElemType} from "../types";
 
 
 export const Components: FC = (props) => {

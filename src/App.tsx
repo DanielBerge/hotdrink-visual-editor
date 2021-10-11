@@ -3,22 +3,9 @@ import {Canvas} from './Canvas';
 import {Column} from "./sides/Column";
 import {Components} from "./sides/Components";
 import {Properties} from "./sides/Properties";
-import {useRete} from "./rete/useRete";
+import {Constraints} from "./sides/Constraints";
+import {Constraint, Elem, ElemType} from "./types";
 
-export enum ElemType {
-    Input = "input",
-    Button = "button",
-}
-
-export interface Elem {
-    height: number;
-    width: number;
-    x: number;
-    y: number;
-    type: ElemType;
-    value: string;
-    id: string;
-}
 
 const initialElements: Elem[] = [
     {
@@ -41,13 +28,23 @@ const initialElements: Elem[] = [
     }
 ]
 
+const initialConstraints: Constraint[] = [
+    {
+        fromId: "id",
+        toId: "id2",
+        code: ""
+    }
+]
+
 export const ElementContext = React.createContext<any>({})
+export const ConstraintContext = React.createContext<any>({})
 export const CurrentContext = React.createContext<any>({});
 
 function App() {
     const json = JSON.stringify(initialElements);
     const fromJson: Elem[] = JSON.parse(json);
     const [elements, setElements] = useState(fromJson)
+    const [constraints, setConstraints] = useState(initialConstraints);
     const [current, setCurrent] = useState(undefined);
 
     function addElement(element: Elem) {
@@ -64,21 +61,33 @@ function App() {
         }
     }
 
+    function getElementById(id: string): Elem | undefined {
+        return elements.find((element) => {
+            if (element.id === id) {
+                return element;
+            }
+            return undefined;
+        })
+    }
+
     return (
-        <ElementContext.Provider value={{elements, addElement, updateElement}}>
-            <CurrentContext.Provider value={{current, setCurrent}}>
-                <div className="flex space-x-3 h-screen">
-                    <Column>
-                        <Components/>
-                    </Column>
-                    <div className="flex-1">
-                        <Canvas/>
+        <ElementContext.Provider value={{elements, addElement, updateElement, getElementById}}>
+            <ConstraintContext.Provider value={{constraints, setConstraints}}>
+                <CurrentContext.Provider value={{current, setCurrent}}>
+                    <div className="flex space-x-3 h-screen">
+                        <Column>
+                            <Components/>
+                            <Constraints/>
+                        </Column>
+                        <div className="flex-1">
+                            <Canvas/>
+                        </div>
+                        <Column>
+                            <Properties/>
+                        </Column>
                     </div>
-                    <Column>
-                        <Properties/>
-                    </Column>
-                </div>
-            </CurrentContext.Provider>
+                </CurrentContext.Provider>
+            </ConstraintContext.Provider>
         </ElementContext.Provider>
     );
 }

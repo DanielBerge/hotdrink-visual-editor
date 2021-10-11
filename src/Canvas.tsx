@@ -1,15 +1,17 @@
 import React, {FC, useContext, useState} from 'react';
 import {Arrow, Group, Layer, Line, Rect, Stage, Text} from 'react-konva';
-import {CurrentContext, Elem, ElementContext, ElemType} from "./App";
+import {ConstraintContext, CurrentContext, ElementContext} from "./App";
 import {KonvaEventObject} from "konva/lib/Node";
 import {Modal} from "@mui/material";
 import {useRete} from "./rete/useRete";
+import {Constraint, Elem, ElemType} from "./types";
 
 export const Canvas: FC = () => {
     const [setContainer] = useRete();
     const [open, setOpen] = useState(false);
-    const {elements, __, updateElement} = useContext(ElementContext);
+    const {elements, __, updateElement, getElementById} = useContext(ElementContext);
     const {_, setCurrent} = useContext(CurrentContext);
+    const {constraints, setConstraints} = useContext(ConstraintContext);
 
     function onClick(element: Elem) {
         setCurrent(element);
@@ -31,20 +33,26 @@ export const Canvas: FC = () => {
                 className="bg-gray-100"
             >
                 <Layer>
-                    <Group
-                        onClick={() => setOpen(true)}
-                    >
-                        <Line
-                            points={[elements[0].x, elements[0].y, elements[1].x, elements[1].y]}
-                            stroke="red"
-                            strokeWidth={5}
-                        />
-                        <Arrow
-                            points={[elements[0].x, elements[0].y]}
-                            stroke="red"
-                            fill="red"
-                        />
-                    </Group>
+                    {constraints?.map((constraint: Constraint) => {
+                        const from = getElementById(constraint.fromId)
+                        const to = getElementById(constraint.toId);
+                        return (
+                            <Group
+                                onClick={() => setOpen(true)}
+                            >
+                                <Line
+                                    points={[from.x, from.y, to.x, to.y]}
+                                    stroke="red"
+                                    strokeWidth={5}
+                                />
+                                <Arrow
+                                    points={[from.x, from.y]}
+                                    stroke="red"
+                                    fill="red"
+                                />
+                            </Group>
+                        )
+                    })}
                 </Layer>
                 <Layer>
                     {elements.map((element: Elem, key: number) => {
