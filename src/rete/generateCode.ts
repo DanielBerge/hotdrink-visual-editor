@@ -21,8 +21,12 @@ export async function generateCode(engine: Engine, data: Data): Promise<string> 
                 file += `const ${varName} = ${expression};\n`;
                 outputs[name] = varName;
             }
+
             // @ts-ignore
-            component.code(node, inputs, add);
+            if (typeof component.code === "function") {
+                // @ts-ignore
+                component.code(node, inputs, add);
+            }
         }
         component.worker.bind(component);
 

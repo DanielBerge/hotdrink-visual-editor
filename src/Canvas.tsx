@@ -9,12 +9,17 @@ import {Constraint, Elem, ElemType} from "./types";
 let constraintIds: Array<string> = [];
 
 export const Canvas: FC = () => {
-    const [setContainer] = useRete();
+    const [setContainer, setConstraint, onVisualClose] = useRete();
     const [open, setOpen] = useState(false);
     const {elements, __, updateElement, getElementById} = useContext(ElementContext);
     const {_, setCurrent} = useContext(CurrentContext);
     const {constraints, setConstraints} = useContext(ConstraintContext);
     const {newConstraint, setNewConstraint} = useContext(NewConstraintContext);
+
+    function onClose() {
+        setOpen(false);
+        onVisualClose();
+    }
 
     function onClick(element: Elem) {
         if (newConstraint) {
@@ -58,7 +63,11 @@ export const Canvas: FC = () => {
                         const to = getElementById(constraint.toId);
                         return (
                             <Group
-                                onClick={() => setOpen(true)}
+                                key={from.id + to.id}
+                                onClick={() => {
+                                    setOpen(true)
+                                    setConstraint(constraint);
+                                }}
                             >
                                 <Line
                                     points={[from.x, from.y, to.x, to.y]}
@@ -66,7 +75,7 @@ export const Canvas: FC = () => {
                                     strokeWidth={5}
                                 />
                                 <Arrow
-                                    points={[from.x, from.y]}
+                                    points={[to.x, to.y]}
                                     stroke="red"
                                     fill="red"
                                 />
@@ -125,7 +134,7 @@ export const Canvas: FC = () => {
             </Stage>
             <Modal
                 open={open}
-                onClose={() => setOpen(false)}
+                onClose={onClose}
                 color="white"
                 className="w-2/3 h-2/3 bg-white p-20"
             >

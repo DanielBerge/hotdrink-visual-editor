@@ -4,7 +4,7 @@ import {Column} from "./sides/Column";
 import {Components} from "./sides/Components";
 import {Properties} from "./sides/Properties";
 import {Constraints} from "./sides/Constraints";
-import {Constraint, Elem, ElemType} from "./types";
+import {Constraint, Elem, ElemType, InputType} from "./types";
 
 
 const initialElements: Elem[] = [
@@ -14,6 +14,7 @@ const initialElements: Elem[] = [
         x: 100,
         y: 100,
         type: ElemType.Input,
+        subType: InputType.Number,
         value: "value",
         id: "id",
     },

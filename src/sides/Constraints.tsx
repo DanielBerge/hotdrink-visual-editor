@@ -12,7 +12,7 @@ export const Constraints: FC = () => {
         <>
             <h1>Constraints</h1>
             <button
-                className="h-10 bg-red-800 text-white p-2"
+                className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"
                 onClick={onCreate}
                 disabled={newConstraint}
             >Create constraint
