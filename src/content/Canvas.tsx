@@ -1,10 +1,10 @@
 import React, {FC, useContext, useState} from 'react';
 import {Arrow, Group, Layer, Line, Rect, Stage, Text} from 'react-konva';
-import {ConstraintContext, CurrentContext, ElementContext, NewConstraintContext} from "./App";
+import {ConstraintContext, CurrentContext, ElementContext, NewConstraintContext} from "../App";
 import {KonvaEventObject} from "konva/lib/Node";
 import {Modal} from "@mui/material";
-import {useRete} from "./rete/useRete";
-import {Constraint, Elem, ElemType} from "./types";
+import {useRete} from "../rete/useRete";
+import {Constraint, Elem, ElemType} from "../types";
 
 let constraintIds: Array<string> = [];
 

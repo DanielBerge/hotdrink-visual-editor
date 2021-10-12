@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Canvas} from './Canvas';
+import {Canvas} from './content/Canvas';
 import {Column} from "./sides/Column";
 import {Components} from "./sides/Components";
 import {Properties} from "./sides/Properties";
@@ -15,7 +15,7 @@ const initialElements: Elem[] = [
         y: 100,
         type: ElemType.Input,
         subType: InputType.Number,
-        value: "value",
+        value: "",
         id: "id",
     },
     {
