@@ -1,4 +1,4 @@
-import React, {FC, useContext, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {Arrow, Group, Layer, Line, Rect, Stage, Text} from 'react-konva';
 import {KonvaEventObject} from "konva/lib/Node";
 import {Modal} from "@mui/material";

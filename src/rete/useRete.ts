@@ -42,8 +42,8 @@ async function initRete(container: HTMLElement, constraint: Constraint, setCode:
         engine.register(c);
     })
 
-    editor.addNode(await newNode(200, 40, constraint.fromId, numComponent));
-    editor.addNode(await newNode(600, 300, "positive", positiveComponent));
+    editor.addNode(await newNode(200, 200, constraint.fromId, numComponent));
+    editor.addNode(await newNode(500, 300, "positive", positiveComponent));
     editor.addNode(await newNode(800, 300, "", returnBoolComponent));
 
     editor.on(
@@ -66,7 +66,7 @@ async function initRete(container: HTMLElement, constraint: Constraint, setCode:
 }
 
 
-export function useRete(): [any, any, any] {
+export function useRete(): [(HTMLElement: HTMLElement) => void, (constraint: Constraint) => void, any] {
     const constraints = useConstraints();
     const [constraint, setConstraint] = useState<Constraint | undefined>(undefined);
     const [container, setContainer] = useState<HTMLElement | null>(null);
