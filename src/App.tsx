@@ -13,15 +13,11 @@ export function freshId() {
     return ++id;
 }
 
-export const CurrentContext = React.createContext<any>({});
 
 function App() {
-    const [current, setCurrent] = useState(undefined);
-
     return (
         <ElementsWrapper>
             <ConstraintsWrapper>
-                <CurrentContext.Provider value={{current, setCurrent}}>
                         <div className="flex space-x-3 h-screen">
                             <Column>
                                 <Components/>
@@ -34,7 +30,6 @@ function App() {
                                 <Properties/>
                             </Column>
                         </div>
-                </CurrentContext.Provider>
             </ConstraintsWrapper>
         </ElementsWrapper>
     );

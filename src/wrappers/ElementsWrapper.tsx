@@ -1,7 +1,7 @@
 import React, {FC, useContext, useState} from "react";
-import {Element, ElemType, InputType} from "../types";
+import {Elem, ElemType, InputType} from "../types";
 
-const initialElements: Element[] = [
+const initialElements: Elem[] = [
     {
         height: 50,
         width: 200,
@@ -24,25 +24,29 @@ const initialElements: Element[] = [
 ]
 
 const ElementContext = React.createContext<any>({})
+const CurrentContext = React.createContext<any>({});
 
 interface Elements {
-    elements: Element[];
-    addElement: (element: Element) => void;
-    updateElement: (oldElem: Element, newElem: Element) => void;
-    getElementById: (id: string) => Element | undefined;
+    elements: Elem[];
+    addElement: (element: Elem) => void;
+    updateElement: (oldElem: Elem, newElem: Elem) => void;
+    getElementById: (id: string) => Elem | undefined;
+    current: Elem;
+    setCurrent: (element: Elem) => void;
 }
 
 const ElementsWrapper: FC = (props) => {
     const [elements, setElements] = useState(initialElements)
+    const [current, setCurrent] = useState(undefined);
 
-    function addElement(element: Element) {
+    function addElement(element: Elem) {
         setElements([
             ...elements, element]
         )
     }
 
-    function updateElement(oldElem: Element, newElem: Element) {
-        const index = elements.findIndex((elem: Element) => elem.id === oldElem.id);
+    function updateElement(oldElem: Elem, newElem: Elem) {
+        const index = elements.findIndex((elem: Elem) => elem.id === oldElem.id);
         if (index !== -1) {
             elements[index] = newElem;
             setElements(elements);
@@ -51,8 +55,8 @@ const ElementsWrapper: FC = (props) => {
         }
     }
 
-    function getElementById(id: string): Element | undefined {
-        return elements.find((element: Element) => {
+    function getElementById(id: string): Elem | undefined {
+        return elements.find((element: Elem) => {
             if (element.id === id) {
                 return element;
             }
@@ -62,7 +66,9 @@ const ElementsWrapper: FC = (props) => {
 
     return (
         <ElementContext.Provider value={{elements, addElement, updateElement, getElementById}}>
-            {props.children}
+            <CurrentContext.Provider value={{current, setCurrent}}>
+                {props.children}
+            </CurrentContext.Provider>
         </ElementContext.Provider>
     )
 }
@@ -70,12 +76,15 @@ const ElementsWrapper: FC = (props) => {
 
 function useElements(): Elements {
     const {elements, addElement, updateElement, getElementById} = useContext(ElementContext);
+    const {current, setCurrent} = useContext(CurrentContext);
 
     return {
         elements,
         addElement,
         updateElement,
-        getElementById
+        getElementById,
+        current,
+        setCurrent,
     }
 }
 

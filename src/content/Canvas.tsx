@@ -1,10 +1,9 @@
 import React, {FC, useContext, useState} from 'react';
 import {Arrow, Group, Layer, Line, Rect, Stage, Text} from 'react-konva';
-import {CurrentContext} from "../App";
 import {KonvaEventObject} from "konva/lib/Node";
 import {Modal} from "@mui/material";
 import {useRete} from "../rete/useRete";
-import {Constraint, Element, ElemType} from "../types";
+import {Constraint, Elem, ElemType} from "../types";
 import {useElements} from "../wrappers/ElementsWrapper";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
 
@@ -14,7 +13,6 @@ export const Canvas: FC = () => {
     const [setContainer, setConstraint, onVisualClose] = useRete();
     const [open, setOpen] = useState(false);
     const elements = useElements();
-    const {current, setCurrent} = useContext(CurrentContext);
     const constraints = useConstraints();
 
     function onClose() {
@@ -22,7 +20,7 @@ export const Canvas: FC = () => {
         onVisualClose();
     }
 
-    function onClick(element: Element) {
+    function onClick(element: Elem) {
         if (constraints.newConstraint) {
             if (constraintIds.length < 2) {
                 constraintIds.push(element.id);
@@ -40,16 +38,16 @@ export const Canvas: FC = () => {
                 constraintIds = [];
             }
         }
-        setCurrent(element);
+        elements.setCurrent(element);
     }
 
-    function onDragEnd(e: KonvaEventObject<DragEvent>, elem: Element) {
+    function onDragEnd(e: KonvaEventObject<DragEvent>, elem: Elem) {
         elements.updateElement(elem, {
             ...elem,
             x: e.target.x(),
             y: e.target.y(),
         })
-        setCurrent(elem);
+        elements.setCurrent(elem);
     }
 
     return (
@@ -90,7 +88,7 @@ export const Canvas: FC = () => {
                     })}
                 </Layer>
                 <Layer>
-                    {elements.elements.map((element: Element, key: number) => {
+                    {elements.elements.map((element: Elem, key: number) => {
                         switch (element.type) {
                             case ElemType.Input:
                                 return (

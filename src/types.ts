@@ -9,7 +9,7 @@ export enum InputType {
     Number = "number",
 }
 
-export interface Element {
+export interface Elem {
     height: number;
     width: number;
     x: number;
