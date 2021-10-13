@@ -4,10 +4,11 @@ import {Elem, ElemType} from "../types";
 export function exportToHTML(elements: Elem[]) {
     let html = "<html>";
 
-    for (const {type, x, y, value, subType, width, height} of elements) {
+    for (const {type, x, y, value, subType, width, height, id} of elements) {
         switch (type) {
             case ElemType.Input:
                 html += `<input 
+                            id=${id}
                             type=${subType}
                             style="
                                  position:absolute;
@@ -20,6 +21,7 @@ export function exportToHTML(elements: Elem[]) {
                 break;
             case ElemType.Button:
                 html += `<button 
+                            id=${id}
                             style="
                                  position:absolute;
                                  top:${y}px;
@@ -32,6 +34,7 @@ export function exportToHTML(elements: Elem[]) {
                 break;
             case ElemType.Text:
                 html += `<p
+                            id=${id}
                             style="
                                  position:absolute;
                                  top:${y}px;

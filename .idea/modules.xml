@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../hd-visual/.idea/hd-visual.iml" filepath="$PROJECT_DIR$/../hd-visual/.idea/hd-visual.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/hd-visual2.iml" filepath="$PROJECT_DIR$/.idea/hd-visual2.iml" />
     </modules>
   </component>

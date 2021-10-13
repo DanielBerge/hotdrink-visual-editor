@@ -27,7 +27,7 @@ const initialElements: Elem[] = [
         width: 150,
         x: 200,
         y: 300,
-        type: ElemType.Button,
+        type: ElemType.Input,
         value: "value2",
         id: "initial2",
     }
