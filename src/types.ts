@@ -1,6 +1,7 @@
 export enum ElemType {
     Input = "input",
     Button = "button",
+    Text = "text",
 }
 
 export enum InputType {

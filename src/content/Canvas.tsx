@@ -11,8 +11,8 @@ let constraintIds: Array<string> = [];
 export const Canvas: FC = () => {
     const [setContainer, setConstraint, onVisualClose] = useRete();
     const [open, setOpen] = useState(false);
-    const {elements, __, updateElement, getElementById} = useContext(ElementContext);
-    const {_, setCurrent} = useContext(CurrentContext);
+    const {elements, addElement, updateElement, getElementById} = useContext(ElementContext);
+    const {current, setCurrent} = useContext(CurrentContext);
     const {constraints, setConstraints} = useContext(ConstraintContext);
     const {newConstraint, setNewConstraint} = useContext(NewConstraintContext);
 
@@ -126,6 +126,24 @@ export const Canvas: FC = () => {
                                             fontSize={16}
                                         />
                                     </Group>
+                                )
+                            case ElemType.Text:
+                                return (
+                                    <Text
+                                        key={key}
+                                        text={element.value}
+                                        fill="black"
+                                        align="center"
+                                        width={element.width}
+                                        height={element.height}
+                                        padding={15}
+                                        fontSize={16}
+                                        draggable
+                                        x={element.x}
+                                        y={element.y}
+                                        onClick={() => onClick(element)}
+                                        onDragEnd={(e) => onDragEnd(e, element)}
+                                    />
                                 )
                             default:
                                 return null;

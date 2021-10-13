@@ -26,9 +26,20 @@ export function exportToHTML(elements: Elem[]) {
                                  left:${x}px;
                                  width:${width}px;
                                  height:${height}px;
-                                 background-color:gray;"
+                                 background-color:gray;
                             "
                          >${value}</button>`;
+                break;
+            case ElemType.Text:
+                html += `<p
+                            style="
+                                 position:absolute;
+                                 top:${y}px;
+                                 left:${x}px;
+                                 width:${width}px;
+                                 height:${height}px;
+                            "
+                         >${value}</p>`;
                 break;
         }
     }

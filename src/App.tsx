@@ -6,6 +6,10 @@ import {Properties} from "./sides/Properties";
 import {Constraints} from "./sides/Constraints";
 import {Constraint, Elem, ElemType, InputType} from "./types";
 
+let id = 0;
+export function freshId() {
+    return ++id;
+}
 
 const initialElements: Elem[] = [
     {
@@ -16,7 +20,7 @@ const initialElements: Elem[] = [
         type: ElemType.Input,
         subType: InputType.Number,
         value: "",
-        id: "id",
+        id: "initial",
     },
     {
         height: 50,
@@ -25,14 +29,14 @@ const initialElements: Elem[] = [
         y: 300,
         type: ElemType.Button,
         value: "value2",
-        id: "id2",
+        id: "initial2",
     }
 ]
 
 const initialConstraints: Constraint[] = [
     {
-        fromId: "id",
-        toId: "id2",
+        fromId: "initial",
+        toId: "initial2",
         code: ""
     }
 ]

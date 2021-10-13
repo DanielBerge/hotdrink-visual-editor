@@ -11,7 +11,10 @@ export const Properties = () => {
 
     return (
         <>
-            <button onClick={() => setOpen(true)}>Run</button>
+            <button
+                className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"
+                onClick={() => setOpen(true)}
+            >Run</button>
             <h1>Properties</h1>
             {current && Object.keys(current).map((key) => {
                 return <div key={key}>{key}: {current[key]}</div>

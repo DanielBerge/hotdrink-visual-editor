@@ -1,5 +1,5 @@
 import React, {FC, useContext} from "react";
-import {ElementContext} from "../App";
+import {ElementContext, freshId} from "../App";
 import {ElemType} from "../types";
 
 
@@ -22,7 +22,7 @@ export const Components: FC = (props) => {
                         y: event.clientY,
                         type: ElemType.Input,
                         value: "value",
-                        id: "id1",
+                        id: `id${freshId()}`,
                     })
                 })}
             >Input
@@ -38,10 +38,26 @@ export const Components: FC = (props) => {
                         y: event.clientY,
                         type: ElemType.Button,
                         value: "value",
-                        id: "id2",
+                        id: `id${freshId()}`,
                     })
                 })}
             >Button
+            </div>
+            <div
+                draggable
+                className="w-24 text-black p-3 m-1 border border-black"
+                onDragEnd={(event => {
+                    addElement({
+                        height: 50,
+                        width: 200,
+                        x: event.clientX,
+                        y: event.clientY,
+                        type: ElemType.Text,
+                        value: "Textvalue",
+                        id: `id${freshId()}`,
+                    })
+                })}
+            >Text
             </div>
         </>
     )
