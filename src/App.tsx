@@ -57,7 +57,7 @@ function App() {
     }
 
     function updateElement(oldElem: Elem, newElem: Elem) {
-        const index = elements.findIndex((elem) => elem === oldElem);
+        const index = elements.findIndex((elem) => elem.id === oldElem.id);
         if (index !== -1) {
             elements[index] = newElem;
             setElements(elements);

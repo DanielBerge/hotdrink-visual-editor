@@ -48,6 +48,7 @@ export const Canvas: FC = () => {
             x: e.target.x(),
             y: e.target.y(),
         })
+        setCurrent(elem);
     }
 
     return (
