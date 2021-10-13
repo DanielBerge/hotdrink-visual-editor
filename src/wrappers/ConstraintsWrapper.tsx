@@ -21,7 +21,7 @@ interface Constraints {
     setNewConstraint: (newConstraint: boolean) => void;
 }
 
-export const ConstraintsWrapper: FC = (props) => {
+const ConstraintsWrapper: FC = (props) => {
     const [constraints, setConstraints] = useState(initialConstraints);
     const [newConstraint, setNewConstraint] = useState(false);
 
@@ -44,7 +44,7 @@ export const ConstraintsWrapper: FC = (props) => {
     )
 }
 
-export function useConstraints(): Constraints {
+function useConstraints(): Constraints {
     const {constraints, setConstraints, updateConstraint} = useContext(ConstraintContext);
     const {newConstraint, setNewConstraint, } = useContext(NewConstraintContext);
 
@@ -56,3 +56,5 @@ export function useConstraints(): Constraints {
         setNewConstraint,
     }
 }
+
+export {ConstraintsWrapper, useConstraints};

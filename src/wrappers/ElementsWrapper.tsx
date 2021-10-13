@@ -32,7 +32,7 @@ interface Elements {
     getElementById: (id: string) => Element | undefined;
 }
 
-export const ElementsWrapper: FC = (props) => {
+const ElementsWrapper: FC = (props) => {
     const [elements, setElements] = useState(initialElements)
 
     function addElement(element: Element) {
@@ -68,7 +68,7 @@ export const ElementsWrapper: FC = (props) => {
 }
 
 
-export function useElements(): Elements {
+function useElements(): Elements {
     const {elements, addElement, updateElement, getElementById} = useContext(ElementContext);
 
     return {
@@ -78,3 +78,5 @@ export function useElements(): Elements {
         getElementById
     }
 }
+
+export {ElementsWrapper, useElements};
