@@ -9,7 +9,7 @@ import {ReturnAnyComponent} from "./components/returnAnyComponent";
 import {ReadOnlyVarComponent} from "./components/ReadOnlyVarComponent";
 import {numSocket, stringSocket} from "./sockets";
 import {Constraint} from "../types";
-import {ConstraintContext} from "../App";
+import {useConstraints} from "../wrappers/ConstraintsWrapper";
 
 function createEditor(container: HTMLElement): NodeEditor {
     const editor: NodeEditor = new Rete.NodeEditor("demo@0.1.0", container);
@@ -67,7 +67,7 @@ async function initRete(container: HTMLElement, constraint: Constraint, setCode:
 
 
 export function useRete(): [any, any, any] {
-    const {constraints, setConstraints, updateConstraint} = useContext(ConstraintContext);
+    const constraints = useConstraints();
     const [constraint, setConstraint] = useState<Constraint | undefined>(undefined);
     const [container, setContainer] = useState<HTMLElement | null>(null);
     const editorRef = useRef<NodeEditor>();
@@ -91,8 +91,8 @@ export function useRete(): [any, any, any] {
 
     function onClose() {
         if (editorRef.current) {
-            updateConstraint(constraint, {
-                ...constraint,
+            constraints.updateConstraint(constraint!, {
+                ...constraint!,
                 code: code,
             })
             editorRef.current.destroy();

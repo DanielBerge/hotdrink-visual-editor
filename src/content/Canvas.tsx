@@ -1,19 +1,21 @@
 import React, {FC, useContext, useState} from 'react';
 import {Arrow, Group, Layer, Line, Rect, Stage, Text} from 'react-konva';
-import {ConstraintContext, CurrentContext, ElementContext, NewConstraintContext} from "../App";
+import {CurrentContext, NewConstraintContext} from "../App";
 import {KonvaEventObject} from "konva/lib/Node";
 import {Modal} from "@mui/material";
 import {useRete} from "../rete/useRete";
-import {Constraint, Elem, ElemType} from "../types";
+import {Constraint, Element, ElemType} from "../types";
+import {useElements} from "../wrappers/ElementsWrapper";
+import {useConstraints} from "../wrappers/ConstraintsWrapper";
 
 let constraintIds: Array<string> = [];
 
 export const Canvas: FC = () => {
     const [setContainer, setConstraint, onVisualClose] = useRete();
     const [open, setOpen] = useState(false);
-    const {elements, addElement, updateElement, getElementById} = useContext(ElementContext);
+    const elements = useElements();
     const {current, setCurrent} = useContext(CurrentContext);
-    const {constraints, setConstraints} = useContext(ConstraintContext);
+    const constraints = useConstraints();
     const {newConstraint, setNewConstraint} = useContext(NewConstraintContext);
 
     function onClose() {
@@ -21,15 +23,15 @@ export const Canvas: FC = () => {
         onVisualClose();
     }
 
-    function onClick(element: Elem) {
+    function onClick(element: Element) {
         if (newConstraint) {
             if (constraintIds.length < 2) {
                 constraintIds.push(element.id);
             }
             if (constraintIds.length === 2) {
                 setNewConstraint(false);
-                setConstraints([
-                    ...constraints,
+                constraints.setConstraints([
+                    ...constraints.constraints,
                     {
                         fromId: constraintIds[0],
                         toId: constraintIds[1],
@@ -42,8 +44,8 @@ export const Canvas: FC = () => {
         setCurrent(element);
     }
 
-    function onDragEnd(e: KonvaEventObject<DragEvent>, elem: Elem) {
-        updateElement(elem, {
+    function onDragEnd(e: KonvaEventObject<DragEvent>, elem: Element) {
+        elements.updateElement(elem, {
             ...elem,
             x: e.target.x(),
             y: e.target.y(),
@@ -59,9 +61,13 @@ export const Canvas: FC = () => {
                 className="bg-gray-100"
             >
                 <Layer>
-                    {constraints.map((constraint: Constraint) => {
-                        const from = getElementById(constraint.fromId)
-                        const to = getElementById(constraint.toId);
+                    {constraints.constraints.map((constraint: Constraint) => {
+                        const from = elements.getElementById(constraint.fromId)
+                        const to = elements.getElementById(constraint.toId);
+                        if (to === undefined || from === undefined) {
+                            console.error(`Constraint ids, does not have matching elements: ${constraint.fromId} -> ${constraint.toId}`)
+                            return null;
+                        }
                         return (
                             <Group
                                 key={from.id + to.id}
@@ -85,7 +91,7 @@ export const Canvas: FC = () => {
                     })}
                 </Layer>
                 <Layer>
-                    {elements.map((element: Elem, key: number) => {
+                    {elements.elements.map((element: Element, key: number) => {
                         switch (element.type) {
                             case ElemType.Input:
                                 return (

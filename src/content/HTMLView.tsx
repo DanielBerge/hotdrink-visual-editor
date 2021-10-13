@@ -1,14 +1,14 @@
-import {FC, useContext, useEffect} from "react";
+import {FC, useEffect} from "react";
 import ReactDOM from "react-dom";
 import {runJs} from "../utils";
-import {ConstraintContext} from "../App";
+import {useConstraints} from "../wrappers/ConstraintsWrapper";
 
 interface Props {
     HTML: string;
 }
 
 export const HTMLView: FC<Props> = ({HTML}) => {
-    const {constraints, setConstraints} = useContext(ConstraintContext);
+    const constraints = useConstraints();
 
     useEffect(() => {
         function createMarkup(string: string) {
@@ -21,7 +21,7 @@ export const HTMLView: FC<Props> = ({HTML}) => {
                 dangerouslySetInnerHTML={createMarkup(HTML)}
             />,
             document.getElementById("index"), () => {
-                runJs(constraints);
+                runJs(constraints.constraints);
             });
     }, [HTML]);
 

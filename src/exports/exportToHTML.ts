@@ -1,7 +1,7 @@
-import {Elem, ElemType} from "../types";
+import {Element, ElemType} from "../types";
 
 
-export function exportToHTML(elements: Elem[]) {
+export function exportToHTML(elements: Element[]) {
     let html = "<html>";
 
     for (const {type, x, y, value, subType, width, height, id} of elements) {

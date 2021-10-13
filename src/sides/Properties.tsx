@@ -1,11 +1,12 @@
-import {CurrentContext, ElementContext} from "../App";
+import {CurrentContext} from "../App";
 import {useContext, useState} from "react";
 import {exportToHTML} from "../exports/exportToHTML";
 import {Modal} from "@mui/material";
 import {HTMLView} from "../content/HTMLView";
+import {useElements} from "../wrappers/ElementsWrapper";
 
 export const Properties = () => {
-    const {elements, addElement, updateElement, getElementById} = useContext(ElementContext);
+    const elements = useElements()
     const {current,} = useContext(CurrentContext);
     const [open, setOpen] = useState(false);
 
@@ -24,7 +25,7 @@ export const Properties = () => {
                 onBackdropClick={() => setOpen(false)}
             >
                 <div className="w-2/3 h-2/3 bg-gray-200 p-20">
-                    <HTMLView HTML={exportToHTML(elements)}/>
+                    <HTMLView HTML={exportToHTML(elements.elements)}/>
                 </div>
             </Modal>
         </>

@@ -4,7 +4,8 @@ import {Column} from "./sides/Column";
 import {Components} from "./sides/Components";
 import {Properties} from "./sides/Properties";
 import {Constraints} from "./sides/Constraints";
-import {Constraint, Elem, ElemType, InputType} from "./types";
+import {ElementsWrapper} from "./wrappers/ElementsWrapper";
+import {ConstraintsWrapper} from "./wrappers/ConstraintsWrapper";
 
 let id = 0;
 
@@ -12,88 +13,16 @@ export function freshId() {
     return ++id;
 }
 
-const initialElements: Elem[] = [
-    {
-        height: 50,
-        width: 200,
-        x: 100,
-        y: 100,
-        type: ElemType.Input,
-        subType: InputType.Number,
-        value: "",
-        id: "initial",
-    },
-    {
-        height: 50,
-        width: 150,
-        x: 200,
-        y: 300,
-        type: ElemType.Input,
-        value: "value2",
-        id: "initial2",
-    }
-]
-
-const initialConstraints: Constraint[] = [
-    {
-        fromId: "initial",
-        toId: "initial2",
-        code: "const positive = initial >= 0;\n" +
-            "return positive;"
-    }
-]
-
-export const ElementContext = React.createContext<any>({})
-export const ConstraintContext = React.createContext<any>({})
 export const CurrentContext = React.createContext<any>({});
 export const NewConstraintContext = React.createContext<any>(false);
 
 function App() {
-    const json = JSON.stringify(initialElements);
-    const fromJson: Elem[] = JSON.parse(json);
-    const [elements, setElements] = useState(fromJson)
     const [current, setCurrent] = useState(undefined);
-    const [constraints, setConstraints] = useState(initialConstraints);
     const [newConstraint, setNewConstraint] = useState(false);
 
-    function addElement(element: Elem) {
-        setElements([
-            ...elements, element]
-        )
-    }
-
-    function updateElement(oldElem: Elem, newElem: Elem) {
-        const index = elements.findIndex((elem) => elem.id === oldElem.id);
-        if (index !== -1) {
-            elements[index] = newElem;
-            setElements(elements);
-        } else {
-            console.warn("Could not find element to update");
-        }
-    }
-
-    function updateConstraint(oldConstraint: Constraint, newConstraint: Constraint) {
-        const index = constraints.findIndex((constraint) => constraint.fromId === oldConstraint.fromId && constraint.toId === oldConstraint.toId);
-        if (index !== -1) {
-            constraints[index] = newConstraint;
-            setConstraints(constraints);
-        } else {
-            console.warn("Could not find element to update");
-        }
-    }
-
-    function getElementById(id: string): Elem | undefined {
-        return elements.find((element) => {
-            if (element.id === id) {
-                return element;
-            }
-            return undefined;
-        })
-    }
-
     return (
-        <ElementContext.Provider value={{elements, addElement, updateElement, getElementById}}>
-            <ConstraintContext.Provider value={{constraints, setConstraints, updateConstraint}}>
+        <ElementsWrapper>
+            <ConstraintsWrapper>
                 <CurrentContext.Provider value={{current, setCurrent}}>
                     <NewConstraintContext.Provider value={{newConstraint, setNewConstraint}}>
                         <div className="flex space-x-3 h-screen">
@@ -110,8 +39,8 @@ function App() {
                         </div>
                     </NewConstraintContext.Provider>
                 </CurrentContext.Provider>
-            </ConstraintContext.Provider>
-        </ElementContext.Provider>
+            </ConstraintsWrapper>
+        </ElementsWrapper>
     );
 }
 

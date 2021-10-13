@@ -1,10 +1,11 @@
 import React, {FC, useContext} from "react";
-import {ElementContext, freshId} from "../App";
+import {freshId} from "../App";
 import {ElemType, InputType} from "../types";
+import {useElements} from "../wrappers/ElementsWrapper";
 
 
 export const Components: FC = (props) => {
-    const {elements, addElement} = useContext(ElementContext);
+    const elements = useElements();
 
     return (
         <>
@@ -15,7 +16,7 @@ export const Components: FC = (props) => {
                 draggable
                 className="w-24 bg-white border border-black p-3 m-1"
                 onDragEnd={(event => {
-                    addElement({
+                    elements.addElement({
                         height: 50,
                         width: 200,
                         x: event.clientX,
@@ -32,7 +33,7 @@ export const Components: FC = (props) => {
                 draggable
                 className="w-24 bg-white border border-black p-3 m-1"
                 onDragEnd={(event => {
-                    addElement({
+                    elements.addElement({
                         height: 50,
                         width: 200,
                         x: event.clientX,
@@ -49,7 +50,7 @@ export const Components: FC = (props) => {
                 draggable
                 className="w-24 bg-black text-white p-3 m-1"
                 onDragEnd={(event => {
-                    addElement({
+                    elements.addElement({
                         height: 50,
                         width: 200,
                         x: event.clientX,
@@ -65,7 +66,7 @@ export const Components: FC = (props) => {
                 draggable
                 className="w-24 text-black p-3 m-1 border border-black"
                 onDragEnd={(event => {
-                    addElement({
+                    elements.addElement({
                         height: 50,
                         width: 200,
                         x: event.clientX,
