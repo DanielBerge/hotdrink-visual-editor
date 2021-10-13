@@ -48,11 +48,9 @@ export function runJs(constraints: Constraint[]) {
     try {
         let system = defaultConstraintSystem;
 
-        /**
-        const method1 = new Method(2, [0], [1], [maskNone], (initial: number) => {
-            const positive = initial >= 0;
-            return positive;
-        });
+        //const func = eval("(initial) => {const positive = initial >= 0; \nreturn positive;}")
+        const func = eval(`(${constraints[0].fromId}) => {${constraints[0].code}}`)
+        const method1 = new Method(2, [0], [1], [maskNone], func);
 
         const cspec = new ConstraintSpec([method1]);
 
@@ -61,20 +59,6 @@ export function runJs(constraints: Constraint[]) {
         const varB = comp.emplaceVariable(constraints[0].toId, undefined);
 
         comp.emplaceConstraint("C", cspec, [varA, varB], false);
-
-        system.addComponent(comp);
-         **/
-
-        let comp = component`
-               var initial, initial2;
-               
-               constraint {
-                    (initial -> initial2) => {
-                             const positive = initial >= 0;
-                             return positive;
-                    }
-               }
-        `
 
         system.addComponent(comp);
 

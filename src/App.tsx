@@ -37,7 +37,8 @@ const initialConstraints: Constraint[] = [
     {
         fromId: "initial",
         toId: "initial2",
-        code: ""
+        code: "const positive = initial >= 0;\n" +
+            "return positive;"
     }
 ]
 
