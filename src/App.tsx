@@ -14,17 +14,14 @@ export function freshId() {
 }
 
 export const CurrentContext = React.createContext<any>({});
-export const NewConstraintContext = React.createContext<any>(false);
 
 function App() {
     const [current, setCurrent] = useState(undefined);
-    const [newConstraint, setNewConstraint] = useState(false);
 
     return (
         <ElementsWrapper>
             <ConstraintsWrapper>
                 <CurrentContext.Provider value={{current, setCurrent}}>
-                    <NewConstraintContext.Provider value={{newConstraint, setNewConstraint}}>
                         <div className="flex space-x-3 h-screen">
                             <Column>
                                 <Components/>
@@ -37,7 +34,6 @@ function App() {
                                 <Properties/>
                             </Column>
                         </div>
-                    </NewConstraintContext.Provider>
                 </CurrentContext.Provider>
             </ConstraintsWrapper>
         </ElementsWrapper>

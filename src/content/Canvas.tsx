@@ -1,6 +1,6 @@
 import React, {FC, useContext, useState} from 'react';
 import {Arrow, Group, Layer, Line, Rect, Stage, Text} from 'react-konva';
-import {CurrentContext, NewConstraintContext} from "../App";
+import {CurrentContext} from "../App";
 import {KonvaEventObject} from "konva/lib/Node";
 import {Modal} from "@mui/material";
 import {useRete} from "../rete/useRete";
@@ -16,7 +16,6 @@ export const Canvas: FC = () => {
     const elements = useElements();
     const {current, setCurrent} = useContext(CurrentContext);
     const constraints = useConstraints();
-    const {newConstraint, setNewConstraint} = useContext(NewConstraintContext);
 
     function onClose() {
         setOpen(false);
@@ -24,12 +23,12 @@ export const Canvas: FC = () => {
     }
 
     function onClick(element: Element) {
-        if (newConstraint) {
+        if (constraints.newConstraint) {
             if (constraintIds.length < 2) {
                 constraintIds.push(element.id);
             }
             if (constraintIds.length === 2) {
-                setNewConstraint(false);
+                constraints.setNewConstraint(false);
                 constraints.setConstraints([
                     ...constraints.constraints,
                     {

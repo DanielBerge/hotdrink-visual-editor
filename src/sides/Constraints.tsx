@@ -1,11 +1,11 @@
 import React, {FC, useContext, useState} from "react";
-import {NewConstraintContext} from "../App";
+import {useConstraints} from "../wrappers/ConstraintsWrapper";
 
 export const Constraints: FC = () => {
-    const {newConstraint, setNewConstraint} = useContext(NewConstraintContext);
+    const constraints = useConstraints();
 
     function onCreate() {
-        setNewConstraint(true);
+        constraints.setNewConstraint(true);
     }
 
     return (
@@ -14,7 +14,7 @@ export const Constraints: FC = () => {
             <button
                 className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"
                 onClick={onCreate}
-                disabled={newConstraint}
+                disabled={constraints.newConstraint}
             >Create constraint
             </button>
         </>

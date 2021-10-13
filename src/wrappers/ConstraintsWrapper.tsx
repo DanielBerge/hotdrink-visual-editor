@@ -11,15 +11,19 @@ const initialConstraints: Constraint[] = [
 ]
 
 const ConstraintContext = React.createContext<any>({})
+const NewConstraintContext = React.createContext<any>(false);
 
 interface Constraints {
     constraints: Constraint[];
-    setConstraints: (constrains: Constraint[]) => void;
+    setConstraints: (constraints: Constraint[]) => void;
     updateConstraint: (oldConstraint: Constraint, newConstraint: Constraint) => void
+    newConstraint: boolean;
+    setNewConstraint: (newConstraint: boolean) => void;
 }
 
 export const ConstraintsWrapper: FC = (props) => {
     const [constraints, setConstraints] = useState(initialConstraints);
+    const [newConstraint, setNewConstraint] = useState(false);
 
     function updateConstraint(oldConstraint: Constraint, newConstraint: Constraint) {
         const index = constraints.findIndex((constraint) => constraint.fromId === oldConstraint.fromId && constraint.toId === oldConstraint.toId);
@@ -33,17 +37,22 @@ export const ConstraintsWrapper: FC = (props) => {
 
     return (
         <ConstraintContext.Provider value={{constraints, setConstraints, updateConstraint}}>
-            {props.children}
+            <NewConstraintContext.Provider value={{newConstraint, setNewConstraint}}>
+                {props.children}
+            </NewConstraintContext.Provider>
         </ConstraintContext.Provider>
     )
 }
 
 export function useConstraints(): Constraints {
     const {constraints, setConstraints, updateConstraint} = useContext(ConstraintContext);
+    const {newConstraint, setNewConstraint, } = useContext(NewConstraintContext);
 
     return {
         constraints,
         setConstraints,
         updateConstraint,
+        newConstraint,
+        setNewConstraint,
     }
 }
