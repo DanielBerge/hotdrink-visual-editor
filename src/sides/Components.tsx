@@ -1,6 +1,6 @@
 import React, {FC, useContext} from "react";
 import {ElementContext, freshId} from "../App";
-import {ElemType} from "../types";
+import {ElemType, InputType} from "../types";
 
 
 export const Components: FC = (props) => {
@@ -21,11 +21,29 @@ export const Components: FC = (props) => {
                         x: event.clientX,
                         y: event.clientY,
                         type: ElemType.Input,
+                        subType: InputType.Number,
                         value: "value",
                         id: `id${freshId()}`,
                     })
                 })}
-            >Input
+            >Input number
+            </div>
+            <div
+                draggable
+                className="w-24 bg-white border border-black p-3 m-1"
+                onDragEnd={(event => {
+                    addElement({
+                        height: 50,
+                        width: 200,
+                        x: event.clientX,
+                        y: event.clientY,
+                        type: ElemType.Input,
+                        subType: InputType.Text,
+                        value: "value",
+                        id: `id${freshId()}`,
+                    })
+                })}
+            >Input text
             </div>
             <div
                 draggable

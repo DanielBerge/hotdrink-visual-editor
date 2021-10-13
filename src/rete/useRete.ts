@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import Rete, {Component, Engine, Node, NodeEditor} from "rete";
 import ReactRenderPlugin from "rete-react-render-plugin";
 import ConnectionPlugin from "rete-connection-plugin";
@@ -9,6 +9,7 @@ import {ReturnAnyComponent} from "./components/returnAnyComponent";
 import {ReadOnlyVarComponent} from "./components/ReadOnlyVarComponent";
 import {numSocket, stringSocket} from "./sockets";
 import {Constraint} from "../types";
+import {ConstraintContext} from "../App";
 
 function createEditor(container: HTMLElement): NodeEditor {
     const editor: NodeEditor = new Rete.NodeEditor("demo@0.1.0", container);
@@ -26,7 +27,7 @@ async function newNode(x: number, y: number, variableName: string, component: Co
     return node;
 }
 
-async function initRete(container: HTMLElement, constraint: Constraint): Promise<NodeEditor> {
+async function initRete(container: HTMLElement, constraint: Constraint, setCode: Function): Promise<NodeEditor> {
     const editor: NodeEditor = createEditor(container);
     const engine: Engine = new Rete.Engine("demo@0.1.0");
 
@@ -51,7 +52,7 @@ async function initRete(container: HTMLElement, constraint: Constraint): Promise
         async () => {
             const sourceCode: string = await generateCode(engine, editor.toJSON());
             console.log(sourceCode);
-            console.log(editor.nodes);
+            setCode(await generateCode(engine, editor.toJSON()));
             await engine.abort();
             await engine.process(editor.toJSON());
         }
@@ -66,13 +67,15 @@ async function initRete(container: HTMLElement, constraint: Constraint): Promise
 
 
 export function useRete(): [any, any, any] {
+    const {constraints, setConstraints, updateConstraint} = useContext(ConstraintContext);
     const [constraint, setConstraint] = useState<Constraint | undefined>(undefined);
     const [container, setContainer] = useState<HTMLElement | null>(null);
     const editorRef = useRef<NodeEditor>();
+    const [code, setCode] = useState("");
 
     useEffect(() => {
         if (container && constraint) {
-            initRete(container, constraint).then((value: NodeEditor) => {
+            initRete(container, constraint, setCode).then((value: NodeEditor) => {
                 editorRef.current = value;
             });
         }
@@ -88,6 +91,10 @@ export function useRete(): [any, any, any] {
 
     function onClose() {
         if (editorRef.current) {
+            updateConstraint(constraint, {
+                ...constraint,
+                code: code,
+            })
             editorRef.current.destroy();
         }
     }

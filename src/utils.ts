@@ -1,12 +1,4 @@
-import {
-    component,
-    Component,
-    ConstraintSpec,
-    defaultConstraintSystem,
-    maskNone,
-    Method,
-    VariableReference
-} from "hotdrink";
+import {Component, ConstraintSpec, defaultConstraintSystem, maskNone, Method, VariableReference} from "hotdrink";
 import {Constraint} from "./types";
 
 export const idToValue = new Map();
@@ -46,25 +38,28 @@ export function DOMBind(element: HTMLElement | null, value: VariableReference<an
 
 export function runJs(constraints: Constraint[]) {
     try {
-        let system = defaultConstraintSystem;
+        for (const constraint of constraints) {
+            let system = defaultConstraintSystem;
 
-        //const func = eval("(initial) => {const positive = initial >= 0; \nreturn positive;}")
-        const func = eval(`(${constraints[0].fromId}) => {${constraints[0].code}}`)
-        const method1 = new Method(2, [0], [1], [maskNone], func);
+            //const func = eval("(initial) => {const positive = initial >= 0; \nreturn positive;}")
+            const func = eval(`(${constraint.fromId}) => {
+                ${constraint.code}
+            }`)
+            const method1 = new Method(2, [0], [1], [maskNone], func);
 
-        const cspec = new ConstraintSpec([method1]);
+            const cspec = new ConstraintSpec([method1]);
 
-        const comp = new Component("Component");
-        const varA = comp.emplaceVariable(constraints[0].fromId, undefined);
-        const varB = comp.emplaceVariable(constraints[0].toId, undefined);
+            const comp = new Component("Component");
+            const varA = comp.emplaceVariable(constraint.fromId, undefined);
+            const varB = comp.emplaceVariable(constraint.toId, undefined);
 
-        comp.emplaceConstraint("C", cspec, [varA, varB], false);
+            comp.emplaceConstraint("C", cspec, [varA, varB], false);
 
-        system.addComponent(comp);
+            system.addComponent(comp);
 
-        DOMBind(document.getElementById(constraints[0].fromId), comp.vs.initial, "value");
-        DOMBind(document.getElementById(constraints[0].toId), comp.vs.initial2, "value");
-
+            DOMBind(document.getElementById(constraint.fromId), comp.vs[constraint.fromId], "value");
+            DOMBind(document.getElementById(constraint.toId), comp.vs[constraint.toId], "value");
+        }
     } catch (e) {
         console.error(e);
     }

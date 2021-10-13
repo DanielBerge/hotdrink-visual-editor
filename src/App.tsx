@@ -7,6 +7,7 @@ import {Constraints} from "./sides/Constraints";
 import {Constraint, Elem, ElemType, InputType} from "./types";
 
 let id = 0;
+
 export function freshId() {
     return ++id;
 }
@@ -66,6 +67,18 @@ function App() {
         if (index !== -1) {
             elements[index] = newElem;
             setElements(elements);
+        } else {
+            console.warn("Could not find element to update");
+        }
+    }
+
+    function updateConstraint(oldConstraint: Constraint, newConstraint: Constraint) {
+        const index = constraints.findIndex((constraint) => constraint.fromId === oldConstraint.fromId && constraint.toId === oldConstraint.toId);
+        if (index !== -1) {
+            constraints[index] = newConstraint;
+            setConstraints(constraints);
+        } else {
+            console.warn("Could not find element to update");
         }
     }
 
@@ -80,7 +93,7 @@ function App() {
 
     return (
         <ElementContext.Provider value={{elements, addElement, updateElement, getElementById}}>
-            <ConstraintContext.Provider value={{constraints, setConstraints}}>
+            <ConstraintContext.Provider value={{constraints, setConstraints, updateConstraint}}>
                 <CurrentContext.Provider value={{current, setCurrent}}>
                     <NewConstraintContext.Provider value={{newConstraint, setNewConstraint}}>
                         <div className="flex space-x-3 h-screen">
