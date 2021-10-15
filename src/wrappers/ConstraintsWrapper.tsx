@@ -46,7 +46,7 @@ const ConstraintsWrapper: FC = (props) => {
 
 function useConstraints(): Constraints {
     const {constraints, setConstraints, updateConstraint} = useContext(ConstraintContext);
-    const {newConstraint, setNewConstraint, } = useContext(NewConstraintContext);
+    const {newConstraint, setNewConstraint,} = useContext(NewConstraintContext);
 
     return {
         constraints,

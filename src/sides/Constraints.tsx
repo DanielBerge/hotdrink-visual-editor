@@ -1,4 +1,4 @@
-import React, {FC, useContext, useState} from "react";
+import React, {FC} from "react";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
 
 export const Constraints: FC = () => {

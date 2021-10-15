@@ -50,6 +50,7 @@ export const Canvas: FC = () => {
         elements.setCurrent(elem);
     }
 
+    /// test ut component([«someString»])
     return (
         <div className="">
             <Stage
@@ -62,7 +63,7 @@ export const Canvas: FC = () => {
                         const from = elements.getElementById(constraint.fromId)
                         const to = elements.getElementById(constraint.toId);
                         if (to === undefined || from === undefined) {
-                            console.error(`Constraint ids, does not have matching elements: ${constraint.fromId} -> ${constraint.toId}`)
+                            console.error(`Constraint ids, does not have matching HTML elements: ${constraint.fromId} -> ${constraint.toId}`)
                             return null;
                         }
                         return (

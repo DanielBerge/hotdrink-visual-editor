@@ -1,4 +1,4 @@
-import React, {FC, useContext} from "react";
+import React, {FC} from "react";
 import {freshId} from "../App";
 import {ElemType, InputType} from "../types";
 import {useElements} from "../wrappers/ElementsWrapper";

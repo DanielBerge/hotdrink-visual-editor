@@ -1,5 +1,5 @@
 import Rete, {Node, NodeEditor} from "rete";
-import {anySocket, boolSocket, numSocket} from "../sockets";
+import {anySocket} from "../sockets";
 import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
 
 export class ReturnAnyComponent extends Rete.Component {
@@ -10,7 +10,7 @@ export class ReturnAnyComponent extends Rete.Component {
         this.editor = editor;
     }
 
-    async builder(node: Node): Promise<void>{
+    async builder(node: Node): Promise<void> {
         const input = new Rete.Input("any", "Any", anySocket);
 
         node.addInput(input);

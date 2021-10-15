@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Canvas} from './content/Canvas';
 import {Column} from "./sides/Column";
 import {Components} from "./sides/Components";
@@ -18,18 +18,18 @@ function App() {
     return (
         <ElementsWrapper>
             <ConstraintsWrapper>
-                        <div className="flex space-x-3 h-screen">
-                            <Column>
-                                <Components/>
-                                <Constraints/>
-                            </Column>
-                            <div className="flex-1">
-                                <Canvas/>
-                            </div>
-                            <Column>
-                                <Properties/>
-                            </Column>
-                        </div>
+                <div className="flex space-x-3 h-screen">
+                    <Column>
+                        <Components/>
+                        <Constraints/>
+                    </Column>
+                    <div className="flex-1">
+                        <Canvas/>
+                    </div>
+                    <Column>
+                        <Properties/>
+                    </Column>
+                </div>
             </ConstraintsWrapper>
         </ElementsWrapper>
     );

@@ -23,7 +23,7 @@ export const HTMLView: FC<Props> = ({HTML}) => {
             document.getElementById("index"), () => {
                 runJs(constraints.constraints);
             });
-    }, [HTML]);
+    }, [HTML, constraints.constraints]);
 
     return (
         <div id="index"/>

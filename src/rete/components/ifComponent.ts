@@ -7,7 +7,7 @@ export class IfComponent extends Rete.Component {
         super("If component");
     }
 
-    async builder(node: Node): Promise<void>{
+    async builder(node: Node): Promise<void> {
         const inp = new Rete.Input("bool", "Boolean", boolSocket);
         const out1 = new Rete.Output("num1", "Number", numSocket);
         const out2 = new Rete.Output("num2", "Number", numSocket);
