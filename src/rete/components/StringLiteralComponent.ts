@@ -1,6 +1,6 @@
 import Rete, {Node} from "rete";
 import {codeBlockSocket, stringSocket} from "../sockets";
-import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
+import {InputConnectionData, NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
 
 export class StringLiteralComponent extends Rete.Component {
 
@@ -16,15 +16,14 @@ export class StringLiteralComponent extends Rete.Component {
     }
 
     worker(node: NodeData, inputs: WorkerInputs, outputs: WorkerOutputs) {
-        if (node.inputs["stringKey1"].connections[0].output === "codeBlock1") {
-            outputs["stringKey"] = "codeBlock1";
-        }
-        if (node.inputs["stringKey1"].connections[0].output === "codeBlock2") {
-            outputs["stringKey"] = "codeBlock2";
-        }
+            outputs["stringKey"] = "";
     }
 
     code(node: NodeData, inputs: WorkerInputs, add: (name: string, expression?: any) => void) {
-        //add(this.variable, node.data.variable);
+        const connections: InputConnectionData[] = node.inputs["any"].connections;
+        if (connections[0].output === "codeBlock1") {
+        } else if (connections[0].output === "codeBlock2") {
+            add(`else`);
+        }
     }
 }

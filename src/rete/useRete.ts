@@ -44,8 +44,8 @@ async function newNode(x: number, y: number, variableName: string, component: Co
 }
 
 async function initRete(container: HTMLElement, constraint: Constraint, setCode: Function): Promise<NodeEditor> {
-    const editor: NodeEditor = createEditor(container);
     const engine: Engine = new Rete.Engine("demo@0.1.0");
+    const editor: NodeEditor = createEditor(container);
 
     const numComponent: ReadOnlyVarComponent = new ReadOnlyVarComponent("Number", numSocket, "num");
     const stringComponent: ReadOnlyVarComponent = new ReadOnlyVarComponent("String", stringSocket, "num");
@@ -60,8 +60,12 @@ async function initRete(container: HTMLElement, constraint: Constraint, setCode:
         engine.register(c);
     })
 
-    editor.addNode(await newNode(100, 200, constraint.fromId, numComponent));
-    editor.addNode(await newNode(900, 200, "??", returnBoolComponent));
+    if (constraint.rete !== undefined) {
+        await editor.fromJSON(constraint.rete);
+    } else {
+        editor.addNode(await newNode(100, 200, constraint.fromId, numComponent));
+        editor.addNode(await newNode(900, 200, "", returnBoolComponent));
+    }
 
     editor.on(
         // @ts-ignore
@@ -71,23 +75,23 @@ async function initRete(container: HTMLElement, constraint: Constraint, setCode:
             console.log(sourceCode);
             console.log(editor.nodes);
             setCode(await generateCode(engine, editor.toJSON()));
-            await engine.abort();
-            await engine.process(editor.toJSON());
+            //await engine.abort();
+            //await engine.process(editor.toJSON());
         }
     );
 
-    editor.on("nodecreated", async (node) => {
+    editor.on("nodecreated", async (node: Node) => {
         if (node.name.match(new RegExp(".*positive.*"))) {
             node.data = {variableName: `positive${freshIndex()}`}
         } else if (node.name.match(new RegExp(".*IF.*"))) {
             node.data = {variableName: `if${freshIndex()}`}
-        } else if(node.name.match(new RegExp(".*literal.*"))) {
+        } else if (node.name.match(new RegExp(".*literal.*"))) {
             node.data = {variableName: `literal${freshIndex()}`}
         }
     })
 
     editor.view.resize();
-    editor.trigger("process");
+    //editor.trigger("process");
     AreaPlugin.zoomAt(editor);
 
     return editor;
@@ -122,6 +126,7 @@ export function useRete(): [(HTMLElement: HTMLElement) => void, (constraint: Con
             constraints.updateConstraint(constraint!, {
                 ...constraint!,
                 code: code,
+                rete: editorRef.current?.toJSON(),
             })
             console.log(editorRef.current?.toJSON());
             editorRef.current?.clear()

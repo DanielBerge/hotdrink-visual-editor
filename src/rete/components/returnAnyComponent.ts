@@ -13,13 +13,12 @@ export class ReturnAnyComponent extends Rete.Component {
 
     async builder(node: Node): Promise<void> {
         const input = new Rete.Input("any", "Any", anySocket);
-        input.multipleConnections = true;
+        //input.multipleConnections = true;
 
         node.addInput(input);
     }
 
     worker(node: NodeData, inputs: WorkerInputs, outputs: WorkerOutputs) {
-
     }
 
     code(node: NodeData, inputs: WorkerInputs, add: (name: string, expression?: any) => void) {
@@ -27,12 +26,8 @@ export class ReturnAnyComponent extends Rete.Component {
 
         //TODO Istedenfor sjekk for codeblock, sjekk om noen av de tidligere nodene i conection path har codeBlock?
 
-        if (connections[0].output === "codeBlock1") {
-            const variable: unknown | undefined = getInputVariable("any", node, this.editor);
-            add(`return ${variable}`);
-        } else if (connections[0].output === "codeBlock2") {
-            const variable: unknown | undefined = getInputVariable("any", node, this.editor);
-            add(`else return ${variable}`);
+        if (connections[0].output === "stringKey") {
+            add(`return "string"`);
         } else {
             const variable: unknown | undefined = getInputVariable("any", node, this.editor);
             if (variable !== undefined) {
