@@ -24,4 +24,5 @@ export interface Constraint {
     fromId: string;
     toId: string;
     code: string;
+    rete?: string;
 }

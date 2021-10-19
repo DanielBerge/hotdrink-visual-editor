@@ -1,26 +1,33 @@
-import Rete, {Node} from "rete";
+import Rete, {Node, NodeEditor} from "rete";
 import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
-import {boolSocket, numSocket} from "../sockets";
+import {anySocket, boolSocket, codeBlockSocket, numSocket} from "../sockets";
+import {getInputVariable} from "../reteUtils";
 
 export class IfComponent extends Rete.Component {
-    constructor() {
-        super("If component");
+    editor: NodeEditor;
+
+    constructor(editor: NodeEditor) {
+        super("IF Block");
+        this.editor = editor;
     }
 
     async builder(node: Node): Promise<void> {
         const inp = new Rete.Input("bool", "Boolean", boolSocket);
-        const out1 = new Rete.Output("num1", "Number", numSocket);
-        const out2 = new Rete.Output("num2", "Number", numSocket);
+        const out1 = new Rete.Output("codeBlock1", "Run", codeBlockSocket);
+        const out2 = new Rete.Output("codeBlock2", "Run", codeBlockSocket);
 
         node.addInput(inp).addOutput(out1).addOutput(out2);
     }
 
     worker(node: NodeData, inputs: WorkerInputs, outputs: WorkerOutputs) {
-        outputs["num1"] = node.data.num;
-        outputs["num2"] = node.data.num;
+        outputs["codeBlock1"] = "";
+        outputs["codeBlock2"] = "";
     }
 
-    code(node: NodeData, inputs: WorkerInputs, add: (name: string, expression?: any) => void) { // 'node' parameter as in worker()
-        add("if"); // add a variable with the value "node.data.num"
+    code(node: NodeData, inputs: WorkerInputs, add: (name: string, expression?: any) => void) {
+        const variable: unknown | undefined = getInputVariable("bool", node, this.editor);
+        if (variable !== undefined) {
+            add(`if (${variable})`);
+        }
     }
 }

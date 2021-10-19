@@ -10,6 +10,16 @@ import {ReadOnlyVarComponent} from "./components/ReadOnlyVarComponent";
 import {numSocket, stringSocket} from "./sockets";
 import {Constraint} from "../types";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
+import DockPlugin from 'rete-dock-plugin';
+import AreaPlugin from 'rete-area-plugin';
+import {IfComponent} from "./components/ifComponent";
+import {StringLiteralComponent} from "./components/StringLiteralComponent";
+
+let index = 0;
+
+export function freshIndex() {
+    return ++index;
+}
 
 function createEditor(container: HTMLElement): NodeEditor {
     const editor: NodeEditor = new Rete.NodeEditor("demo@0.1.0", container);
@@ -17,6 +27,12 @@ function createEditor(container: HTMLElement): NodeEditor {
     editor.use(ReactRenderPlugin);
     editor.use(ContextMenuPlugin, {
         searchBar: false,
+    });
+    // @ts-ignore
+    editor.use(DockPlugin, {
+        container: document.querySelector('.dock'),
+        plugins: [ReactRenderPlugin],
+        itemClass: 'dock-item',
     });
     return editor;
 }
@@ -35,32 +51,44 @@ async function initRete(container: HTMLElement, constraint: Constraint, setCode:
     const stringComponent: ReadOnlyVarComponent = new ReadOnlyVarComponent("String", stringSocket, "num");
     const positiveComponent: IsPositiveComponent = new IsPositiveComponent(editor);
     const returnBoolComponent: ReturnAnyComponent = new ReturnAnyComponent(editor);
-    const components: Component[] = [numComponent, positiveComponent, returnBoolComponent, stringComponent]
+    const ifComponent: IfComponent = new IfComponent(editor);
+    const stringLiteralComponent: StringLiteralComponent = new StringLiteralComponent();
+    const components: Component[] = [numComponent, positiveComponent, returnBoolComponent, stringComponent, ifComponent, stringLiteralComponent]
 
     components.forEach((c) => {
         editor.register(c);
         engine.register(c);
     })
 
-    editor.addNode(await newNode(200, 200, constraint.fromId, numComponent));
-    editor.addNode(await newNode(500, 300, "positive", positiveComponent));
-    editor.addNode(await newNode(800, 300, "", returnBoolComponent));
+    editor.addNode(await newNode(100, 200, constraint.fromId, numComponent));
+    editor.addNode(await newNode(900, 200, "??", returnBoolComponent));
 
     editor.on(
         // @ts-ignore
-        "process nodecreated noderemoved connectioncreated connectionremoved",
+        "process noderemoved connectioncreated connectionremoved",
         async () => {
             const sourceCode: string = await generateCode(engine, editor.toJSON());
             console.log(sourceCode);
+            console.log(editor.nodes);
             setCode(await generateCode(engine, editor.toJSON()));
             await engine.abort();
             await engine.process(editor.toJSON());
         }
     );
 
+    editor.on("nodecreated", async (node) => {
+        if (node.name.match(new RegExp(".*positive.*"))) {
+            node.data = {variableName: `positive${freshIndex()}`}
+        } else if (node.name.match(new RegExp(".*IF.*"))) {
+            node.data = {variableName: `if${freshIndex()}`}
+        } else if(node.name.match(new RegExp(".*literal.*"))) {
+            node.data = {variableName: `literal${freshIndex()}`}
+        }
+    })
+
     editor.view.resize();
     editor.trigger("process");
-    //AreaPlugin.zoomAt(editor, editor.nodes);
+    AreaPlugin.zoomAt(editor);
 
     return editor;
 }
@@ -95,6 +123,8 @@ export function useRete(): [(HTMLElement: HTMLElement) => void, (constraint: Con
                 ...constraint!,
                 code: code,
             })
+            console.log(editorRef.current?.toJSON());
+            editorRef.current?.clear()
             editorRef.current.destroy();
         }
     }

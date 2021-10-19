@@ -12,7 +12,7 @@ export async function generateCode(engine: Engine, data: Data): Promise<string> 
         component.worker = (node, inputs, outputs) => {
             function add(name: string, expression: any) {
                 if (!expression) {
-                    file += `${name};\n`;
+                    file += `${name}\n`;
                     return;
                 }
 

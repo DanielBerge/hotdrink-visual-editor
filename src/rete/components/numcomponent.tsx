@@ -65,7 +65,7 @@ export class NumComponent extends Rete.Component {
         outputs["variable"] = node.data.variable;
     }
 
-    code(node: NodeData, inputs: WorkerInputs, add: (name: string, expression?: any) => void) { // 'node' parameter as in worker()
-        add(this.variable, node.data.variable); // add a variable with the value "node.data.num"
+    code(node: NodeData, inputs: WorkerInputs, add: (name: string, expression?: any) => void) {
+        add(this.variable, node.data.variable);
     }
 }

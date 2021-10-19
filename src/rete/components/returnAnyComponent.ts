@@ -1,6 +1,7 @@
 import Rete, {Node, NodeEditor} from "rete";
 import {anySocket} from "../sockets";
-import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
+import {InputConnectionData, NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
+import {getInputVariable} from "../reteUtils";
 
 export class ReturnAnyComponent extends Rete.Component {
     editor: NodeEditor;
@@ -12,6 +13,7 @@ export class ReturnAnyComponent extends Rete.Component {
 
     async builder(node: Node): Promise<void> {
         const input = new Rete.Input("any", "Any", anySocket);
+        input.multipleConnections = true;
 
         node.addInput(input);
     }
@@ -20,10 +22,24 @@ export class ReturnAnyComponent extends Rete.Component {
 
     }
 
-    code(node: NodeData, inputs: WorkerInputs, add: (name: string, expression?: any) => void) { // 'node' parameter as in worker()
-        const inpIndex = node.inputs["any"].connections[0].node;
-        const variable = this.editor.nodes[inpIndex - 1].data["variableName"];
+    code(node: NodeData, inputs: WorkerInputs, add: (name: string, expression?: any) => void) {
+        const connections: InputConnectionData[] = node.inputs["any"].connections;
 
-        add(`return ${variable}`);
+        //TODO Istedenfor sjekk for codeblock, sjekk om noen av de tidligere nodene i conection path har codeBlock?
+
+        if (connections[0].output === "codeBlock1") {
+            const variable: unknown | undefined = getInputVariable("any", node, this.editor);
+            add(`return ${variable}`);
+        } else if (connections[0].output === "codeBlock2") {
+            const variable: unknown | undefined = getInputVariable("any", node, this.editor);
+            add(`else return ${variable}`);
+        } else {
+            const variable: unknown | undefined = getInputVariable("any", node, this.editor);
+            if (variable !== undefined) {
+                add(`return ${variable}`);
+            }
+        }
     }
 }
+
+

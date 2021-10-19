@@ -162,13 +162,19 @@ export const Canvas: FC = () => {
                 className="w-2/3 h-2/3 bg-white p-20"
             >
                 <div
+                    className="editor"
                     style={{
-                        width: "20vw",
-                        height: "20vh",
-                        backgroundColor: "white"
+                        width: "100vw",
+                        height: "100vh",
+                        backgroundColor: "white",
                     }}
                     ref={(ref) => ref && setContainer(ref)}
-                />
+                >
+                    <div className="container">
+                        <div className="node-editor"/>
+                    </div>
+                    <div className="dock"/>
+                </div>
             </Modal>
         </div>
     );
