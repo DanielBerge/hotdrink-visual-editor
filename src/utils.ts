@@ -64,3 +64,7 @@ export function runJs(constraints: Constraint[]) {
         console.error(e);
     }
 }
+
+export function upperCaseFirst(string: string): string {
+    return string.slice(0, 1).toUpperCase() + string.slice(1);
+}

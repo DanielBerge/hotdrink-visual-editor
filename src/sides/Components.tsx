@@ -9,7 +9,7 @@ export const Components: FC = (props) => {
 
     return (
         <>
-            <h1>
+            <h1 className="font-bold text-lg">
                 Components
             </h1>
             <div

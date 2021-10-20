@@ -29,7 +29,7 @@ const CurrentContext = React.createContext<any>({});
 interface Elements {
     elements: Elem[];
     addElement: (element: Elem) => void;
-    updateElement: (oldElem: Elem, newElem: Elem) => void;
+    updateElement: (oldElem: Elem, newElem: Elem) => Elem;
     getElementById: (id: string) => Elem | undefined;
     current: Elem;
     setCurrent: (element: Elem) => void;
@@ -45,7 +45,7 @@ const ElementsWrapper: FC = (props) => {
         )
     }
 
-    function updateElement(oldElem: Elem, newElem: Elem) {
+    function updateElement(oldElem: Elem, newElem: Elem): Elem {
         const index = elements.findIndex((elem: Elem) => elem.id === oldElem.id);
         if (index !== -1) {
             elements[index] = newElem;
@@ -53,6 +53,7 @@ const ElementsWrapper: FC = (props) => {
         } else {
             console.warn("Could not find element to update");
         }
+        return newElem;
     }
 
     function getElementById(id: string): Elem | undefined {
