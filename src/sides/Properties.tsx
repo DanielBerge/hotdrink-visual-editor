@@ -14,11 +14,6 @@ export const Properties = () => {
 
     return (
         <>
-            <button
-                className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"
-                onClick={() => setOpen(true)}
-            >Run
-            </button>
             <h1 className={"font-bold text-lg"}>Properties</h1>
             {elements.current && Object.keys(elements.current).map((key: string) => {
                 if (inputs.includes(key)) {
@@ -41,6 +36,11 @@ export const Properties = () => {
                 }
                 return <div key={key}>{upperCaseFirst(key)}: {elements.current[key as keyof Elem]}</div>
             })}
+            <button
+                className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"
+                onClick={() => setOpen(true)}
+            >Run
+            </button>
             <Modal
                 open={open}
                 onBackdropClick={() => setOpen(false)}

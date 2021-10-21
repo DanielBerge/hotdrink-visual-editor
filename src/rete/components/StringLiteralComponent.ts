@@ -16,14 +16,9 @@ export class StringLiteralComponent extends Rete.Component {
     }
 
     worker(node: NodeData, inputs: WorkerInputs, outputs: WorkerOutputs) {
-            outputs["stringKey"] = "";
     }
 
     code(node: NodeData, inputs: WorkerInputs, add: (name: string, expression?: any) => void) {
         const connections: InputConnectionData[] = node.inputs["any"].connections;
-        if (connections[0].output === "codeBlock1") {
-        } else if (connections[0].output === "codeBlock2") {
-            add(`else`);
-        }
     }
 }

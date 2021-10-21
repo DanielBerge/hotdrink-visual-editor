@@ -12,7 +12,6 @@ import {Constraint} from "../types";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
 import DockPlugin from 'rete-dock-plugin';
 import AreaPlugin from 'rete-area-plugin';
-import {IfComponent} from "./components/ifComponent";
 import {StringLiteralComponent} from "./components/StringLiteralComponent";
 
 let index = 0;
@@ -28,12 +27,16 @@ function createEditor(container: HTMLElement): NodeEditor {
     editor.use(ContextMenuPlugin, {
         searchBar: false,
     });
-    // @ts-ignore
-    editor.use(DockPlugin, {
-        container: document.querySelector('.dock'),
-        plugins: [ReactRenderPlugin],
-        itemClass: 'dock-item',
-    });
+    try {
+        // @ts-ignore
+        editor.use(DockPlugin, {
+            container: document.querySelector('.dock'),
+            plugins: [ReactRenderPlugin],
+            itemClass: 'dock-item',
+        });
+    } catch (e) {
+        console.error(e);
+    }
     return editor;
 }
 
@@ -51,18 +54,19 @@ async function initRete(container: HTMLElement, constraint: Constraint, setCode:
     const stringComponent: ReadOnlyVarComponent = new ReadOnlyVarComponent("String", stringSocket, "num");
     const positiveComponent: IsPositiveComponent = new IsPositiveComponent(editor);
     const returnBoolComponent: ReturnAnyComponent = new ReturnAnyComponent(editor);
-    const ifComponent: IfComponent = new IfComponent(editor);
     const stringLiteralComponent: StringLiteralComponent = new StringLiteralComponent();
-    const components: Component[] = [numComponent, positiveComponent, returnBoolComponent, stringComponent, ifComponent, stringLiteralComponent]
+    const components: Component[] = [numComponent, positiveComponent, returnBoolComponent, stringComponent, stringLiteralComponent]
 
     components.forEach((c) => {
         editor.register(c);
         engine.register(c);
     })
 
+    console.log(constraint);
     if (constraint.rete !== undefined) {
         await editor.fromJSON(constraint.rete);
     } else {
+        console.log("?");
         editor.addNode(await newNode(100, 200, constraint.fromId, numComponent));
         editor.addNode(await newNode(900, 200, "", returnBoolComponent));
     }
@@ -131,6 +135,7 @@ export function useRete(): [(HTMLElement: HTMLElement) => void, (constraint: Con
             console.log(editorRef.current?.toJSON());
             editorRef.current?.clear()
             editorRef.current.destroy();
+            setConstraint(undefined);
         }
     }
 

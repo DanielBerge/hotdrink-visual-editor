@@ -22,17 +22,9 @@ export class ReturnAnyComponent extends Rete.Component {
     }
 
     code(node: NodeData, inputs: WorkerInputs, add: (name: string, expression?: any) => void) {
-        const connections: InputConnectionData[] = node.inputs["any"].connections;
-
-        //TODO Istedenfor sjekk for codeblock, sjekk om noen av de tidligere nodene i conection path har codeBlock?
-
-        if (connections[0].output === "stringKey") {
-            add(`return "string"`);
-        } else {
-            const variable: unknown | undefined = getInputVariable("any", node, this.editor);
-            if (variable !== undefined) {
-                add(`return ${variable}`);
-            }
+        const variable: unknown | undefined = getInputVariable("any", node, this.editor);
+        if (variable !== undefined) {
+            add(`return ${variable}`);
         }
     }
 }

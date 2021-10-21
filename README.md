@@ -1,13 +1,14 @@
 # Getting Started with Create React App
 
 ## Future features
+* Exporting and importing project
 * Choose between code and visual editor for constraints
 * Hide/show constraints
 * Export to HTML
 * Export to REACT
 * Make HTML run mode prettier
 * Visualize constraint flow in HTML run mode
-* Allow elements to change width and height by dragging edges
+* Allow elements to change width and height by dragging edges [Transformer react konva](https://konvajs.org/docs/react/Transformer.html)
 * Make the arrow of constraints more visually pleasing
 
 ## Available Scripts

@@ -1,24 +1,26 @@
 import React, {FC, useState} from 'react';
 import {Arrow, Group, Layer, Line, Rect, Stage, Text} from 'react-konva';
 import {KonvaEventObject} from "konva/lib/Node";
-import {Modal} from "@mui/material";
 import {useRete} from "../rete/useRete";
 import {Constraint, Elem, ElemType} from "../types";
 import {useElements} from "../wrappers/ElementsWrapper";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
+import {ConstraintEditor} from "./ConstraintEditor";
 
 let constraintIds: Array<string> = [];
 
 export const Canvas: FC = () => {
-    const [setContainer, setConstraint, onVisualClose] = useRete();
-    const [open, setOpen] = useState(false);
     const elements = useElements();
     const constraints = useConstraints();
+
+    const [setContainer, setConstraint, onVisualClose] = useRete();
+    const [open, setOpen] = useState(false);
 
     function onClose() {
         setOpen(false);
         onVisualClose();
     }
+
 
     function onClick(element: Elem) {
         if (constraints.newConstraint) {
@@ -155,27 +157,11 @@ export const Canvas: FC = () => {
                     })}
                 </Layer>
             </Stage>
-            <Modal
-                open={open}
+            <ConstraintEditor
                 onClose={onClose}
-                color="white"
-                className="w-2/3 h-2/3 bg-white p-20"
-            >
-                <div
-                    className="editor"
-                    style={{
-                        width: "100vw",
-                        height: "100vh",
-                        backgroundColor: "white",
-                    }}
-                    ref={(ref) => ref && setContainer(ref)}
-                >
-                    <div className="container">
-                        <div className="node-editor"/>
-                    </div>
-                    <div className="dock"/>
-                </div>
-            </Modal>
+                open={open}
+                setContainer={setContainer}
+            />
         </div>
     );
 };
