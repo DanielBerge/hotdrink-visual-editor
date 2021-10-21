@@ -25,7 +25,7 @@ function createEditor(container: HTMLElement): NodeEditor {
     editor.use(ConnectionPlugin);
     editor.use(ReactRenderPlugin);
     editor.use(ContextMenuPlugin, {
-        searchBar: false,
+        searchBar: true,
     });
     try {
         // @ts-ignore
@@ -36,6 +36,7 @@ function createEditor(container: HTMLElement): NodeEditor {
         });
     } catch (e) {
         console.error(e);
+        return editor;
     }
     return editor;
 }
@@ -62,11 +63,9 @@ async function initRete(container: HTMLElement, constraint: Constraint, setCode:
         engine.register(c);
     })
 
-    console.log(constraint);
     if (constraint.rete !== undefined) {
         await editor.fromJSON(constraint.rete);
     } else {
-        console.log("?");
         editor.addNode(await newNode(100, 200, constraint.fromId, numComponent));
         editor.addNode(await newNode(900, 200, "", returnBoolComponent));
     }
@@ -79,8 +78,6 @@ async function initRete(container: HTMLElement, constraint: Constraint, setCode:
             console.log(sourceCode);
             console.log(editor.nodes);
             setCode(await generateCode(engine, editor.toJSON()));
-            //await engine.abort();
-            //await engine.process(editor.toJSON());
         }
     );
 
@@ -95,8 +92,6 @@ async function initRete(container: HTMLElement, constraint: Constraint, setCode:
     })
 
     editor.view.resize();
-    //editor.trigger("process");
-    AreaPlugin.zoomAt(editor);
 
     return editor;
 }
@@ -113,6 +108,7 @@ export function useRete(): [(HTMLElement: HTMLElement) => void, (constraint: Con
         if (container && constraint) {
             initRete(container, constraint, setCode).then((value: NodeEditor) => {
                 editorRef.current = value;
+                AreaPlugin.zoomAt(editorRef.current);
             });
         }
     }, [container, constraint]);

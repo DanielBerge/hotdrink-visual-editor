@@ -27,11 +27,8 @@ export const ConstraintEditor: FC<Props> = ({open, onClose, setContainer}) => {
             <button className="p-5" onClick={() => setEditorType(EditorType.VISUAL)}>Visual</button>
             <button className="p-5" onClick={() => setEditorType(EditorType.CODE)}>Code</button>
             {editorType === EditorType.VISUAL ? <div
-                    className="editor"
+                    className="editor bg-white"
                     ref={(ref) => ref && setContainer(ref)}
-                    style={{
-                        backgroundColor: "white",
-                    }}
                 >
                     <div className="container">
                         <div className="node-editor"/>
