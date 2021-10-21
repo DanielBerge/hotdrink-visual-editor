@@ -52,7 +52,6 @@ export const Canvas: FC = () => {
         elements.setCurrent(elem);
     }
 
-    /// test ut component([«someString»])
     return (
         <div className="">
             <Stage

@@ -12,7 +12,6 @@ import {Constraint} from "../types";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
 import DockPlugin from 'rete-dock-plugin';
 import AreaPlugin from 'rete-area-plugin';
-import {StringLiteralComponent} from "./components/StringLiteralComponent";
 
 let index = 0;
 
@@ -55,8 +54,7 @@ async function initRete(container: HTMLElement, constraint: Constraint, setCode:
     const stringComponent: ReadOnlyVarComponent = new ReadOnlyVarComponent("String", stringSocket, "num");
     const positiveComponent: IsPositiveComponent = new IsPositiveComponent(editor);
     const returnBoolComponent: ReturnAnyComponent = new ReturnAnyComponent(editor);
-    const stringLiteralComponent: StringLiteralComponent = new StringLiteralComponent();
-    const components: Component[] = [numComponent, positiveComponent, returnBoolComponent, stringComponent, stringLiteralComponent]
+    const components: Component[] = [numComponent, positiveComponent, returnBoolComponent, stringComponent]
 
     components.forEach((c) => {
         editor.register(c);
@@ -122,14 +120,14 @@ export function useRete(): [(HTMLElement: HTMLElement) => void, (constraint: Con
     }, []);
 
     function onClose() {
-        if (editorRef.current) {
-            constraints.updateConstraint(constraint!, {
-                ...constraint!,
+        if (editorRef.current && constraint) {
+            constraints.updateConstraint(constraint, {
+                ...constraint,
                 code: code,
-                rete: editorRef.current?.toJSON(),
+                rete: editorRef.current.toJSON(),
             })
-            console.log(editorRef.current?.toJSON());
-            editorRef.current?.clear()
+            console.log(editorRef.current.toJSON());
+            editorRef.current.clear()
             editorRef.current.destroy();
             setConstraint(undefined);
         }
