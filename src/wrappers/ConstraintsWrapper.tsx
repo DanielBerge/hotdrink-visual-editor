@@ -16,7 +16,7 @@ const NewConstraintContext = React.createContext<any>(false);
 interface Constraints {
     constraints: Constraint[];
     setConstraints: (constraints: Constraint[]) => void;
-    updateConstraint: (oldConstraint: Constraint, newConstraint: Constraint) => void
+    updateConstraint: (oldConstraint: Constraint, newConstraint: Constraint) => Constraint;
     newConstraint: boolean;
     setNewConstraint: (newConstraint: boolean) => void;
 }
@@ -33,6 +33,7 @@ const ConstraintsWrapper: FC = (props) => {
         } else {
             console.warn("Could not find element to update");
         }
+        return newConstraint;
     }
 
     return (
@@ -46,7 +47,7 @@ const ConstraintsWrapper: FC = (props) => {
 
 function useConstraints(): Constraints {
     const {constraints, setConstraints, updateConstraint} = useContext(ConstraintContext);
-    const {newConstraint, setNewConstraint,} = useContext(NewConstraintContext);
+    const {newConstraint, setNewConstraint} = useContext(NewConstraintContext);
 
     return {
         constraints,
