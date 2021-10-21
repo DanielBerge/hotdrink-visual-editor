@@ -26,17 +26,20 @@ export const ConstraintEditor: FC<Props> = ({open, onClose, setContainer}) => {
         >
             <button className="p-5" onClick={() => setEditorType(EditorType.VISUAL)}>Visual</button>
             <button className="p-5" onClick={() => setEditorType(EditorType.CODE)}>Code</button>
-            {editorType === EditorType.VISUAL ? <div
-                    className="editor bg-white"
-                    ref={(ref) => ref && setContainer(ref)}
-                >
-                    <div className="container">
-                        <div className="node-editor"/>
-                    </div>
-                    <div className="dock"/>
+            <div
+                style={editorType === EditorType.VISUAL ? {} : {display: 'none'}}
+                className="editor bg-white"
+                ref={(ref) => ref && setContainer(ref)}
+            >
+                <div className="container">
+                    <div className="node-editor"/>
                 </div>
-                : <div>Monaco</div>
-            }
+                <div className="dock"/>
+            </div>
+            <div
+                style={editorType === EditorType.CODE ? {} : {display: 'none'}}
+            >Monaco
+            </div>
         </div>
     </Modal>
 }
