@@ -10,6 +10,7 @@ export const CodeEditor = () => {
         if (monaco) {
         }
     }, [monaco]);
+
     function handleBeforeMount(monaco: Monaco) {
         monaco.editor.EditorOptions.formatOnType.defaultValue = true;
     }
@@ -17,6 +18,7 @@ export const CodeEditor = () => {
     function handleOnMount(editor: monaco.editor.IStandaloneCodeEditor) {
         editorRef.current = editor;
     }
+
     function handleEditorChange(value: string | undefined, _: monaco.editor.IModelContentChangedEvent) {
 
     }
