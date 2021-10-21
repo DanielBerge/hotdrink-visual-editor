@@ -1,13 +1,13 @@
 import Rete, {Node, NodeEditor} from "rete";
 import {anySocket} from "../sockets";
-import {InputConnectionData, NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
+import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
 import {getInputVariable} from "../reteUtils";
 
 export class ReturnAnyComponent extends Rete.Component {
     editor: NodeEditor;
 
     constructor(editor: NodeEditor) {
-        super("Return any");
+        super("Output");
         this.editor = editor;
     }
 

@@ -4,15 +4,17 @@ import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
 export class ReadOnlyVarComponent extends Rete.Component {
     private readonly variable: string;
     private readonly socket: Socket;
+    private readonly socketName: string;
 
-    constructor(name: string, socket: Socket, variable: string) {
-        super(name);
+    constructor(socketName: string, socket: Socket, variable: string) {
+        super(`Input variable: ${socketName}`);
+        this.socketName = socketName;
         this.variable = variable;
         this.socket = socket;
     }
 
     async builder(node: Node): Promise<void> {
-        const output = new Rete.Output(this.variable, this.name, this.socket);
+        const output = new Rete.Output(this.variable, this.socketName, this.socket);
         node.addOutput(output);
     }
 
