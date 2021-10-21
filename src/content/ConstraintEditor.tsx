@@ -1,5 +1,6 @@
 import {Modal} from "@mui/material";
 import React, {FC, useState} from "react";
+import {CodeEditor} from "./CodeEditor";
 
 interface Props {
     open: boolean;
@@ -38,7 +39,8 @@ export const ConstraintEditor: FC<Props> = ({open, onClose, setContainer}) => {
             </div>
             <div
                 style={editorType === EditorType.CODE ? {} : {display: 'none'}}
-            >Monaco
+            >
+                <CodeEditor/>
             </div>
         </div>
     </Modal>
