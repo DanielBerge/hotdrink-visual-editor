@@ -1,6 +1,6 @@
-import Editor, {Monaco, useMonaco} from "@monaco-editor/react";
+import Editor, {Monaco} from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
-import {useEffect, useRef} from "react";
+import {useRef} from "react";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
 import {useEditor} from "../wrappers/EditorWrapper";
 import {EditorType} from "../types";
@@ -8,13 +8,7 @@ import {EditorType} from "../types";
 export const CodeEditor = () => {
     const constraints = useConstraints();
     const editor = useEditor();
-    const monaco = useMonaco();
     const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
-
-    useEffect(() => {
-        if (monaco) {
-        }
-    }, [monaco]);
 
     function handleBeforeMount(monaco: Monaco) {
         monaco.editor.EditorOptions.formatOnType.defaultValue = true;
@@ -26,19 +20,20 @@ export const CodeEditor = () => {
 
     function handleEditorChange(value: string | undefined, _: monaco.editor.IModelContentChangedEvent) {
         if (constraints.current && editor.type === EditorType.CODE) {
-            console.log(
-                constraints.updateConstraint(constraints.current, {
-                    ...constraints.current,
-                    code: value ?? "",
-                    type: EditorType.CODE,
-                    rete: undefined,
-                })
-            )
+            constraints.updateConstraint(constraints.current, {
+                ...constraints.current,
+                code: value ?? "",
+                type: EditorType.CODE,
+                rete: undefined,
+            });
         }
     }
 
     return (
-        <div className="flex h-96">
+        <div className="flex h-96 flex-col">
+            <p
+                className="p-2"
+            >Variables in scope: {constraints.current?.fromId}</p>
             <Editor
                 height="100%"
                 defaultLanguage={"javascript"}
