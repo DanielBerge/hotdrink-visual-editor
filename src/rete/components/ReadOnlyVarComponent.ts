@@ -1,5 +1,6 @@
 import Rete, {Node, Socket} from "rete";
 import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
+import {CustomNode} from "../CustomNode";
 
 export class ReadOnlyVarComponent extends Rete.Component {
     private readonly variable: string;
@@ -11,6 +12,8 @@ export class ReadOnlyVarComponent extends Rete.Component {
         this.socketName = socketName;
         this.variable = variable;
         this.socket = socket;
+        // @ts-ignore
+        this.data.component = CustomNode;
     }
 
     async builder(node: Node): Promise<void> {

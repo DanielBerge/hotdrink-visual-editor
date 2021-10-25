@@ -2,6 +2,7 @@ import Rete, {Node, NodeEditor} from "rete";
 import {anySocket} from "../sockets";
 import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
 import {getInputVariable} from "../reteUtils";
+import {CustomNode} from "../CustomNode";
 
 export class ReturnAnyComponent extends Rete.Component {
     editor: NodeEditor;
@@ -9,6 +10,8 @@ export class ReturnAnyComponent extends Rete.Component {
     constructor(editor: NodeEditor) {
         super("Output");
         this.editor = editor;
+        // @ts-ignore
+        this.data.component = CustomNode;
     }
 
     async builder(node: Node): Promise<void> {

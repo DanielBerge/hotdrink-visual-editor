@@ -2,6 +2,7 @@ import Rete, {Node, NodeEditor} from "rete";
 import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
 import {boolSocket, numSocket} from "../sockets";
 import {getInputVariable} from "../reteUtils";
+import {CustomNode} from "../CustomNode";
 
 
 export class IsPositiveComponent extends Rete.Component {
@@ -10,6 +11,8 @@ export class IsPositiveComponent extends Rete.Component {
     constructor(editor: NodeEditor) {
         super("Number is positive");
         this.editor = editor;
+        // @ts-ignore
+        this.data.component = CustomNode;
     }
 
     async builder(node: Node): Promise<void> {

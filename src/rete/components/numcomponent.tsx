@@ -1,6 +1,7 @@
 import Rete, {Node} from "rete";
 import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
 import {numSocket} from "../sockets";
+import {CustomNode} from "../CustomNode";
 
 /**
  class NumControl extends Rete.Control {
@@ -53,6 +54,8 @@ export class NumComponent extends Rete.Component {
     constructor(variable: string) {
         super("Number");
         this.variable = variable;
+        // @ts-ignore
+        this.data.component = CustomNode;
     }
 
     async builder(node: Node): Promise<void> {
