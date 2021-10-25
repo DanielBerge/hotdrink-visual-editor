@@ -12,6 +12,7 @@ const initialConstraints: Constraint[] = [
 
 const ConstraintContext = React.createContext<any>({})
 const NewConstraintContext = React.createContext<any>(false);
+const CurrentContext = React.createContext<any>({});
 
 interface Constraints {
     constraints: Constraint[];
@@ -19,11 +20,14 @@ interface Constraints {
     updateConstraint: (oldConstraint: Constraint, newConstraint: Constraint) => Constraint;
     newConstraint: boolean;
     setNewConstraint: (newConstraint: boolean) => void;
+    current: Constraint | undefined;
+    setCurrent: (newConstraint: Constraint | undefined) => void;
 }
 
 const ConstraintsWrapper: FC = (props) => {
     const [constraints, setConstraints] = useState(initialConstraints);
     const [newConstraint, setNewConstraint] = useState(false);
+    const [current, setCurrent] = useState(undefined);
 
     function updateConstraint(oldConstraint: Constraint, newConstraint: Constraint) {
         const index = constraints.findIndex((constraint) => constraint.fromId === oldConstraint.fromId && constraint.toId === oldConstraint.toId);
@@ -39,7 +43,9 @@ const ConstraintsWrapper: FC = (props) => {
     return (
         <ConstraintContext.Provider value={{constraints, setConstraints, updateConstraint}}>
             <NewConstraintContext.Provider value={{newConstraint, setNewConstraint}}>
-                {props.children}
+                <CurrentContext.Provider value={{current, setCurrent}}>
+                    {props.children}
+                </CurrentContext.Provider>
             </NewConstraintContext.Provider>
         </ConstraintContext.Provider>
     )
@@ -48,6 +54,7 @@ const ConstraintsWrapper: FC = (props) => {
 function useConstraints(): Constraints {
     const {constraints, setConstraints, updateConstraint} = useContext(ConstraintContext);
     const {newConstraint, setNewConstraint} = useContext(NewConstraintContext);
+    const {current, setCurrent} = useContext(CurrentContext);
 
     return {
         constraints,
@@ -55,6 +62,8 @@ function useConstraints(): Constraints {
         updateConstraint,
         newConstraint,
         setNewConstraint,
+        current,
+        setCurrent,
     }
 }
 

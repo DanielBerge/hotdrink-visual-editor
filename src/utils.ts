@@ -4,6 +4,29 @@ import {Constraint} from "./types";
 export const idToValue = new Map();
 export const valueToId = new Map();
 
+/**
+
+ Binds a DOM element to a variable.
+
+ This function binds a DOM element to a variable. When
+ the variable changes, the DOM element's attribute is updated
+ and vise versa.
+
+ Parameters
+ ----------
+ @param element : HTMLElement
+ The DOM element to bind to.
+ @param value : VariableReference
+ The variable to bind to.
+ @param attribute : string
+ The name of the attribute to bind to.
+
+ Returns
+ -------
+ unsubscribe : function
+ A function that will unbind the DOM element from the variable.
+
+ */
 export function DOMBind(element: HTMLElement | null, value: VariableReference<any> | undefined, attribute: string) {
     if (element === null) {
         throw Error("DOM Element is null");
@@ -65,6 +88,13 @@ export function runJs(constraints: Constraint[]) {
     }
 }
 
+/**
+ * Converts the first character of a string to upper case.
+ *
+ * @param string - The string to convert.
+ *
+ * @returns The converted string.
+ */
 export function upperCaseFirst(string: string): string {
     return string.slice(0, 1).toUpperCase() + string.slice(1);
 }
