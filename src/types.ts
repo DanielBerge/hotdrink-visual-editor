@@ -12,8 +12,8 @@ export enum InputType {
 }
 
 export enum EditorType {
-    CODE,
-    VISUAL
+    CODE = "CODE",
+    VISUAL = "VISUAL",
 }
 
 export interface Elem {

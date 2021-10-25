@@ -2,7 +2,6 @@
 
 ## Future features
 * Exporting and importing project
-* Choose between code and visual editor for constraints
 * Hide/show constraints
 * Export to HTML
 * Export to REACT
