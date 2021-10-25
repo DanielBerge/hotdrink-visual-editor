@@ -1,8 +1,13 @@
 import Editor, {Monaco, useMonaco} from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
 import {useEffect, useRef} from "react";
+import {useConstraints} from "../wrappers/ConstraintsWrapper";
+import {useEditor} from "../wrappers/EditorWrapper";
+import {EditorType} from "../types";
 
 export const CodeEditor = () => {
+    const constraints = useConstraints();
+    const editor = useEditor();
     const monaco = useMonaco();
     const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
@@ -20,7 +25,16 @@ export const CodeEditor = () => {
     }
 
     function handleEditorChange(value: string | undefined, _: monaco.editor.IModelContentChangedEvent) {
-
+        if (constraints.current && editor.type === EditorType.CODE) {
+            console.log(
+                constraints.updateConstraint(constraints.current, {
+                    ...constraints.current,
+                    code: value ?? "",
+                    type: EditorType.CODE,
+                    rete: undefined,
+                })
+            )
+        }
     }
 
     return (
@@ -28,7 +42,7 @@ export const CodeEditor = () => {
             <Editor
                 height="100%"
                 defaultLanguage={"javascript"}
-                defaultValue={""}
+                defaultValue={constraints.current?.code ?? ""}
                 beforeMount={handleBeforeMount}
                 onChange={handleEditorChange}
                 onMount={handleOnMount}

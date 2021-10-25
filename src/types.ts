@@ -11,6 +11,11 @@ export enum InputType {
     Number = "number",
 }
 
+export enum EditorType {
+    CODE,
+    VISUAL
+}
+
 export interface Elem {
     height: number;
     width: number;
@@ -26,5 +31,6 @@ export interface Constraint {
     fromId: string;
     toId: string;
     code: string;
+    type: EditorType;
     rete?: Data;
 }

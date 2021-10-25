@@ -8,10 +8,11 @@ import ContextMenuPlugin from 'rete-context-menu-plugin';
 import {ReturnAnyComponent} from "./components/returnAnyComponent";
 import {ReadOnlyVarComponent} from "./components/ReadOnlyVarComponent";
 import {numSocket, stringSocket} from "./sockets";
-import {Constraint} from "../types";
+import {Constraint, EditorType} from "../types";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
 import DockPlugin from 'rete-dock-plugin';
 import AreaPlugin from 'rete-area-plugin';
+import {useEditor} from "../wrappers/EditorWrapper";
 
 let index = 0;
 
@@ -97,13 +98,13 @@ async function initRete(container: HTMLElement, constraint: Constraint, setCode:
 
 export function useRete(): [(HTMLElement: HTMLElement) => void, any] {
     const constraints = useConstraints();
+    const editor = useEditor();
     const [container, setContainer] = useState<HTMLElement | null>(null);
     const editorRef = useRef<NodeEditor>();
-    const [code, setCode] = useState(constraints.current?.code ?? "");
 
     useEffect(() => {
         if (container && constraints.current) {
-            initRete(container, constraints.current, setCode).then((value: NodeEditor) => {
+            initRete(container, constraints.current, editor.setCode).then((value: NodeEditor) => {
                 editorRef.current = value;
                 AreaPlugin.zoomAt(editorRef.current);
             });
@@ -119,17 +120,15 @@ export function useRete(): [(HTMLElement: HTMLElement) => void, any] {
     }, []);
 
     function onClose() {
-        if (editorRef.current && constraints.current) {
+        if (editorRef.current && constraints.current && editor.type === EditorType.VISUAL) {
             constraints.updateConstraint(constraints.current, {
                 ...constraints.current,
-                code: code,
+                code: editor.code,
+                type: EditorType.VISUAL,
                 rete: editorRef.current.toJSON(),
             })
-            console.log(editorRef.current.toJSON());
-            editorRef.current.clear()
-            editorRef.current.destroy();
-            constraints.setCurrent(undefined);
         }
+        constraints.setCurrent(undefined);
     }
 
     return [setContainer, onClose];

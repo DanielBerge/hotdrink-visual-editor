@@ -2,7 +2,7 @@ import React, {FC, useState} from 'react';
 import {Arrow, Group, Layer, Line, Rect, Stage, Text} from 'react-konva';
 import {KonvaEventObject} from "konva/lib/Node";
 import {useRete} from "../rete/useRete";
-import {Constraint, Elem, ElemType} from "../types";
+import {Constraint, EditorType, Elem, ElemType} from "../types";
 import {useElements} from "../wrappers/ElementsWrapper";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
 import {ConstraintEditor} from "./ConstraintEditor";
@@ -34,6 +34,7 @@ export const Canvas: FC = () => {
                     {
                         fromId: constraintIds[0],
                         toId: constraintIds[1],
+                        type: EditorType.VISUAL,
                         code: "",
                     }
                 ])

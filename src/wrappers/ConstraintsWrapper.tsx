@@ -1,10 +1,11 @@
 import React, {FC, useContext, useState} from "react";
-import {Constraint} from "../types";
+import {Constraint, EditorType} from "../types";
 
 const initialConstraints: Constraint[] = [
     {
         fromId: "initial",
         toId: "initial2",
+        type: EditorType.VISUAL,
         code: "const positive = initial >= 0;\n" +
             "return positive;"
     }
