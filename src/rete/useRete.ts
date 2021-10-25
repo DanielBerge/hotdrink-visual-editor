@@ -95,21 +95,20 @@ async function initRete(container: HTMLElement, constraint: Constraint, setCode:
 }
 
 
-export function useRete(): [(HTMLElement: HTMLElement) => void, (constraint: Constraint) => void, any] {
+export function useRete(): [(HTMLElement: HTMLElement) => void, any] {
     const constraints = useConstraints();
-    const [constraint, setConstraint] = useState<Constraint | undefined>(undefined);
     const [container, setContainer] = useState<HTMLElement | null>(null);
     const editorRef = useRef<NodeEditor>();
-    const [code, setCode] = useState("");
+    const [code, setCode] = useState(constraints.current?.code ?? "");
 
     useEffect(() => {
-        if (container && constraint) {
-            initRete(container, constraint, setCode).then((value: NodeEditor) => {
+        if (container && constraints.current) {
+            initRete(container, constraints.current, setCode).then((value: NodeEditor) => {
                 editorRef.current = value;
                 AreaPlugin.zoomAt(editorRef.current);
             });
         }
-    }, [container, constraint]);
+    }, [container, constraints.current]);
 
     useEffect(() => {
         return () => {
@@ -120,18 +119,18 @@ export function useRete(): [(HTMLElement: HTMLElement) => void, (constraint: Con
     }, []);
 
     function onClose() {
-        if (editorRef.current && constraint) {
-            constraints.updateConstraint(constraint, {
-                ...constraint,
+        if (editorRef.current && constraints.current) {
+            constraints.updateConstraint(constraints.current, {
+                ...constraints.current,
                 code: code,
                 rete: editorRef.current.toJSON(),
             })
             console.log(editorRef.current.toJSON());
             editorRef.current.clear()
             editorRef.current.destroy();
-            setConstraint(undefined);
+            constraints.setCurrent(undefined);
         }
     }
 
-    return [setContainer, setConstraint, onClose];
+    return [setContainer, onClose];
 }

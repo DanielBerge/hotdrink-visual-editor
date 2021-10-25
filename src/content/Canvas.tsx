@@ -13,7 +13,7 @@ export const Canvas: FC = () => {
     const elements = useElements();
     const constraints = useConstraints();
 
-    const [setContainer, setConstraint, onVisualClose] = useRete();
+    const [setContainer, onVisualClose] = useRete();
     const [open, setOpen] = useState(false);
 
     function onClose() {
@@ -72,7 +72,7 @@ export const Canvas: FC = () => {
                                 key={from.id + to.id}
                                 onClick={() => {
                                     setOpen(true)
-                                    setConstraint(constraint);
+                                    constraints.setCurrent(constraint);
                                 }}
                             >
                                 <Line
