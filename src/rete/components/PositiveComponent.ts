@@ -16,7 +16,7 @@ export class IsPositiveComponent extends Rete.Component {
     }
 
     async builder(node: Node): Promise<void> {
-        const out = new Rete.Output("bool", "Boolean", boolSocket);
+        const out = new Rete.Output("bool", "True/False", boolSocket);
         const inp = new Rete.Input("numKey", "Number", numSocket);
 
         node.addInput(inp).addOutput(out);

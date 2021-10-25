@@ -47,7 +47,7 @@ async function newNode(x: number, y: number, variableName: string, component: Co
     return node;
 }
 
-async function initRete(container: HTMLElement, constraint: Constraint, setCode: Function): Promise<NodeEditor> {
+async function initRete(container: HTMLElement, constraint: Constraint, onCodeUpdate: Function): Promise<NodeEditor> {
     const engine: Engine = new Rete.Engine("demo@0.1.0");
     const editor: NodeEditor = createEditor(container);
 
@@ -74,9 +74,7 @@ async function initRete(container: HTMLElement, constraint: Constraint, setCode:
         "process noderemoved connectioncreated connectionremoved",
         async () => {
             const sourceCode: string = await generateCode(engine, editor.toJSON());
-            console.log(sourceCode);
-            console.log(editor.nodes);
-            setCode(await generateCode(engine, editor.toJSON()));
+            onCodeUpdate(sourceCode);
         }
     );
 
@@ -102,9 +100,21 @@ export function useRete(): [(HTMLElement: HTMLElement) => void, any] {
     const [container, setContainer] = useState<HTMLElement | null>(null);
     const editorRef = useRef<NodeEditor>();
 
+    function onCodeUpdate(code: string) {
+        editor.setCode(code);
+        if (constraints.current) {
+            constraints.updateConstraint(constraints.current, {
+                ...constraints.current,
+                code: editor.code,
+                type: EditorType.VISUAL,
+                rete: editorRef.current?.toJSON(),
+            })
+        }
+    }
+
     useEffect(() => {
         if (container && constraints.current) {
-            initRete(container, constraints.current, editor.setCode).then((value: NodeEditor) => {
+            initRete(container, constraints.current, onCodeUpdate).then((value: NodeEditor) => {
                 editorRef.current = value;
                 AreaPlugin.zoomAt(editorRef.current);
             });
@@ -118,6 +128,7 @@ export function useRete(): [(HTMLElement: HTMLElement) => void, any] {
             }
         };
     }, []);
+
 
     function onClose() {
         if (editorRef.current && constraints.current && editor.type === EditorType.VISUAL) {
