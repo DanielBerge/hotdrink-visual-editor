@@ -98,3 +98,14 @@ export function runJs(constraints: Constraint[]) {
 export function upperCaseFirst(string: string): string {
     return string.slice(0, 1).toUpperCase() + string.slice(1);
 }
+
+/**
+ * Converts the first character of a string to lower case.
+ *
+ * @param string - The string to convert.
+ *
+ * @returns The converted string.
+ */
+export function lowerCaseFirst(string: string): string {
+    return string.slice(0, 1).toLowerCase() + string.slice(1);
+}

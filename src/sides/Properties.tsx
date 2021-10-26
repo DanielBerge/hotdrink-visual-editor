@@ -4,7 +4,7 @@ import {Modal} from "@mui/material";
 import {HTMLView} from "../content/HTMLView";
 import {useElements} from "../wrappers/ElementsWrapper";
 import {Elem, InputType} from "../types";
-import {upperCaseFirst} from "../utils";
+import {lowerCaseFirst, upperCaseFirst} from "../utils";
 
 export const Properties = () => {
     const elements = useElements()
@@ -49,8 +49,9 @@ export const Properties = () => {
                                     );
                                 }}
                             >
-                                <option value="text">Text</option>
-                                <option value="number">Number</option>
+                                {Object.keys(InputType).map((type) => {
+                                    return <option value={lowerCaseFirst(type)}>{type}</option>
+                                })}
                             </select>
                         </div>
                     );
