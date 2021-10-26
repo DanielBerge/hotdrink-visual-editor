@@ -36,20 +36,23 @@ export const Properties = () => {
                 }
                 if (key === "subType") {
                     return (
-                        <select
-                            value={elements.current[key as keyof Elem]}
-                            onChange={(e) => {
-                                elements.setCurrent(
-                                    elements.updateElement(elements.current, {
-                                        ...elements.current,
-                                        [key as keyof InputType]: e.target.value,
-                                    })
-                                );
-                            }}
-                        >
-                            <option value="text">Text</option>
-                            <option value="number">Number</option>
-                        </select>
+                        <div className="flex">
+                            <div>{upperCaseFirst(key)}: </div>
+                            <select
+                                value={elements.current[key as keyof Elem]}
+                                onChange={(e) => {
+                                    elements.setCurrent(
+                                        elements.updateElement(elements.current, {
+                                            ...elements.current,
+                                            [key as keyof InputType]: e.target.value,
+                                        })
+                                    );
+                                }}
+                            >
+                                <option value="text">Text</option>
+                                <option value="number">Number</option>
+                            </select>
+                        </div>
                     );
                 }
                 return <div key={key}>{upperCaseFirst(key)}: {elements.current[key as keyof Elem]}</div>

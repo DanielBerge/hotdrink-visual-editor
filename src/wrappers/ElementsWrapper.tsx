@@ -18,6 +18,7 @@ const initialElements: Elem[] = [
         x: 200,
         y: 300,
         type: ElemType.Input,
+        subType: InputType.Text,
         value: "value2",
         id: "initial2",
     }
