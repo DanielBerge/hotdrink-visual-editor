@@ -8,7 +8,7 @@ export class ReadOnlyVarComponent extends Rete.Component {
     private readonly socketName: string;
 
     constructor(socketName: string, socket: Socket, variable: string) {
-        super(`Input variable: ${socketName}`);
+        super(`Input: ${socketName}`);
         this.socketName = socketName;
         this.variable = variable;
         this.socket = socket;

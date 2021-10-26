@@ -9,7 +9,8 @@
 * Visualize constraint flow in HTML run mode
 * Allow elements to change width and height by dragging edges [Transformer react konva](https://konvajs.org/docs/react/Transformer.html)
 * Make the arrow of constraints more visually pleasing
-* Change theme of rete components
+* Endre react render plugin til å virke med hooks?
+* Dropdown for valg av input type til input fields
 
 ## Available Scripts
 

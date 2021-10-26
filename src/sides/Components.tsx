@@ -22,29 +22,12 @@ export const Components: FC = (props) => {
                         x: event.clientX,
                         y: event.clientY,
                         type: ElemType.Input,
-                        subType: InputType.Number,
-                        value: "value",
-                        id: `id${freshId()}`,
-                    })
-                })}
-            >Input number
-            </div>
-            <div
-                draggable
-                className="w-24 bg-white border border-black p-3 m-1"
-                onDragEnd={(event => {
-                    elements.addElement({
-                        height: 50,
-                        width: 200,
-                        x: event.clientX,
-                        y: event.clientY,
-                        type: ElemType.Input,
                         subType: InputType.Text,
                         value: "value",
                         id: `id${freshId()}`,
                     })
                 })}
-            >Input text
+            >Input
             </div>
             <div
                 draggable

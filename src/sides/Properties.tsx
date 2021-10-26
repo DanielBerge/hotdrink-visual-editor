@@ -3,7 +3,7 @@ import {exportToHTML} from "../exports/exportToHTML";
 import {Modal} from "@mui/material";
 import {HTMLView} from "../content/HTMLView";
 import {useElements} from "../wrappers/ElementsWrapper";
-import {Elem} from "../types";
+import {Elem, InputType} from "../types";
 import {upperCaseFirst} from "../utils";
 
 export const Properties = () => {
@@ -33,6 +33,24 @@ export const Properties = () => {
                             />
                         </div>
                     )
+                }
+                if (key === "subType") {
+                    return (
+                        <select
+                            value={elements.current[key as keyof Elem]}
+                            onChange={(e) => {
+                                elements.setCurrent(
+                                    elements.updateElement(elements.current, {
+                                        ...elements.current,
+                                        [key as keyof InputType]: e.target.value,
+                                    })
+                                );
+                            }}
+                        >
+                            <option value="text">Text</option>
+                            <option value="number">Number</option>
+                        </select>
+                    );
                 }
                 return <div key={key}>{upperCaseFirst(key)}: {elements.current[key as keyof Elem]}</div>
             })}
