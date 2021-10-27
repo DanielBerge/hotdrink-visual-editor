@@ -1,13 +1,15 @@
 import {useState} from "react";
-import {exportToHTML} from "../exports/exportToHTML";
 import {Modal} from "@mui/material";
 import {HTMLView} from "../content/HTMLView";
 import {useElements} from "../wrappers/ElementsWrapper";
 import {Elem, InputType} from "../types";
 import {lowerCaseFirst, upperCaseFirst} from "../utils";
+import {HTMLBuilder} from "../exports/HTMLBuilder";
+import {useConstraints} from "../wrappers/ConstraintsWrapper";
 
 export const Properties = () => {
-    const elements = useElements()
+    const elements = useElements();
+    const constraints = useConstraints();
     const [open, setOpen] = useState(false);
 
     const inputs = ["value", "height", "width"]
@@ -36,7 +38,7 @@ export const Properties = () => {
                 }
                 if (key === "subType") {
                     return (
-                        <div className="flex">
+                        <div key={key} className="flex">
                             <div>{upperCaseFirst(key)}: </div>
                             <select
                                 value={elements.current[key as keyof Elem]}
@@ -63,12 +65,21 @@ export const Properties = () => {
                 onClick={() => setOpen(true)}
             >Run
             </button>
+            <button
+                className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"
+                onClick={() => {
+                    let builder = new HTMLBuilder();
+                    builder.includeHTML(elements.elements).includeJS(constraints.constraints).end();
+                    console.log(builder.build());
+                }}
+            >Export
+            </button>
             <Modal
                 open={open}
                 onBackdropClick={() => setOpen(false)}
             >
                 <div className="w-2/3 h-2/3 bg-gray-200 p-20">
-                    <HTMLView HTML={exportToHTML(elements.elements)}/>
+                    <HTMLView/>
                 </div>
             </Modal>
         </>

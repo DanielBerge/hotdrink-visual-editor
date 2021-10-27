@@ -64,7 +64,6 @@ export function runJs(constraints: Constraint[]) {
         for (const constraint of constraints) {
             let system = defaultConstraintSystem;
 
-            //const func = eval("(initial) => {const positive = initial >= 0; \nreturn positive;}")
             const func = eval(`(${constraint.fromId}) => {
                 ${constraint.code}
             }`)
