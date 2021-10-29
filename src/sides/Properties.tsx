@@ -6,6 +6,9 @@ import {Elem, InputType} from "../types";
 import {lowerCaseFirst, upperCaseFirst} from "../utils";
 import {HTMLBuilder} from "../exports/HTMLBuilder";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
+import JSZip from "jszip";
+import { saveAs } from 'file-saver';
+
 
 export const Properties = () => {
     const elements = useElements();
@@ -51,8 +54,8 @@ export const Properties = () => {
                                     );
                                 }}
                             >
-                                {Object.keys(InputType).map((type) => {
-                                    return <option value={lowerCaseFirst(type)}>{type}</option>
+                                {Object.keys(InputType).map((type, key) => {
+                                    return <option key={key} value={lowerCaseFirst(type)}>{type}</option>
                                 })}
                             </select>
                         </div>
@@ -67,10 +70,21 @@ export const Properties = () => {
             </button>
             <button
                 className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"
-                onClick={() => {
+                onClick={async () => {
+                    const zip = new JSZip();
                     let builder = new HTMLBuilder();
                     builder.includeHTML(elements.elements).includeJS(constraints.constraints).end();
-                    console.log(builder.build());
+                    zip.file("index.html", builder.build());
+
+                    let response = await fetch("/hotdrink.js", {
+                        method: "GET"
+                    });
+                    zip.file("hotdrink.js", await response.text())
+
+                    zip.generateAsync({ type: 'blob' }).then(function (content) {
+                        saveAs(content, 'program.zip');
+                    });
+
                 }}
             >Export
             </button>

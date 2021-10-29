@@ -78,7 +78,6 @@ export class HTMLBuilder {
         runJs(constraints);
 
         const json = constraintSystemToJson(defaultConstraintSystem);
-        console.log(defaultConstraintSystem);
 
         this.add("<script>");
         this.add(`const system = hd.constraintSystemFromJson(${JSON.stringify(json)});`)
