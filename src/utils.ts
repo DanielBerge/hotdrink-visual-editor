@@ -124,27 +124,31 @@ export function getPoints(from: Elem, to: Elem) {
     let toHeight = to.height;
     let fromWidth = from.width;
     let toWidth = to.width;
-    const spaceFromEnd = 7;
+    const spaceFromEnd = 8;
+
+    function calculatePlacement(side: number, from: number, to: number) {
+       return side / 2 + Math.max(Math.min(side / 2, (from - to) / 2), -side/ 2);
+    }
     if (Math.abs(fromX - toX) > Math.abs(fromY - toY)) {
         if (fromX < toX) {
-            toY += toHeight / 2;
+            toY += calculatePlacement(toHeight, fromY, toY);
             fromY += fromHeight / 2;
             fromX += fromWidth;
             toX -= spaceFromEnd;
         } else if (fromX > toX) {
-            toY += toHeight / 2;
+            toY += calculatePlacement(toHeight, fromY, toY);
             fromY += fromHeight / 2;
             toX += toWidth;
             toX += spaceFromEnd;
         }
     } else {
         if (fromY < toY) {
-            toX += toWidth / 2;
+            toX += calculatePlacement(toWidth, fromX, toX);
             fromX += fromWidth / 2;
             fromY += fromHeight;
             toY -= spaceFromEnd;
         } else if (fromY > toY) {
-            toX += toWidth / 2;
+            toX += calculatePlacement(toWidth, fromX, toX);
             fromX += fromWidth / 2;
             toY += toHeight;
             toY += spaceFromEnd;
