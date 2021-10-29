@@ -1,5 +1,5 @@
 import {Component, ConstraintSpec, defaultConstraintSystem, maskNone, Method, VariableReference} from "hotdrink";
-import {Constraint} from "./types";
+import {Constraint, Elem} from "./types";
 
 export const idToValue = new Map();
 export const valueToId = new Map();
@@ -113,4 +113,43 @@ export function upperCaseFirst(string: string): string {
  */
 export function lowerCaseFirst(string: string): string {
     return string.slice(0, 1).toLowerCase() + string.slice(1);
+}
+
+export function getPoints(from: Elem, to: Elem) {
+    let fromX = from.x;
+    let fromY = from.y;
+    let toX = to.x;
+    let toY = to.y;
+    let fromHeight = from.height;
+    let toHeight = to.height;
+    let fromWidth = from.width;
+    let toWidth = to.width;
+    const spaceFromEnd = 7;
+    if (Math.abs(fromX - toX) > Math.abs(fromY - toY)) {
+        if (fromX < toX) {
+            toY += toHeight / 2;
+            fromY += fromHeight / 2;
+            fromX += fromWidth;
+            toX -= spaceFromEnd;
+        } else if (fromX > toX) {
+            toY += toHeight / 2;
+            fromY += fromHeight / 2;
+            toX += toWidth;
+            toX += spaceFromEnd;
+        }
+    } else {
+        if (fromY < toY) {
+            toX += toWidth / 2;
+            fromX += fromWidth / 2;
+            fromY += fromHeight;
+            toY -= spaceFromEnd;
+        } else if (fromY > toY) {
+            toX += toWidth / 2;
+            fromX += fromWidth / 2;
+            toY += toHeight;
+            toY += spaceFromEnd;
+        }
+    }
+
+    return [fromX, fromY, toX, toY]
 }

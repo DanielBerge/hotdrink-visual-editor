@@ -1,11 +1,12 @@
 import React, {FC, useState} from 'react';
-import {Arrow, Group, Layer, Line, Rect, Stage, Text} from 'react-konva';
+import {Arrow, Group, Layer, Rect, Stage, Text} from 'react-konva';
 import {KonvaEventObject} from "konva/lib/Node";
 import {useRete} from "../rete/useRete";
 import {Constraint, EditorType, Elem, ElemType} from "../types";
 import {useElements} from "../wrappers/ElementsWrapper";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
 import {ConstraintEditor} from "./ConstraintEditor";
+import {getPoints} from "../utils";
 
 let constraintIds: Array<string> = [];
 
@@ -62,31 +63,25 @@ export const Canvas: FC = () => {
             >
                 <Layer>
                     {constraints.constraints.map((constraint: Constraint) => {
-                        const from = elements.getElementById(constraint.fromId)
+                        const from = elements.getElementById(constraint.fromId);
                         const to = elements.getElementById(constraint.toId);
                         if (to === undefined || from === undefined) {
-                            console.error(`Constraint ids, does not have matching HTML elements: ${constraint.fromId} -> ${constraint.toId}`)
+                            console.error(`Constraint ids, does not have matching canvas elements: ${constraint.fromId} -> ${constraint.toId}`)
                             return null;
                         }
+
                         return (
-                            <Group
+                            <Arrow
                                 key={from.id + to.id}
                                 onClick={() => {
                                     setOpen(true)
                                     constraints.setCurrent(constraint);
                                 }}
-                            >
-                                <Line
-                                    points={[from.x, from.y, to.x, to.y]}
-                                    stroke="red"
-                                    strokeWidth={5}
-                                />
-                                <Arrow
-                                    points={[to.x, to.y]}
-                                    stroke="red"
-                                    fill="red"
-                                />
-                            </Group>
+                                points={getPoints(from, to)}
+                                stroke="red"
+                                fill="red"
+                                strokeWidth={5}
+                            />
                         )
                     })}
                 </Layer>

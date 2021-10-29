@@ -9,6 +9,8 @@
 * Allow elements to change width and height by dragging edges [Transformer react konva](https://konvajs.org/docs/react/Transformer.html)
 * Make the arrow of constraints more visually pleasing
 * Endre react render plugin til å virke med hooks?
+* Legge til "Hdbind" variabel på elementer, som velger for eksempel "disabled", eller "value" for å velge binding.
+* Legge til variable references i hotdrik to json?
 
 ## Available Scripts
 
