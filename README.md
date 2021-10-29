@@ -3,7 +3,6 @@
 ## Future features
 * Exporting and importing project
 * Hide/show constraints
-* Export to HTML
 * Export to REACT
 * Make HTML run mode prettier
 * Visualize constraint flow in HTML run mode

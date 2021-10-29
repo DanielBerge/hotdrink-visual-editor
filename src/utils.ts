@@ -60,6 +60,8 @@ export function DOMBind(element: HTMLElement | null, value: VariableReference<an
 }
 
 export function runJs(constraints: Constraint[]) {
+    let index = 0;
+    const freshIndex = () => ++index;
     try {
         for (const constraint of constraints) {
             let system = defaultConstraintSystem;
@@ -71,16 +73,20 @@ export function runJs(constraints: Constraint[]) {
 
             const cspec = new ConstraintSpec([method1]);
 
-            const comp = new Component("Component");
+            const comp = new Component(`Component${freshIndex()}`);
             const varA = comp.emplaceVariable(constraint.fromId, undefined);
             const varB = comp.emplaceVariable(constraint.toId, undefined);
 
-            comp.emplaceConstraint("C", cspec, [varA, varB], false);
+            comp.emplaceConstraint(`C${freshIndex()}`, cspec, [varA, varB], false);
 
             system.addComponent(comp);
 
-            DOMBind(document.getElementById(constraint.fromId), comp.vs[constraint.fromId], "value");
-            DOMBind(document.getElementById(constraint.toId), comp.vs[constraint.toId], "value");
+            try {
+                DOMBind(document.getElementById(constraint.fromId), comp.vs[constraint.fromId], "value");
+                DOMBind(document.getElementById(constraint.toId), comp.vs[constraint.toId], "value");
+            } catch (e) {
+                console.log(e);
+            }
         }
     } catch (e) {
         console.error(e);

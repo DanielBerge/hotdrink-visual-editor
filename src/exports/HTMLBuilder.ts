@@ -94,8 +94,11 @@ export class HTMLBuilder {
     });
 }
 `);
-        this.add(`bind(document.getElementById("${constraints[0].fromId}"), Array.from(system.variables())[0]._owner, "value");`)
-        this.add(`bind(document.getElementById("${constraints[0].toId}"), Array.from(system.variables())[1]._owner, "value");`)
+        let counter = 0;
+        for (let i = 0; i < constraints.length; i++) {
+            this.add(`bind(document.getElementById("${constraints[i].fromId}"), Array.from(system.variables())[${counter++}]._owner, "value");`)
+            this.add(`bind(document.getElementById("${constraints[i].toId}"), Array.from(system.variables())[${counter++}]._owner, "value");`)
+        }
 
         this.add("</script>")
         return this;
