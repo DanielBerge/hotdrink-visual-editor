@@ -45,7 +45,7 @@ export const Canvas: FC = () => {
         elements.setCurrent(element);
     }
 
-    function onDragEnd(e: KonvaEventObject<DragEvent>, elem: Elem) {
+    function onDragMove(e: KonvaEventObject<DragEvent>, elem: Elem) {
         elements.updateElement(elem, {
             ...elem,
             x: e.target.x(),
@@ -100,7 +100,7 @@ export const Canvas: FC = () => {
                                         fill="white"
                                         stroke="black"
                                         onClick={() => onClick(element)}
-                                        onDragEnd={(e) => onDragEnd(e, element)}
+                                        onDragMove={(e) => onDragMove(e, element)}
                                     />
                                 )
                             case ElemType.Button:
@@ -111,7 +111,7 @@ export const Canvas: FC = () => {
                                         y={element.y}
                                         draggable
                                         onClick={() => onClick(element)}
-                                        onDragEnd={(e) => onDragEnd(e, element)}
+                                        onDragMove={(e) => onDragMove(e, element)}
                                     >
                                         <Rect
                                             width={element.width}
@@ -143,7 +143,7 @@ export const Canvas: FC = () => {
                                         x={element.x}
                                         y={element.y}
                                         onClick={() => onClick(element)}
-                                        onDragEnd={(e) => onDragEnd(e, element)}
+                                        onDragMove={(e) => onDragMove(e, element)}
                                     />
                                 )
                             default:
