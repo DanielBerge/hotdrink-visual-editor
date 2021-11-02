@@ -1,16 +1,18 @@
 # Getting Started with Create React App
 
 ## Future features
+* Legge til "Hdbind" variabel på elementer, som velger for eksempel "disabled", eller "value" for å velge binding.
+* Fikse click on component, blir stuck
+* Allow elements to change width and height by dragging edges [Transformer react konva](https://konvajs.org/docs/react/Transformer.html)
+* Ha constraints i properties, mulighet for å "Change constraint" for å endre kode, dropdown for å endre på connections (from/to).
+* Blokkere mulighet for å lage to av samme constraint (from == from && to == to)
 * Exporting and importing project
-* Hide/show constraints
 * Export to REACT
 * Visualize constraint flow in HTML run mode
-* Allow elements to change width and height by dragging edges [Transformer react konva](https://konvajs.org/docs/react/Transformer.html)
-* Endre react render plugin til å virke med hooks?
-* Legge til "Hdbind" variabel på elementer, som velger for eksempel "disabled", eller "value" for å velge binding.
 * Legge til variable references i hotdrik to json?
 * Grid background? [Grid background](https://codepen.io/pierrebleroux/pen/gGpvxJ?editors=1010)
-* Sletting av component?
+* Hide/show constraints
+* Endre react render plugin til å virke med hooks?
 
 ## Available Scripts
 

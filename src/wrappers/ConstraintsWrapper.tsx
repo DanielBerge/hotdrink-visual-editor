@@ -23,7 +23,7 @@ interface Constraints {
     setNewConstraint: (newConstraint: boolean) => void;
     current: Constraint | undefined;
     setCurrent: (newConstraint: Constraint | undefined) => void;
-    deleteConstraintsConnected: (id: string) => void;
+    deleteConstraintsConnected: (elementId: string) => void;
 }
 
 const ConstraintsWrapper: FC = (props) => {
@@ -42,8 +42,8 @@ const ConstraintsWrapper: FC = (props) => {
         return newConstraint;
     }
 
-    function deleteConstraintsConnected(id: string) {
-        setConstraints(constraints.filter((constraint) => constraint.toId !== id && constraint.fromId !== id));
+    function deleteConstraintsConnected(elementId: string) {
+        setConstraints(constraints.filter((constraint) => constraint.toId !== elementId && constraint.fromId !== elementId));
     }
 
     return (
