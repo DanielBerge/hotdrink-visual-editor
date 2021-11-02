@@ -23,7 +23,7 @@ export class HTMLBuilder {
         return this.html;
     }
 
-    includeHTML(elements: Elem[]) {
+    includeHTML(elements: Elem[], relativeX: number = 0, relativeY: number = 0) {
         for (const {type, x, y, value, subType, width, height, id} of elements) {
             switch (type) {
                 case ElemType.Input:
@@ -32,8 +32,8 @@ export class HTMLBuilder {
                             type=${subType}
                             style="
                                  position:absolute;
-                                 top:${y}px;
-                                 left:${x}px;
+                                 top:${y + relativeY}px;
+                                 left:${x + relativeX}px;
                                  width:${width}px;
                                  height:${height}px;
                             "
@@ -44,8 +44,8 @@ export class HTMLBuilder {
                             id=${id}
                             style="
                                  position:absolute;
-                                 top:${y}px;
-                                 left:${x}px;
+                                 top:${y + relativeY}px;
+                                 left:${x + relativeX}px;
                                  width:${width}px;
                                  height:${height}px;
                                  background-color:gray;
@@ -57,8 +57,8 @@ export class HTMLBuilder {
                             id=${id}
                             style="
                                  position:absolute;
-                                 top:${y}px;
-                                 left:${x}px;
+                                 top:${y + relativeY}px;
+                                 left:${x + relativeX}px;
                                  width:${width}px;
                                  height:${height}px;
                             "

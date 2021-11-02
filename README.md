@@ -10,6 +10,9 @@
 * Endre react render plugin til å virke med hooks?
 * Legge til "Hdbind" variabel på elementer, som velger for eksempel "disabled", eller "value" for å velge binding.
 * Legge til variable references i hotdrik to json?
+* Fix canvas width
+* Grid background?
+* Sletting av component?
 
 ## Available Scripts
 

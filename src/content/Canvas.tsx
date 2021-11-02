@@ -57,7 +57,7 @@ export const Canvas: FC = () => {
     return (
         <div className="">
             <Stage
-                width={1000}
+                width={window.screen.availWidth - 600}
                 height={window.innerHeight}
                 className="bg-gray-100"
             >

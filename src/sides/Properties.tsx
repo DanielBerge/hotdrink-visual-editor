@@ -92,7 +92,7 @@ export const Properties = () => {
                 open={open}
                 onBackdropClick={() => setOpen(false)}
             >
-                <div className="w-2/3 h-2/3 bg-gray-200 p-20">
+                <div className="w-3/4 h-3/4 bg-gray-200 p-20 ml-auto mr-auto mt-20">
                     <HTMLView/>
                 </div>
             </Modal>

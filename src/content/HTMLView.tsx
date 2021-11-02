@@ -11,7 +11,7 @@ export const HTMLView: FC = () => {
 
     useEffect(() => {
        let builder = new HTMLBuilder();
-       builder.includeHTML(elements.elements).end();
+       builder.includeHTML(elements.elements, 200, 100).end();
 
         function createMarkup(string: string) {
             return {__html: string};
