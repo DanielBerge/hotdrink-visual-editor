@@ -4,14 +4,12 @@
 * Exporting and importing project
 * Hide/show constraints
 * Export to REACT
-* Make HTML run mode prettier
 * Visualize constraint flow in HTML run mode
 * Allow elements to change width and height by dragging edges [Transformer react konva](https://konvajs.org/docs/react/Transformer.html)
 * Endre react render plugin til å virke med hooks?
 * Legge til "Hdbind" variabel på elementer, som velger for eksempel "disabled", eller "value" for å velge binding.
 * Legge til variable references i hotdrik to json?
-* Fix canvas width
-* Grid background?
+* Grid background? [Grid background](https://codepen.io/pierrebleroux/pen/gGpvxJ?editors=1010)
 * Sletting av component?
 
 ## Available Scripts

@@ -23,6 +23,7 @@ interface Constraints {
     setNewConstraint: (newConstraint: boolean) => void;
     current: Constraint | undefined;
     setCurrent: (newConstraint: Constraint | undefined) => void;
+    deleteConstraintsConnected: (id: string) => void;
 }
 
 const ConstraintsWrapper: FC = (props) => {
@@ -41,8 +42,12 @@ const ConstraintsWrapper: FC = (props) => {
         return newConstraint;
     }
 
+    function deleteConstraintsConnected(id: string) {
+        setConstraints(constraints.filter((constraint) => constraint.toId !== id && constraint.fromId !== id));
+    }
+
     return (
-        <ConstraintContext.Provider value={{constraints, setConstraints, updateConstraint}}>
+        <ConstraintContext.Provider value={{constraints, setConstraints, updateConstraint, deleteConstraintsConnected}}>
             <NewConstraintContext.Provider value={{newConstraint, setNewConstraint}}>
                 <CurrentContext.Provider value={{current, setCurrent}}>
                     {props.children}
@@ -53,7 +58,7 @@ const ConstraintsWrapper: FC = (props) => {
 }
 
 function useConstraints(): Constraints {
-    const {constraints, setConstraints, updateConstraint} = useContext(ConstraintContext);
+    const {constraints, setConstraints, updateConstraint, deleteConstraintsConnected} = useContext(ConstraintContext);
     const {newConstraint, setNewConstraint} = useContext(NewConstraintContext);
     const {current, setCurrent} = useContext(CurrentContext);
 
@@ -65,6 +70,7 @@ function useConstraints(): Constraints {
         setNewConstraint,
         current,
         setCurrent,
+        deleteConstraintsConnected,
     }
 }
 

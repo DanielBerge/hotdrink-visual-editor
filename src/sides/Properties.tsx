@@ -20,6 +20,17 @@ export const Properties = () => {
     return (
         <>
             <h1 className={"font-bold text-lg"}>Properties</h1>
+            {elements.current && (
+                <button
+                    className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"
+                    onClick={() => {
+                        elements.deleteElement(elements.current.id);
+                        constraints.deleteConstraintsConnected(elements.current.id);
+                        elements.setCurrent(undefined);
+                    }}
+                >Delete
+                </button>
+            )}
             {elements.current && Object.keys(elements.current).map((key: string) => {
                 if (inputs.includes(key)) {
                     return (

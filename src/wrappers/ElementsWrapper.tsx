@@ -33,7 +33,8 @@ interface Elements {
     updateElement: (oldElem: Elem, newElem: Elem) => Elem;
     getElementById: (id: string) => Elem | undefined;
     current: Elem;
-    setCurrent: (element: Elem) => void;
+    setCurrent: (element: Elem | undefined) => void;
+    deleteElement: (id: string) => void;
 }
 
 const ElementsWrapper: FC = (props) => {
@@ -66,8 +67,12 @@ const ElementsWrapper: FC = (props) => {
         })
     }
 
+    function deleteElement(id: string) {
+        setElements(elements.filter((elem: Elem) => id !== elem.id));
+    }
+
     return (
-        <ElementContext.Provider value={{elements, addElement, updateElement, getElementById}}>
+        <ElementContext.Provider value={{elements, addElement, updateElement, getElementById, deleteElement}}>
             <CurrentContext.Provider value={{current, setCurrent}}>
                 {props.children}
             </CurrentContext.Provider>
@@ -77,7 +82,7 @@ const ElementsWrapper: FC = (props) => {
 
 
 function useElements(): Elements {
-    const {elements, addElement, updateElement, getElementById} = useContext(ElementContext);
+    const {elements, addElement, updateElement, getElementById, deleteElement} = useContext(ElementContext);
     const {current, setCurrent} = useContext(CurrentContext);
 
     return {
@@ -87,6 +92,7 @@ function useElements(): Elements {
         getElementById,
         current,
         setCurrent,
+        deleteElement,
     }
 }
 
