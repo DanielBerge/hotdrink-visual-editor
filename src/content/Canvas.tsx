@@ -46,12 +46,18 @@ export const Canvas: FC = () => {
     }
 
     function onDragMove(e: KonvaEventObject<DragEvent>, elem: Elem) {
-        elements.updateElement(elem, {
-            ...elem,
-            x: e.target.x(),
-            y: e.target.y(),
-        })
-        elements.setCurrent(elem);
+        const found = elements.getElementById(elem.id);
+        if (found) {
+            elements.updateElement(found, {
+                    ...found,
+                    x: e.target.x(),
+                    y: e.target.y(),
+                }
+            )
+            elements.setCurrent(found);
+        } else {
+            throw new Error("Could not find element to move");
+        }
     }
 
     return (
