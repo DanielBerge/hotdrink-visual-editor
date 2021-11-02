@@ -1,17 +1,16 @@
 # Getting Started with Create React App
 
 ## Future features
-* Fikse click on component, blir stuck
 * Allow elements to change width and height by dragging edges [Transformer react konva](https://konvajs.org/docs/react/Transformer.html)
 * Ha constraints i properties, mulighet for å "Change constraint" for å endre kode, dropdown for å endre på connections (from/to).
 * Blokkere mulighet for å lage to av samme constraint (from == from && to == to)
 * Exporting and importing project
 * Export to REACT
+* Collision detection på elements i canvas
 * Visualize constraint flow in HTML run mode
 * Legge til variable references i hotdrik to json?
 * Grid background? [Grid background](https://codepen.io/pierrebleroux/pen/gGpvxJ?editors=1010)
 * Hide/show constraints
-* Collision detection på elements i canvas
 * Endre react render plugin til å virke med hooks?
 
 ## Available Scripts

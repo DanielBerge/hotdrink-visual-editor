@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {Arrow, Group, Layer, Rect, Stage, Text} from 'react-konva';
+import {Arrow, Group, Layer, Rect, Stage, Text, Transformer} from 'react-konva';
 import {KonvaEventObject} from "konva/lib/Node";
 import {useRete} from "../rete/useRete";
 import {Constraint, EditorType, Elem, ElemType} from "../types";
@@ -60,12 +60,20 @@ export const Canvas: FC = () => {
         }
     }
 
+    const checkDeselect = (e: any) => {
+        const clickedOnEmpty = e.target === e.target.getStage();
+        if (clickedOnEmpty) {
+            elements.setCurrent(undefined);
+        }
+    };
+
     return (
         <div className="">
             <Stage
                 width={window.screen.availWidth - 600}
                 height={window.innerHeight}
                 className="bg-gray-100"
+                onClick={checkDeselect}
             >
                 <Layer>
                     {constraints.constraints.map((constraint: Constraint) => {
