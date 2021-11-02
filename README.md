@@ -2,12 +2,11 @@
 
 ## Future features
 * Ha constraints i properties, mulighet for å "Change constraint" for å endre kode, dropdown for å endre på connections (from/to).
-* Blokkere mulighet for å lage to av samme constraint (from == from && to == to)
 * Exporting and importing project
 * Export to REACT
-* Collision detection på elements i canvas
+* Collision detection på elements i canvas i tillegg til kanter
 * Visualize constraint flow in HTML run mode
-* Legge til variable references i hotdrik to json?
+* Legge til variable references i hotdrink to json?
 * Grid background? [Grid background](https://codepen.io/pierrebleroux/pen/gGpvxJ?editors=1010)
 * Hide/show constraints
 * Endre react render plugin til å virke med hooks?

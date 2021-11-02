@@ -6,9 +6,12 @@ import {Constraint, EditorType, Elem, ElemType} from "../types";
 import {useElements} from "../wrappers/ElementsWrapper";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
 import {ConstraintEditor} from "./ConstraintEditor";
-import {getPoints} from "../utils";
+import {clamp, getPoints} from "../utils";
 
 let constraintIds: Array<string> = [];
+
+const width = window.screen.availWidth - 600;
+const height = window.innerHeight;
 
 export const Canvas: FC = () => {
     const elements = useElements();
@@ -51,6 +54,8 @@ export const Canvas: FC = () => {
 
     function onDragMove(e: KonvaEventObject<DragEvent>, elem: Elem) {
         const found = elements.getElementById(elem.id);
+        e.target.x(clamp(e.target.x(), width - elem.width));
+        e.target.y(clamp(e.target.y(), height - elem.height));
         if (found) {
             elements.updateElement(found, {
                     ...found,
@@ -74,8 +79,8 @@ export const Canvas: FC = () => {
     return (
         <div className="">
             <Stage
-                width={window.screen.availWidth - 600}
-                height={window.innerHeight}
+                width={width}
+                height={height}
                 className="bg-gray-100"
                 onClick={checkDeselect}
             >

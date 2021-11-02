@@ -129,8 +129,9 @@ export function getPoints(from: Elem, to: Elem) {
     const spaceFromEnd = 8;
 
     function calculatePlacement(side: number, from: number, to: number) {
-       return side / 2 + Math.max(Math.min(side / 2, (from - to) / 2), -side/ 2);
+        return side / 2 + Math.max(Math.min(side / 2, (from - to) / 2), -side / 2);
     }
+
     if (Math.abs(fromX - toX) > Math.abs(fromY - toY)) {
         if (fromX < toX) {
             toY += calculatePlacement(toHeight, fromY, toY);
@@ -158,4 +159,14 @@ export function getPoints(from: Elem, to: Elem) {
     }
 
     return [fromX, fromY, toX, toY]
+}
+
+export function clamp(num: number, max: number): number {
+    if (num < 0) {
+        return 0;
+    }
+    if (num > max) {
+        return max;
+    }
+    return num;
 }
