@@ -1,10 +1,10 @@
 import React, {FC} from "react";
 import {freshId} from "../App";
-import {ElemType, InputType} from "../types";
+import {Binding, ElemType, InputType} from "../types";
 import {useElements} from "../wrappers/ElementsWrapper";
 
 
-export const Components: FC = (props) => {
+export const Components: FC = () => {
     const elements = useElements();
 
     return (
@@ -22,6 +22,7 @@ export const Components: FC = (props) => {
                         x: event.clientX,
                         y: event.clientY,
                         type: ElemType.Input,
+                        binding: Binding.Value,
                         subType: InputType.Text,
                         value: "value",
                         id: `id${freshId()}`,
@@ -39,6 +40,7 @@ export const Components: FC = (props) => {
                         x: event.clientX,
                         y: event.clientY,
                         type: ElemType.Button,
+                        binding: Binding.Disabled,
                         value: "value",
                         id: `id${freshId()}`,
                     })
@@ -55,6 +57,7 @@ export const Components: FC = (props) => {
                         x: event.clientX,
                         y: event.clientY,
                         type: ElemType.Text,
+                        binding: Binding.InnerText,
                         value: "Textvalue",
                         id: `id${freshId()}`,
                     })

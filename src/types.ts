@@ -16,6 +16,12 @@ export enum EditorType {
     VISUAL = "VISUAL",
 }
 
+export enum Binding {
+    Value = "value",
+    Disabled = "disabled",
+    InnerText = "innertext",
+}
+
 export interface Elem {
     height: number;
     width: number;
@@ -23,6 +29,7 @@ export interface Elem {
     y: number;
     type: ElemType;
     subType?: undefined | InputType;
+    binding: Binding;
     value: string;
     id: string;
 }

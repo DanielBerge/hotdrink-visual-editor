@@ -48,7 +48,8 @@ export class HTMLBuilder {
                                  left:${x + relativeX}px;
                                  width:${width}px;
                                  height:${height}px;
-                                 background-color:gray;
+                                 background-color:black;
+                                 color: white;
                             "
                          >${value}</button>`);
                     break;
@@ -73,9 +74,9 @@ export class HTMLBuilder {
         this.add("<script type=\"text/javascript\" src=\"hotdrink.js\"></script>");
     }
 
-    includeJS(constraints: Constraint[]) {
+    includeJS(constraints: Constraint[], elements: any) {
         this.includeHotDrink();
-        runJs(constraints);
+        runJs(constraints, elements);
 
         const json = constraintSystemToJson(defaultConstraintSystem);
 
@@ -96,8 +97,10 @@ export class HTMLBuilder {
 `);
         let counter = 0;
         for (let i = 0; i < constraints.length; i++) {
-            this.add(`bind(document.getElementById("${constraints[i].fromId}"), Array.from(system.variables())[${counter++}]._owner, "value");`)
-            this.add(`bind(document.getElementById("${constraints[i].toId}"), Array.from(system.variables())[${counter++}]._owner, "value");`)
+            const fromBindingType = elements.getElementById(constraints[i].fromId).binding;
+            const toBindingType = elements.getElementById(constraints[i].toId).binding;
+            this.add(`bind(document.getElementById("${constraints[i].fromId}"), Array.from(system.variables())[${counter++}]._owner, ${fromBindingType});`)
+            this.add(`bind(document.getElementById("${constraints[i].toId}"), Array.from(system.variables())[${counter++}]._owner, ${toBindingType});`)
         }
 
         this.add("</script>")

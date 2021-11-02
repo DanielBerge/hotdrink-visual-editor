@@ -23,7 +23,7 @@ export const HTMLView: FC = () => {
                 dangerouslySetInnerHTML={createMarkup(builder.build())}
             />,
             document.getElementById("index"), () => {
-                runJs(constraints.constraints);
+                runJs(constraints.constraints, elements);
             });
     }, [constraints.constraints]);
 

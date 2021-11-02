@@ -59,7 +59,7 @@ export function DOMBind(element: HTMLElement | null, value: VariableReference<an
     return unsubscribe;
 }
 
-export function runJs(constraints: Constraint[]) {
+export function runJs(constraints: Constraint[], elements: any) {
     let index = 0;
     const freshIndex = () => ++index;
     try {
@@ -82,8 +82,10 @@ export function runJs(constraints: Constraint[]) {
             system.addComponent(comp);
 
             try {
-                DOMBind(document.getElementById(constraint.fromId), comp.vs[constraint.fromId], "value");
-                DOMBind(document.getElementById(constraint.toId), comp.vs[constraint.toId], "value");
+                const fromBindingType = elements.getElementById(constraint.fromId).binding;
+                const toBindingType = elements.getElementById(constraint.toId).binding;
+                DOMBind(document.getElementById(constraint.fromId), comp.vs[constraint.fromId], fromBindingType);
+                DOMBind(document.getElementById(constraint.toId), comp.vs[constraint.toId], toBindingType);
             } catch (e) {
                 console.log(e);
             }

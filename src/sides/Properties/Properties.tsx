@@ -1,13 +1,14 @@
 import {useState} from "react";
 import {Modal} from "@mui/material";
-import {HTMLView} from "../content/HTMLView";
-import {useElements} from "../wrappers/ElementsWrapper";
-import {Elem, InputType} from "../types";
-import {lowerCaseFirst, upperCaseFirst} from "../utils";
-import {HTMLBuilder} from "../exports/HTMLBuilder";
-import {useConstraints} from "../wrappers/ConstraintsWrapper";
+import {HTMLView} from "../../content/HTMLView";
+import {useElements} from "../../wrappers/ElementsWrapper";
+import {Binding, Elem, InputType} from "../../types";
+import {upperCaseFirst} from "../../utils";
+import {HTMLBuilder} from "../../exports/HTMLBuilder";
+import {useConstraints} from "../../wrappers/ConstraintsWrapper";
 import JSZip from "jszip";
-import { saveAs } from 'file-saver';
+import {saveAs} from 'file-saver';
+import {DropDown} from "./DropDown";
 
 
 export const Properties = () => {
@@ -52,24 +53,12 @@ export const Properties = () => {
                 }
                 if (key === "subType") {
                     return (
-                        <div key={key} className="flex">
-                            <div>{upperCaseFirst(key)}: </div>
-                            <select
-                                value={elements.current[key as keyof Elem]}
-                                onChange={(e) => {
-                                    elements.setCurrent(
-                                        elements.updateElement(elements.current, {
-                                            ...elements.current,
-                                            [key as keyof InputType]: e.target.value,
-                                        })
-                                    );
-                                }}
-                            >
-                                {Object.keys(InputType).map((type, key) => {
-                                    return <option key={key} value={lowerCaseFirst(type)}>{type}</option>
-                                })}
-                            </select>
-                        </div>
+                        <DropDown key={key} elemKey={key} type={InputType}/>
+                    );
+                }
+                if (key === "binding") {
+                    return (
+                        <DropDown key={key} elemKey={key} type={Binding}/>
                     );
                 }
                 return <div key={key}>{upperCaseFirst(key)}: {elements.current[key as keyof Elem]}</div>
@@ -84,7 +73,7 @@ export const Properties = () => {
                 onClick={async () => {
                     const zip = new JSZip();
                     let builder = new HTMLBuilder();
-                    builder.includeHTML(elements.elements).includeJS(constraints.constraints).end();
+                    builder.includeHTML(elements.elements).includeJS(constraints.constraints, elements).end();
                     zip.file("index.html", builder.build());
 
                     let response = await fetch("/hotdrink.js", {
@@ -92,7 +81,7 @@ export const Properties = () => {
                     });
                     zip.file("hotdrink.js", await response.text())
 
-                    zip.generateAsync({ type: 'blob' }).then(function (content) {
+                    zip.generateAsync({type: 'blob'}).then(function (content) {
                         saveAs(content, 'program.zip');
                     });
 

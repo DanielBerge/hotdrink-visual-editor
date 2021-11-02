@@ -1,7 +1,6 @@
 # Getting Started with Create React App
 
 ## Future features
-* Legge til "Hdbind" variabel på elementer, som velger for eksempel "disabled", eller "value" for å velge binding.
 * Fikse click on component, blir stuck
 * Allow elements to change width and height by dragging edges [Transformer react konva](https://konvajs.org/docs/react/Transformer.html)
 * Ha constraints i properties, mulighet for å "Change constraint" for å endre kode, dropdown for å endre på connections (from/to).
@@ -12,6 +11,7 @@
 * Legge til variable references i hotdrik to json?
 * Grid background? [Grid background](https://codepen.io/pierrebleroux/pen/gGpvxJ?editors=1010)
 * Hide/show constraints
+* Collision detection på elements i canvas
 * Endre react render plugin til å virke med hooks?
 
 ## Available Scripts

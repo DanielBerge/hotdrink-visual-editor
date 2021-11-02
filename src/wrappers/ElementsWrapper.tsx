@@ -1,5 +1,5 @@
 import React, {FC, useContext, useState} from "react";
-import {Elem, ElemType, InputType} from "../types";
+import {Binding, Elem, ElemType, InputType} from "../types";
 
 const initialElements: Elem[] = [
     {
@@ -9,6 +9,7 @@ const initialElements: Elem[] = [
         y: 100,
         type: ElemType.Input,
         subType: InputType.Number,
+        binding: Binding.Value,
         value: "",
         id: "initial",
     },
@@ -19,6 +20,7 @@ const initialElements: Elem[] = [
         y: 300,
         type: ElemType.Input,
         subType: InputType.Text,
+        binding: Binding.Value,
         value: "value2",
         id: "initial2",
     }

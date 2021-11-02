@@ -2,7 +2,7 @@ import React from 'react';
 import {Canvas} from './content/Canvas';
 import {Column} from "./sides/Column";
 import {Components} from "./sides/Components";
-import {Properties} from "./sides/Properties";
+import {Properties} from "./sides/Properties/Properties";
 import {Constraints} from "./sides/Constraints";
 import {ElementsWrapper} from "./wrappers/ElementsWrapper";
 import {ConstraintsWrapper} from "./wrappers/ConstraintsWrapper";
