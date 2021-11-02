@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {Arrow, Group, Layer, Rect, Stage, Text, Transformer} from 'react-konva';
+import {Arrow, Group, Layer, Rect, Stage, Text} from 'react-konva';
 import {KonvaEventObject} from "konva/lib/Node";
 import {useRete} from "../rete/useRete";
 import {Constraint, EditorType, Elem, ElemType} from "../types";
@@ -30,15 +30,19 @@ export const Canvas: FC = () => {
             }
             if (constraintIds.length === 2) {
                 constraints.setNewConstraint(false);
-                constraints.setConstraints([
-                    ...constraints.constraints,
-                    {
-                        fromId: constraintIds[0],
-                        toId: constraintIds[1],
-                        type: EditorType.VISUAL,
-                        code: "",
-                    }
-                ])
+                if (constraints.constraints.find((constraint) => constraint.fromId === constraintIds[0] && constraint.toId === constraintIds[1]) === undefined) {
+                    constraints.setConstraints([
+                        ...constraints.constraints,
+                        {
+                            fromId: constraintIds[0],
+                            toId: constraintIds[1],
+                            type: EditorType.VISUAL,
+                            code: "",
+                        }
+                    ])
+                } else {
+                    console.warn("Tried to create already existing constraint, aborting");
+                }
                 constraintIds = [];
             }
         }

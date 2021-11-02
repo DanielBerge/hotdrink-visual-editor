@@ -1,7 +1,6 @@
 # Getting Started with Create React App
 
 ## Future features
-* Allow elements to change width and height by dragging edges [Transformer react konva](https://konvajs.org/docs/react/Transformer.html)
 * Ha constraints i properties, mulighet for å "Change constraint" for å endre kode, dropdown for å endre på connections (from/to).
 * Blokkere mulighet for å lage to av samme constraint (from == from && to == to)
 * Exporting and importing project
@@ -12,6 +11,7 @@
 * Grid background? [Grid background](https://codepen.io/pierrebleroux/pen/gGpvxJ?editors=1010)
 * Hide/show constraints
 * Endre react render plugin til å virke med hooks?
+* Allow elements to change width and height by dragging edges [Transformer react konva](https://konvajs.org/docs/react/Transformer.html)
 
 ## Available Scripts
 
