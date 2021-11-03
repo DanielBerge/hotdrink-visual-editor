@@ -50,6 +50,7 @@ export const Canvas: FC = () => {
             }
         }
         elements.setCurrent(element);
+        constraints.setCurrent(undefined);
     }
 
     function onDragMove(e: KonvaEventObject<DragEvent>, elem: Elem) {
@@ -97,8 +98,13 @@ export const Canvas: FC = () => {
                             <Arrow
                                 key={from.id + to.id}
                                 onClick={() => {
+                                    constraints.setCurrent(constraint);
+                                    elements.setCurrent(undefined);
+                                }}
+                                onDblClick={() => {
                                     setOpen(true)
                                     constraints.setCurrent(constraint);
+                                    elements.setCurrent(undefined);
                                 }}
                                 points={getPoints(from, to)}
                                 stroke="red"

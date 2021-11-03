@@ -1,14 +1,14 @@
-import {lowerCaseFirst, upperCaseFirst} from "../../utils";
-import {Binding, Elem, InputType} from "../../types";
+import {lowerCaseFirst, upperCaseFirst} from "../../../utils";
+import {Binding, Elem, InputType} from "../../../types";
 import {FC} from "react";
-import {useElements} from "../../wrappers/ElementsWrapper";
+import {useElements} from "../../../wrappers/ElementsWrapper";
 
 interface Props {
     elemKey: string;
     type: typeof InputType | typeof Binding;
 }
 
-export const DropDown: FC<Props> = ({elemKey, type}) => {
+export const ComponentDropDown: FC<Props> = ({elemKey, type}) => {
     const elements = useElements();
 
     return (

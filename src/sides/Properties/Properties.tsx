@@ -2,21 +2,18 @@ import {useState} from "react";
 import {Modal} from "@mui/material";
 import {HTMLView} from "../../content/HTMLView";
 import {useElements} from "../../wrappers/ElementsWrapper";
-import {Binding, Elem, InputType} from "../../types";
-import {upperCaseFirst} from "../../utils";
 import {HTMLBuilder} from "../../exports/HTMLBuilder";
 import {useConstraints} from "../../wrappers/ConstraintsWrapper";
 import JSZip from "jszip";
 import {saveAs} from 'file-saver';
-import {DropDown} from "./DropDown";
+import {ComponentProperties} from "./Components/ComponentProperties";
+import {ConstraintProperties} from "./Constraints/ConstraintProperties";
 
 
 export const Properties = () => {
     const elements = useElements();
     const constraints = useConstraints();
     const [open, setOpen] = useState(false);
-
-    const inputs = ["value", "height", "width"]
 
     return (
         <>
@@ -32,37 +29,8 @@ export const Properties = () => {
                 >Delete
                 </button>
             )}
-            {elements.current && Object.keys(elements.current).map((key: string) => {
-                if (inputs.includes(key)) {
-                    return (
-                        <div key={key}>
-                            <label>{upperCaseFirst(key)}: </label>
-                            <input
-                                value={elements.current[key as keyof Elem]}
-                                onChange={(e) => {
-                                    elements.setCurrent(
-                                        elements.updateElement(elements.current, {
-                                            ...elements.current,
-                                            [key]: e.target.value,
-                                        })
-                                    );
-                                }}
-                            />
-                        </div>
-                    )
-                }
-                if (key === "subType") {
-                    return (
-                        <DropDown key={key} elemKey={key} type={InputType}/>
-                    );
-                }
-                if (key === "binding") {
-                    return (
-                        <DropDown key={key} elemKey={key} type={Binding}/>
-                    );
-                }
-                return <div key={key}>{upperCaseFirst(key)}: {elements.current[key as keyof Elem]}</div>
-            })}
+            <ComponentProperties/>
+            <ConstraintProperties/>
             <button
                 className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"
                 onClick={() => setOpen(true)}
