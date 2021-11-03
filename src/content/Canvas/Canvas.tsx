@@ -84,8 +84,10 @@ export const Canvas: FC = () => {
         node?.scaleY(1);
         elements.setCurrent(
             elements.updateElement(elements.current, {
-                ...elements.current,
-                    width: Math.max( e.target.width() * scaleX),
+                    ...elements.current,
+                    x: e.target.x(),
+                    y: e.target.y(),
+                    width: Math.max(e.target.width() * scaleX),
                     height: Math.max(e.target.height() * scaleY),
                 }
             )
