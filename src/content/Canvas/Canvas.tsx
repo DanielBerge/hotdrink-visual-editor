@@ -73,6 +73,17 @@ export const Canvas: FC = () => {
         }
     }
 
+    function onTransform(e: KonvaEventObject<Event>, scaleX: number, scaleY: number) {
+        elements.setCurrent(
+            elements.updateElement(elements.current, {
+                    ...elements.current,
+                    width: Math.max(5, e.target.width() * scaleX),
+                    height: Math.max(e.target.height() * scaleY),
+                }
+            )
+        )
+    }
+
     const checkDeselect = (e: any) => {
         const clickedOnEmpty = e.target === e.target.getStage();
         if (clickedOnEmpty) {
@@ -121,7 +132,14 @@ export const Canvas: FC = () => {
                         switch (element.type) {
                             case ElemType.Input:
                                 return (
-                                    <CanvasInput key={key} element={element} onClick={onClick} onDragMove={onDragMove}/>
+                                    <CanvasInput
+                                        key={key}
+                                        element={element}
+                                        onClick={onClick}
+                                        onDragMove={onDragMove}
+                                        isSelected={element.id === elements.current?.id}
+                                        onTransform={onTransform}
+                                    />
                                 )
                             case ElemType.Button:
                                 return (
