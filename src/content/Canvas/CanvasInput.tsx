@@ -36,6 +36,12 @@ export const CanvasInput: FC<Props> = ({element, onClick, onDragMove, isSelected
                 // @ts-ignore
                 ref={(ref) => trRef.current = ref}
                 rotateEnabled={false}
+                boundBoxFunc={(oldBox, newBox) => {
+                    if (newBox.width < 10 || newBox.height < 10) {
+                        return oldBox;
+                    }
+                    return newBox;
+                }}
             />
             }
         </>
