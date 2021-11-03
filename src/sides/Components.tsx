@@ -3,6 +3,7 @@ import {freshId} from "../App";
 import {Binding, ElemType, InputType} from "../types";
 import {useElements} from "../wrappers/ElementsWrapper";
 
+const sideOffset = 300;
 
 export const Components: FC = () => {
     const elements = useElements();
@@ -19,7 +20,7 @@ export const Components: FC = () => {
                     elements.addElement({
                         height: 50,
                         width: 200,
-                        x: event.clientX,
+                        x: event.clientX - sideOffset,
                         y: event.clientY,
                         type: ElemType.Input,
                         binding: Binding.Value,
@@ -37,7 +38,7 @@ export const Components: FC = () => {
                     elements.addElement({
                         height: 50,
                         width: 200,
-                        x: event.clientX,
+                        x: event.clientX - sideOffset,
                         y: event.clientY,
                         type: ElemType.Button,
                         binding: Binding.Disabled,
@@ -54,7 +55,7 @@ export const Components: FC = () => {
                     elements.addElement({
                         height: 50,
                         width: 200,
-                        x: event.clientX,
+                        x: event.clientX - sideOffset,
                         y: event.clientY,
                         type: ElemType.Text,
                         binding: Binding.InnerText,

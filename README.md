@@ -1,7 +1,7 @@
 # Getting Started with Create React App
 
 ## Future features
-* When adding new elem, place right under mouse
+* Drag to create constraint
 * Exporting and importing project
 * Export to REACT
 * Collision detection på elements i canvas i tillegg til kanter
