@@ -107,8 +107,9 @@ export const Canvas: FC = () => {
         )
     }
 
-    function onTransformEnd(e: KonvaEventObject<Event>, node: any) {
+    function onTransformEnd(e: KonvaEventObject<Event>, node: any, elem: Elem) {
         restrictSize(e);
+        restrictPlacement(e, elem);
         onTransform(e, node);
     }
 

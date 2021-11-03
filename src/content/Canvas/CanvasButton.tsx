@@ -9,7 +9,7 @@ interface Props {
     onClick: (element: Elem) => void;
     onDragMove: (e: KonvaEventObject<DragEvent>, element: Elem) => void;
     onTransform: (e: KonvaEventObject<Event>, node: any) => void;
-    onTransformEnd: (e: KonvaEventObject<Event>, node: any) => void;
+    onTransformEnd: (e: KonvaEventObject<Event>, node: any, element: Elem) => void;
     isSelected: boolean;
 }
 
@@ -32,7 +32,7 @@ export const CanvasButton: FC<Props> = ({element, onClick, onDragMove, onTransfo
                     height={element.height}
                     fill="black"
                     onTransform={(e) => onTransform(e, shapeRef.current)}
-                    onTransformEnd={(e) => onTransformEnd(e, shapeRef.current)}
+                    onTransformEnd={(e) => onTransformEnd(e, shapeRef.current, element)}
                 />
                 <Text
                     text={element.value}
