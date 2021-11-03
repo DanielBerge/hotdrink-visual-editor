@@ -2,18 +2,19 @@
 
 ## Future features
 * Allow elements to change width and height by dragging edges [Transformer react konva](https://konvajs.org/docs/react/Transformer.html)
+* Grid background? [Grid background](https://codepen.io/pierrebleroux/pen/gGpvxJ?editors=1010)
+* When adding new elem, place right under mouse
 * Exporting and importing project
 * Export to REACT
 * Collision detection på elements i canvas i tillegg til kanter
 * Visualize constraint flow in HTML run mode
 * Legge til variable references i hotdrink to json?
-* Grid background? [Grid background](https://codepen.io/pierrebleroux/pen/gGpvxJ?editors=1010)
 * Hide/show constraints
 * Endre react render plugin til å virke med hooks?
 
 ## Meeting notes
 
-Nov.2
+### Nov.2
 Labels to compoents in visual view, Input Textfield1, Output Textfield2
 
 Api for number operations, strings..

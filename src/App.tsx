@@ -1,5 +1,5 @@
 import React from 'react';
-import {Canvas} from './content/Canvas';
+import {Canvas} from './content/Canvas/Canvas';
 import {Column} from "./sides/Column";
 import {Components} from "./sides/Components";
 import {Properties} from "./sides/Properties/Properties";

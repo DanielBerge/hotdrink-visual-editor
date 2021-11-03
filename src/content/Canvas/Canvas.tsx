@@ -1,12 +1,15 @@
 import React, {FC, useState} from 'react';
-import {Arrow, Group, Layer, Rect, Stage, Text} from 'react-konva';
+import {Arrow, Layer, Stage} from 'react-konva';
 import {KonvaEventObject} from "konva/lib/Node";
-import {useRete} from "../rete/useRete";
-import {Constraint, EditorType, Elem, ElemType} from "../types";
-import {useElements} from "../wrappers/ElementsWrapper";
-import {useConstraints} from "../wrappers/ConstraintsWrapper";
-import {ConstraintEditor} from "./ConstraintEditor";
-import {clamp, getPoints} from "../utils";
+import {useRete} from "../../rete/useRete";
+import {Constraint, EditorType, Elem, ElemType} from "../../types";
+import {useElements} from "../../wrappers/ElementsWrapper";
+import {useConstraints} from "../../wrappers/ConstraintsWrapper";
+import {ConstraintEditor} from "../ConstraintEditor";
+import {clamp, getPoints} from "../../utils";
+import {CanvasInput} from "./CanvasInput";
+import {CanvasButton} from "./CanvasButton";
+import {CanvasText} from "./CanvasText";
 
 let constraintIds: Array<string> = [];
 
@@ -93,7 +96,6 @@ export const Canvas: FC = () => {
                             console.error(`Constraint ids, does not have matching canvas elements: ${constraint.fromId} -> ${constraint.toId}`)
                             return null;
                         }
-
                         return (
                             <Arrow
                                 key={from.id + to.id}
@@ -119,61 +121,16 @@ export const Canvas: FC = () => {
                         switch (element.type) {
                             case ElemType.Input:
                                 return (
-                                    <Rect
-                                        key={key}
-                                        width={element.width}
-                                        height={element.height}
-                                        draggable
-                                        x={element.x}
-                                        y={element.y}
-                                        fill="white"
-                                        stroke="black"
-                                        onClick={() => onClick(element)}
-                                        onDragMove={(e) => onDragMove(e, element)}
-                                    />
+                                    <CanvasInput key={key} element={element} onClick={onClick} onDragMove={onDragMove}/>
                                 )
                             case ElemType.Button:
                                 return (
-                                    <Group
-                                        key={key}
-                                        x={element.x}
-                                        y={element.y}
-                                        draggable
-                                        onClick={() => onClick(element)}
-                                        onDragMove={(e) => onDragMove(e, element)}
-                                    >
-                                        <Rect
-                                            width={element.width}
-                                            height={element.height}
-                                            fill="black"
-                                        />
-                                        <Text
-                                            text={element.value}
-                                            fill="white"
-                                            align="center"
-                                            width={element.width}
-                                            padding={15}
-                                            fontSize={16}
-                                        />
-                                    </Group>
+                                    <CanvasButton key={key} element={element} onClick={onClick}
+                                                  onDragMove={onDragMove}/>
                                 )
                             case ElemType.Text:
                                 return (
-                                    <Text
-                                        key={key}
-                                        text={element.value}
-                                        fill="black"
-                                        align="center"
-                                        width={element.width}
-                                        height={element.height}
-                                        padding={15}
-                                        fontSize={16}
-                                        draggable
-                                        x={element.x}
-                                        y={element.y}
-                                        onClick={() => onClick(element)}
-                                        onDragMove={(e) => onDragMove(e, element)}
-                                    />
+                                    <CanvasText key={key} element={element} onClick={onClick} onDragMove={onDragMove}/>
                                 )
                             default:
                                 return null;
