@@ -73,11 +73,19 @@ export const Canvas: FC = () => {
         }
     }
 
-    function onTransform(e: KonvaEventObject<Event>, scaleX: number, scaleY: number) {
+    function onTransform(e: KonvaEventObject<Event>, node: any) {
+        // @ts-ignore
+        const scaleX = node?.scaleX();
+        // @ts-ignore
+        const scaleY = node?.scaleY();
+        // @ts-ignore
+        node?.scaleX(1);
+        // @ts-ignore
+        node?.scaleY(1);
         elements.setCurrent(
             elements.updateElement(elements.current, {
-                    ...elements.current,
-                    width: Math.max(5, e.target.width() * scaleX),
+                ...elements.current,
+                    width: Math.max( e.target.width() * scaleX),
                     height: Math.max(e.target.height() * scaleY),
                 }
             )
@@ -143,8 +151,14 @@ export const Canvas: FC = () => {
                                 )
                             case ElemType.Button:
                                 return (
-                                    <CanvasButton key={key} element={element} onClick={onClick}
-                                                  onDragMove={onDragMove}/>
+                                    <CanvasButton
+                                        key={key}
+                                        element={element}
+                                        onClick={onClick}
+                                        onDragMove={onDragMove}
+                                        isSelected={element.id === elements.current?.id}
+                                        onTransform={onTransform}
+                                    />
                                 )
                             case ElemType.Text:
                                 return (
