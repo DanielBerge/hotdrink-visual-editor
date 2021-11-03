@@ -10,9 +10,10 @@ interface Props {
     onDragMove: (e: KonvaEventObject<DragEvent>, element: Elem) => void;
     isSelected: boolean;
     onTransform: (e: KonvaEventObject<Event>, node: any) => void;
+    onTransformEnd: (e: KonvaEventObject<Event>, node: any) => void;
 }
 
-export const CanvasInput: FC<Props> = ({element, onClick, onDragMove, isSelected, onTransform}) => {
+export const CanvasInput: FC<Props> = ({element, onClick, onDragMove, isSelected, onTransform, onTransformEnd}) => {
     const [shapeRef, trRef] = useTransformer(isSelected);
 
     return (
@@ -30,6 +31,7 @@ export const CanvasInput: FC<Props> = ({element, onClick, onDragMove, isSelected
                 onClick={() => onClick(element)}
                 onDragMove={(e) => onDragMove(e, element)}
                 onTransform={(e) => onTransform(e, shapeRef.current)}
+                onTransformEnd={(e) => onTransformEnd(e, shapeRef.current)}
             />
             {isSelected &&
             <Transformer

@@ -1,7 +1,6 @@
 # Getting Started with Create React App
 
 ## Future features
-* Allow elements to change width and height by dragging edges [Transformer react konva](https://konvajs.org/docs/react/Transformer.html)
 * Grid background? [Grid background](https://codepen.io/pierrebleroux/pen/gGpvxJ?editors=1010)
 * When adding new elem, place right under mouse
 * Exporting and importing project

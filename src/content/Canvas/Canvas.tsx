@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {Arrow, Layer, Stage} from 'react-konva';
+import {Arrow, Layer, Line, Stage} from 'react-konva';
 import {KonvaEventObject} from "konva/lib/Node";
 import {useRete} from "../../rete/useRete";
 import {Constraint, EditorType, Elem, ElemType} from "../../types";
@@ -15,6 +15,7 @@ let constraintIds: Array<string> = [];
 
 const width = window.screen.availWidth - 600;
 const height = window.innerHeight;
+const snapSpace = 10;
 
 export const Canvas: FC = () => {
     const elements = useElements();
@@ -56,10 +57,21 @@ export const Canvas: FC = () => {
         constraints.setCurrent(undefined);
     }
 
+    function restrictPlacement(e: any, elem: Elem) {
+        e.target.x(clamp(e.target.x(), width - elem.width));
+        e.target.x(Math.round(e.target.x() / snapSpace) * snapSpace);
+        e.target.y(clamp(e.target.y(), height - elem.height));
+        e.target.y(Math.round(e.target.y() / snapSpace) * snapSpace);
+    }
+
+    function restrictSize(e: any) {
+        e.target.width(Math.round(e.target.width() / snapSpace) * snapSpace);
+        e.target.height(Math.round(e.target.height() / snapSpace) * snapSpace);
+    }
+
     function onDragMove(e: KonvaEventObject<DragEvent>, elem: Elem) {
         const found = elements.getElementById(elem.id);
-        e.target.x(clamp(e.target.x(), width - elem.width));
-        e.target.y(clamp(e.target.y(), height - elem.height));
+        restrictPlacement(e, elem);
         if (found) {
             elements.updateElement(found, {
                     ...found,
@@ -82,6 +94,7 @@ export const Canvas: FC = () => {
         node?.scaleX(1);
         // @ts-ignore
         node?.scaleY(1);
+
         elements.setCurrent(
             elements.updateElement(elements.current, {
                     ...elements.current,
@@ -92,6 +105,11 @@ export const Canvas: FC = () => {
                 }
             )
         )
+    }
+
+    function onTransformEnd(e: KonvaEventObject<Event>, node: any) {
+        restrictSize(e);
+        onTransform(e, node);
     }
 
     const checkDeselect = (e: any) => {
@@ -109,6 +127,32 @@ export const Canvas: FC = () => {
                 className="bg-gray-100"
                 onClick={checkDeselect}
             >
+                <Layer>
+                    {
+                        Array.from(Array(height).keys()).filter((i) => i % snapSpace === 0).map((y) => {
+                            return (
+                                <Line
+                                    points={[0, y, width, y]}
+                                    width={width}
+                                    stroke="gray"
+                                    strokeWidth={0.5}
+                                />
+                            )
+                        })
+                    }
+                    {
+                        Array.from(Array(width).keys()).filter((i) => i % snapSpace === 0).map((x) => {
+                            return (
+                                <Line
+                                    points={[x, 0, x, height]}
+                                    width={width}
+                                    stroke="gray"
+                                    strokeWidth={0.5}
+                                />
+                            )
+                        })
+                    }
+                </Layer>
                 <Layer>
                     {constraints.constraints.map((constraint: Constraint) => {
                         const from = elements.getElementById(constraint.fromId);
@@ -149,6 +193,7 @@ export const Canvas: FC = () => {
                                         onDragMove={onDragMove}
                                         isSelected={element.id === elements.current?.id}
                                         onTransform={onTransform}
+                                        onTransformEnd={onTransformEnd}
                                     />
                                 )
                             case ElemType.Button:
@@ -160,6 +205,7 @@ export const Canvas: FC = () => {
                                         onDragMove={onDragMove}
                                         isSelected={element.id === elements.current?.id}
                                         onTransform={onTransform}
+                                        onTransformEnd={onTransformEnd}
                                     />
                                 )
                             case ElemType.Text:
