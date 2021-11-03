@@ -1,8 +1,8 @@
 # Getting Started with Create React App
 
 ## Future features
-* Drag to create constraint
 * Exporting and importing project
+* Drag from edge to create constraint, maybe a circle?
 * Export to REACT
 * Collision detection på elements i canvas i tillegg til kanter
 * Visualize constraint flow in HTML run mode

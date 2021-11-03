@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import {Rect, Transformer} from "react-konva";
+import {Circle, Group, Rect, Transformer} from "react-konva";
 import {Elem} from "../../types";
 import {KonvaEventObject} from "konva/lib/Node";
 import {useTransformer} from "./useTransformer";
@@ -18,21 +18,39 @@ export const CanvasInput: FC<Props> = ({element, onClick, onDragMove, isSelected
 
     return (
         <>
-            <Rect
-                // @ts-ignore
-                ref={(ref) => shapeRef.current = ref}
-                width={element.width}
-                height={element.height}
-                draggable
-                x={element.x}
-                y={element.y}
-                fill="white"
-                stroke="black"
-                onClick={() => onClick(element)}
-                onDragMove={(e) => onDragMove(e, element)}
-                onTransform={(e) => onTransform(e, shapeRef.current)}
-                onTransformEnd={(e) => onTransformEnd(e, shapeRef.current, element)}
-            />
+            <Group>
+                <Rect
+                    // @ts-ignore
+                    ref={(ref) => shapeRef.current = ref}
+                    width={element.width}
+                    height={element.height}
+                    draggable
+                    x={element.x}
+                    y={element.y}
+                    fill="white"
+                    stroke="black"
+                    onClick={() => onClick(element)}
+                    onDragMove={(e) => onDragMove(e, element)}
+                    onTransform={(e) => onTransform(e, shapeRef.current)}
+                    onTransformEnd={(e) => onTransformEnd(e, shapeRef.current, element)}
+                />
+                {isSelected &&
+                <Circle
+                    visible={false}
+                    width={40}
+                    height={40}
+                    x={element.x + element.width / 2}
+                    y={element.y + element.height / 2}
+                    fill="red"
+                    onMouseDown={() => {
+                        console.log("Now")
+                    }}
+                    onDragMove={() => {
+                        console.log("??")
+                    }}
+                />
+                }
+            </Group>
             {isSelected &&
             <Transformer
                 // @ts-ignore
