@@ -1,4 +1,4 @@
-import Rete, {Node, NodeEditor} from "rete";
+import Rete, {Input, Node, NodeEditor, Output} from "rete";
 import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
 import {boolSocket, numSocket} from "../sockets";
 import {getInputVariable} from "../reteUtils";
@@ -16,8 +16,8 @@ export class IsPositiveComponent extends Rete.Component {
     }
 
     async builder(node: Node): Promise<void> {
-        const out = new Rete.Output("bool", "True/False", boolSocket);
-        const inp = new Rete.Input("numKey", "Number", numSocket);
+        const out: Output = new Rete.Output("bool", "True/False", boolSocket);
+        const inp: Input = new Rete.Input("numKey", "Number", numSocket);
 
         node.addInput(inp).addOutput(out);
     }

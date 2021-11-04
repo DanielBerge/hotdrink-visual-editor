@@ -10,9 +10,10 @@ import {ReadOnlyVarComponent} from "./components/ReadOnlyVarComponent";
 import {numSocket, stringSocket} from "./sockets";
 import {Constraint, EditorType} from "../types";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
-import DockPlugin from 'rete-dock-plugin';
 import AreaPlugin from 'rete-area-plugin';
 import {useEditor} from "../wrappers/EditorWrapper";
+import {Block} from "./blockBuilder";
+import DockPlugin from 'rete-dock-plugin';
 
 let index = 0;
 
@@ -28,8 +29,8 @@ function createEditor(container: HTMLElement): NodeEditor {
         searchBar: true,
     });
     try {
-        // @ts-ignore
-        editor.use(DockPlugin, {
+         // @ts-ignore
+         editor.use(DockPlugin, {
             container: document.querySelector('.dock'),
             plugins: [ReactRenderPlugin],
             itemClass: 'dock-item',
@@ -54,8 +55,16 @@ async function initRete(container: HTMLElement, constraint: Constraint, onCodeUp
     const numComponent: ReadOnlyVarComponent = new ReadOnlyVarComponent("Number", numSocket, "num");
     const stringComponent: ReadOnlyVarComponent = new ReadOnlyVarComponent("String", stringSocket, "num");
     const positiveComponent: IsPositiveComponent = new IsPositiveComponent(editor);
-    const returnBoolComponent: ReturnAnyComponent = new ReturnAnyComponent(editor);
-    const components: Component[] = [numComponent, positiveComponent, returnBoolComponent, stringComponent]
+    const returnAnyComponent: ReturnAnyComponent = new ReturnAnyComponent(editor);
+
+    const block = new Block("Subtraction", "-", editor);
+    block.addInput("num1", "newInp1", numSocket);
+    block.addInput("num2", "newInp2", numSocket);
+    block.addOutput("num3", "newOut", numSocket);
+
+    const reteComponent = block.build();
+
+    const components: Component[] = [reteComponent, numComponent, positiveComponent, returnAnyComponent, stringComponent]
 
     components.forEach((c) => {
         editor.register(c);
@@ -66,7 +75,7 @@ async function initRete(container: HTMLElement, constraint: Constraint, onCodeUp
         await editor.fromJSON(constraint.rete);
     } else {
         editor.addNode(await newNode(100, 200, constraint.fromId, numComponent));
-        editor.addNode(await newNode(900, 200, "", returnBoolComponent));
+        editor.addNode(await newNode(900, 200, "", returnAnyComponent));
     }
 
     editor.on(
@@ -74,18 +83,13 @@ async function initRete(container: HTMLElement, constraint: Constraint, onCodeUp
         "process noderemoved connectioncreated connectionremoved",
         async () => {
             const sourceCode: string = await generateCode(engine, editor.toJSON());
+            console.log(sourceCode);
             onCodeUpdate(sourceCode);
         }
     );
 
     editor.on("nodecreated", async (node: Node) => {
-        if (node.name.match(new RegExp(".*positive.*"))) {
-            node.data = {variableName: `positive${freshIndex()}`}
-        } else if (node.name.match(new RegExp(".*IF.*"))) {
-            node.data = {variableName: `if${freshIndex()}`}
-        } else if (node.name.match(new RegExp(".*literal.*"))) {
-            node.data = {variableName: `literal${freshIndex()}`}
-        }
+        node.data = {variableName: `var${freshIndex()}`}
     })
 
     editor.view.resize();
