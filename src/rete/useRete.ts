@@ -59,7 +59,6 @@ async function initRete(container: HTMLElement, constraint: Constraint, onCodeUp
 
     const block = new Block("Subtraction", "-", editor);
     block.addInput("num1", "newInp1", numSocket);
-    block.addInput("num2", "newInp2", numSocket);
     block.addOutput("num3", "newOut", numSocket);
 
     const reteComponent = block.build();

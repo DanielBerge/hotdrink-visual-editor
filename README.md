@@ -1,6 +1,9 @@
 # Getting Started with Create React App
 
 ## Future features
+* Change from output and input components to Textfield and Button.
+* IF block only has one input, and binary operation, add a input field in block.
+* Create blockbuilder button for binary operations.
 * Exporting and importing project
 * Drag from edge to create constraint, maybe a circle?
 * Export to REACT
@@ -8,7 +11,7 @@
 * Visualize constraint flow in HTML run mode
 * Legge til variable references i hotdrink to json?
 * Hide/show constraints
-* Endre react render plugin til å virke med hooks?
+* Endre react render plugin til å virke med hooks? Og rete.control?
 
 ## Meeting notes
 
@@ -27,3 +30,9 @@ length, contains, startsWith, endsWith, indexOf, lastIndexOf, substring, toLower
 isBefore, isBetween, isAfter, isSameDay, isSameMonth, isSameYear, isSameHour, isSameMinute, isSameSecond, isSameMillisecond
 ### Boolean operators: 
 and, or, not, isTrue, isFalse
+
+
+### Questions
+Decide on how to group constraints, fahrenheit celsius, etc. + multiplier?
+How to do multiple input variables to one constraint.
+Currently only supporting one way constraint.

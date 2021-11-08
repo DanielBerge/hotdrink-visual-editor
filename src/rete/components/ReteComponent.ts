@@ -3,10 +3,12 @@ import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
 import {CustomNode} from "../CustomNode";
 import {getInputVariable} from "../reteUtils";
 import {BlockConnection} from "../blockBuilder";
+import {ReteControl} from "../control/ReteControl";
 
 export class ReteComponent extends Rete.Component {
     private readonly inputs: BlockConnection[];
     private readonly outputs: BlockConnection[];
+    private control: ReteControl | undefined;
 
     constructor(public name: string, public operator: string, inputs: BlockConnection[], outputs: BlockConnection[], public editor: NodeEditor) {
         super(name);
@@ -26,6 +28,10 @@ export class ReteComponent extends Rete.Component {
         for (const output of this.outputs) {
             node.addOutput(new Rete.Output(output.key, output.title, output.socket));
         }
+        if (this.inputs.length === 1) {
+            this.control = new ReteControl(this.editor, "key", node)
+            node.addControl(this.control);
+        }
     }
 
     worker(node: NodeData, inputs: WorkerInputs, outputs: WorkerOutputs, ...args: unknown[]): void {
@@ -33,6 +39,10 @@ export class ReteComponent extends Rete.Component {
 
     code(node: NodeData, inputs: WorkerInputs, add: (name: string, expression?: any) => void) {
         let variables = this.inputs.map(input => getInputVariable(input.key, node, this.editor));
-        add(node.data["variableName"] as string, `${variables.map((variable) => `parseInt(${variable}) ${this.operator}`).join(" ")})`.slice(0, -3));
+        if (this.inputs.length === 1) {
+            add(node.data["variableName"] as string, `parseInt(${variables[0]}) ${this.operator} ${this.control?.props.value}`);
+        } else {
+            add(node.data["variableName"] as string, `${variables.map((variable) => `parseInt(${variable}) ${this.operator}`).join(" ")})`.slice(0, -3));
+        }
     }
 }
