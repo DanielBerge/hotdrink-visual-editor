@@ -37,7 +37,7 @@ export const VisualComponent: FC<Props> = ({component, updateComponent, setNewCo
             {component.inputs?.map((input: Socket, index) => {
                 return <ComponentSocket
                     component={component}
-                    input={input}
+                    socket={input}
                     index={index}
                     output={false}
                     setNewConnection={setNewConnection}
@@ -47,7 +47,7 @@ export const VisualComponent: FC<Props> = ({component, updateComponent, setNewCo
             {component.outputs?.map((output: Socket, index) => {
                 return <ComponentSocket
                     component={component}
-                    input={output}
+                    socket={output}
                     index={index}
                     output={true}
                     setNewConnection={setNewConnection}

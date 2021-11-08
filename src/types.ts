@@ -51,6 +51,8 @@ export interface Connection {
     toComponentId?: string;
     fromSocketIndex?: number;
     toSocketIndex?: number;
+    toSocket?: Socket;
+    fromSocket?: Socket;
 }
 
 export interface VComponent {
@@ -61,4 +63,5 @@ export interface VComponent {
     height: number;
     inputs?: Socket[];
     outputs?: Socket[];
+    code(inputConnections: Connection[]): string;
 }

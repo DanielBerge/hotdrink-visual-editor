@@ -172,5 +172,5 @@ export function clamp(num: number, max: number): number {
 }
 
 export function socketYAxisPlacement(component: VComponent, index: number) {
-    return component.y + (component.height / (component.outputs!.length * 2)) * index
+    return component.y + (component.height / ((component.outputs?.length ?? 1) * 2)) * index
 }

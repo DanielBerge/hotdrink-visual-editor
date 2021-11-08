@@ -1,5 +1,5 @@
 import React, {FC, useContext, useState} from "react";
-import {VComponent, Connection} from "../../types";
+import {Connection, VComponent} from "../../types";
 
 const ComponentContext = React.createContext<any>({})
 const ConnectionContext = React.createContext<any>({})
@@ -7,7 +7,7 @@ const ConnectionContext = React.createContext<any>({})
 const initialComponents: VComponent[] = [
     {
         id: "1",
-        x: 10,
+        x: 100,
         y: 10,
         width: 200,
         height: 200,
@@ -15,14 +15,17 @@ const initialComponents: VComponent[] = [
             {
                 id: "1",
                 label: "a",
-                variable: "a",
+                variable: "initial",
             },
         ],
+        code: (inputConnections: Connection[]) => {
+            return "";
+        }
     },
     {
         id: "2",
-        x: 200,
-        y: 200,
+        x: 600,
+        y: 100,
         width: 200,
         height: 200,
         inputs: [
@@ -31,24 +34,13 @@ const initialComponents: VComponent[] = [
                 label: "a",
                 variable: "a",
             },
-            {
-                id: "3",
-                label: "a",
-                variable: "a",
-            },
-            {
-                id: "4",
-                label: "a",
-                variable: "a",
-            },
         ],
-        outputs: [
-            {
-                id: "5",
-                label: "a",
-                variable: "b",
-            },
-        ],
+        code: (inputConnections: Connection[]) => {
+            if (inputConnections.length === 1) {
+                return `return ${inputConnections[0].fromSocket?.variable ?? ""}`;
+            }
+            return "";
+        }
     },
 ]
 

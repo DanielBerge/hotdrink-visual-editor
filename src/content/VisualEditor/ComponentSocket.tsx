@@ -1,21 +1,20 @@
 import {Circle, Text} from "react-konva";
 import {FC} from "react";
-import {VComponent, Connection, Socket} from "../../types";
+import {Connection, Socket, VComponent} from "../../types";
 import {socketYAxisPlacement} from "../../utils";
 
 const labelPadding = 15;
 
 interface Props {
     component: VComponent;
-    input: Socket;
+    socket: Socket;
     index: number;
     output: boolean;
     connection: Connection | null;
     setNewConnection: (connection: Connection) => void;
 }
 
-export const ComponentSocket: FC<Props> = ({component, input, index, output, setNewConnection, connection}) => {
-
+export const ComponentSocket: FC<Props> = ({component, socket, index, output, setNewConnection, connection}) => {
     return (
         <>
             <Circle
@@ -24,28 +23,29 @@ export const ComponentSocket: FC<Props> = ({component, input, index, output, set
                 radius={10}
                 fill="green"
                 onClick={() => {
-                    console.log("Clicked");
-                    if (connection?.fromComponentId) {
+                    if (connection?.fromComponentId && !output) {
                         setNewConnection(
                             {
                                 ...connection,
                                 toComponentId: component.id,
                                 toSocketIndex: index,
+                                toSocket: socket,
                             }
                         )
-                    } else {
+                    } else if (output) {
                         setNewConnection(
                             {
                                 ...connection,
                                 fromComponentId: component.id,
                                 fromSocketIndex: index,
+                                fromSocket: socket,
                             }
                         )
                     }
                 }}
             />
             <Text
-                text={input.label}
+                text={socket.label}
                 x={output ? component.x + component.width + labelPadding : component.x + labelPadding}
                 y={socketYAxisPlacement(component, index)}
             />
