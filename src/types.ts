@@ -40,10 +40,25 @@ export interface Constraint {
     visual?: string;
 }
 
-export interface Component {
+export interface Socket {
+    id: string;
+    variable: string;
+    label: string;
+}
+
+export interface Connection {
+    fromComponentId?: string;
+    toComponentId?: string;
+    fromSocketIndex?: number;
+    toSocketIndex?: number;
+}
+
+export interface VComponent {
     id: string;
     x: number;
     y: number;
     width: number;
     height: number;
+    inputs?: Socket[];
+    outputs?: Socket[];
 }

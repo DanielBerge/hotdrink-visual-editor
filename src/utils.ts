@@ -1,5 +1,5 @@
 import {Component, ConstraintSpec, defaultConstraintSystem, maskNone, Method, VariableReference} from "hotdrink";
-import {Constraint, Elem} from "./types";
+import {VComponent, Constraint, Elem} from "./types";
 
 export const idToValue = new Map();
 export const valueToId = new Map();
@@ -169,4 +169,8 @@ export function clamp(num: number, max: number): number {
         return max;
     }
     return num;
+}
+
+export function socketYAxisPlacement(component: VComponent, index: number) {
+    return component.y + (component.height / (component.outputs!.length * 2)) * index
 }
