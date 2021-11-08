@@ -1,6 +1,7 @@
-import {NodeData} from "rete/types/core/data";
-import {Node, NodeEditor} from "rete";
-
+export function none() {
+    throw new Error("Method not implemented.");
+}
+/**
 export function getInputVariable(inputKey: string, node: NodeData, editor: NodeEditor): undefined | unknown {
     if (node.inputs[inputKey].connections.length > 0) {
         const inpIndex: number = node.inputs[inputKey].connections[0].node;
@@ -14,3 +15,4 @@ export function getInputVariable(inputKey: string, node: NodeData, editor: NodeE
         return undefined;
     }
 }
+**/

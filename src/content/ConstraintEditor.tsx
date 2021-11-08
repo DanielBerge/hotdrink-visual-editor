@@ -4,14 +4,15 @@ import {CodeEditor} from "./CodeEditor";
 import {useEditor} from "../wrappers/EditorWrapper";
 import {EditorType} from "../types";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
+import {VisualEditor} from "./VisualEditor/VisualEditor";
+import {VisualWrapper} from "./VisualEditor/VisualWrapper";
 
 interface Props {
     open: boolean;
     onClose: any;
-    setContainer: any;
 }
 
-export const ConstraintEditor: FC<Props> = ({open, onClose, setContainer}) => {
+export const ConstraintEditor: FC<Props> = ({open, onClose}) => {
     const constraints = useConstraints();
     const editor = useEditor();
 
@@ -33,12 +34,10 @@ export const ConstraintEditor: FC<Props> = ({open, onClose, setContainer}) => {
             <div
                 style={editor.type === EditorType.VISUAL ? {} : {display: 'none'}}
                 className="editor bg-white"
-                ref={(ref) => ref && setContainer(ref)}
             >
-                <div className="container">
-                    <div className="node-editor"/>
-                </div>
-                <div className="dock"/>
+                <VisualWrapper>
+                    <VisualEditor/>
+                </VisualWrapper>
             </div>
             <div
                 style={editor.type === EditorType.CODE ? {} : {display: 'none'}}

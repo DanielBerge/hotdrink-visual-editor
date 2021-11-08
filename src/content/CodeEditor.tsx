@@ -24,7 +24,7 @@ export const CodeEditor = () => {
                 ...constraints.current,
                 code: value ?? "",
                 type: EditorType.CODE,
-                rete: undefined,
+                visual: undefined,
             });
         }
     }

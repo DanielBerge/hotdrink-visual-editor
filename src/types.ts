@@ -1,5 +1,3 @@
-import {Data} from "rete/types/core/data";
-
 export enum ElemType {
     Input = "input",
     Button = "button",
@@ -39,5 +37,13 @@ export interface Constraint {
     toId: string;
     code: string;
     type: EditorType;
-    rete?: Data;
+    visual?: string;
+}
+
+export interface Component {
+    id: string;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
 }

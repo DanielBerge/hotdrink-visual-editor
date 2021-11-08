@@ -1,6 +1,5 @@
-import {Engine} from "rete";
-import {Data} from "rete/types/core/data";
 
+/**
 export async function generateCode(engine: Engine, data: Data): Promise<string> {
     let file = '';
 
@@ -36,4 +35,8 @@ export async function generateCode(engine: Engine, data: Data): Promise<string> 
     await engine.process(data);
 
     return file;
+}
+ **/
+export function generateCode() {
+    throw new Error("Method not implemented.");
 }

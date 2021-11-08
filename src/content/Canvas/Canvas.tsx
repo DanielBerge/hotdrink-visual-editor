@@ -21,12 +21,10 @@ export const Canvas: FC = () => {
     const elements = useElements();
     const constraints = useConstraints();
 
-    const [setContainer, onVisualClose] = useRete();
     const [open, setOpen] = useState(false);
 
     function onClose() {
         setOpen(false);
-        onVisualClose();
     }
 
 
@@ -222,7 +220,6 @@ export const Canvas: FC = () => {
             <ConstraintEditor
                 onClose={onClose}
                 open={open}
-                setContainer={setContainer}
             />
         </div>
     );
