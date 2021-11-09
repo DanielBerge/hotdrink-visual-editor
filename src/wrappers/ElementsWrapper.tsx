@@ -61,12 +61,7 @@ const ElementsWrapper: FC = (props) => {
     }
 
     function getElementById(id: string): Elem | undefined {
-        return elements.find((element: Elem) => {
-            if (element.id === id) {
-                return element;
-            }
-            return undefined;
-        })
+        return elements.find((elem: Elem) => elem.id === id);
     }
 
     function deleteElement(id: string) {

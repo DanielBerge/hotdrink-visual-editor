@@ -23,7 +23,7 @@ export const ConstraintProperties = () => {
                         </>
                     )
                 }
-                if (key === "rete") return <></>;
+                if (key === "visualJson") return <></>;
                 return <div key={key}>{upperCaseFirst(key)}: {constraints.current![key as keyof Constraint]}</div>
             })}
         </>

@@ -1,7 +1,6 @@
 import React, {FC, useState} from 'react';
 import {Arrow, Layer, Line, Stage} from 'react-konva';
 import {KonvaEventObject} from "konva/lib/Node";
-import {useRete} from "../../rete/useRete";
 import {Constraint, EditorType, Elem, ElemType} from "../../types";
 import {useElements} from "../../wrappers/ElementsWrapper";
 import {useConstraints} from "../../wrappers/ConstraintsWrapper";
@@ -10,6 +9,7 @@ import {clamp, getPoints} from "../../utils";
 import {CanvasInput} from "./CanvasInput";
 import {CanvasButton} from "./CanvasButton";
 import {CanvasText} from "./CanvasText";
+import { VisualWrapper } from '../VisualEditor/VisualWrapper';
 
 let constraintIds: Array<string> = [];
 
@@ -21,12 +21,10 @@ export const Canvas: FC = () => {
     const elements = useElements();
     const constraints = useConstraints();
 
-    const [setContainer, onVisualClose] = useRete();
     const [open, setOpen] = useState(false);
 
     function onClose() {
         setOpen(false);
-        onVisualClose();
     }
 
 
@@ -133,6 +131,7 @@ export const Canvas: FC = () => {
                         Array.from(Array(height).keys()).filter((i) => i % snapSpace === 0).map((y) => {
                             return (
                                 <Line
+                                    key={y}
                                     points={[0, y, width, y]}
                                     width={width}
                                     stroke="gray"
@@ -145,6 +144,7 @@ export const Canvas: FC = () => {
                         Array.from(Array(width).keys()).filter((i) => i % snapSpace === 0).map((x) => {
                             return (
                                 <Line
+                                    key={x}
                                     points={[x, 0, x, height]}
                                     width={width}
                                     stroke="gray"
@@ -219,11 +219,12 @@ export const Canvas: FC = () => {
                     })}
                 </Layer>
             </Stage>
-            <ConstraintEditor
-                onClose={onClose}
-                open={open}
-                setContainer={setContainer}
-            />
+            <VisualWrapper>
+                <ConstraintEditor
+                    onClose={onClose}
+                    open={open}
+                />
+            </VisualWrapper>
         </div>
     );
 };

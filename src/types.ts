@@ -1,5 +1,3 @@
-import {Data} from "rete/types/core/data";
-
 export enum ElemType {
     Input = "input",
     Button = "button",
@@ -39,5 +37,36 @@ export interface Constraint {
     toId: string;
     code: string;
     type: EditorType;
-    rete?: Data;
+    visualJson?: [ components: any[], connections: any[] ];
+}
+
+export interface Socket {
+    id: string;
+    variable: string;
+    label: string;
+}
+
+export interface Connection {
+    fromComponentId?: string;
+    toComponentId?: string;
+    fromSocketIndex?: number;
+    toSocketIndex?: number;
+    toSocket?: Socket;
+    fromSocket?: Socket;
+}
+
+export interface VComponent extends LibraryComponent {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
+
+export interface LibraryComponent {
+    id: string;
+    label: string;
+    inputs?: Socket[];
+    outputs?: Socket[];
+
+    code(inputConnections: Connection[], outputSockets: Socket[]): string;
 }
