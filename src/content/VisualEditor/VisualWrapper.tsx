@@ -4,6 +4,7 @@ import {Connection, LibraryComponent, Socket, VComponent} from "../../types";
 const ComponentContext = React.createContext<any>({})
 const ConnectionContext = React.createContext<any>({})
 const LibraryContext = React.createContext<any>({})
+const ObjectContext = React.createContext<any>({})
 
 const initialComponents: VComponent[] = [
     {
@@ -16,12 +17,7 @@ const initialComponents: VComponent[] = [
         outputs: [
             {
                 id: "1",
-                label: "a",
-                variable: "initial",
-            },
-            {
-                id: "1",
-                label: "a",
+                label: "Initial",
                 variable: "initial",
             },
         ],
@@ -147,12 +143,31 @@ export interface Visual {
     connections: Connection[],
     setConnections: (connections: Connection[]) => void,
     getComponentById: (id: string) => VComponent,
+    toObject: () => [ components: VComponent[], connections: Connection[] ],
+    fromObject: (object: [ components: VComponent[], connections: Connection[] ] | undefined) => void,
 }
 
 export const VisualWrapper: FC = (props) => {
     const [libraryComponents, setLibraryComponents] = useState<LibraryComponent[]>(initialLibraryComponents);
     const [components, setComponents] = useState(initialComponents);
-    const [connections, setConnections] = useState<string[]>([]);
+    const [connections, setConnections] = useState<Connection[]>([]);
+
+    function toObject(): [ components: VComponent[], connections: Connection[] ] {
+        return [
+            components,
+            connections
+        ]
+    }
+
+    function fromObject(object: [ components: VComponent[], connections: Connection[] ]): void {
+        if (object) {
+            setComponents(object[0]);
+            setConnections(object[1]);
+        } else {
+            setComponents(initialComponents);
+            setConnections([]);
+        }
+    }
 
     function updateComponent(oldComponent: VComponent, newComponent: VComponent) {
         const index = components.findIndex(component => component.id === oldComponent.id);
@@ -169,7 +184,9 @@ export const VisualWrapper: FC = (props) => {
         <ComponentContext.Provider value={{components, setComponents, updateComponent, getComponentById}}>
             <ConnectionContext.Provider value={{connections, setConnections}}>
                 <LibraryContext.Provider value={{libraryComponents, setLibraryComponents}}>
-                    {props.children}
+                    <ObjectContext.Provider value={{toObject, fromObject}}>
+                        {props.children}
+                    </ObjectContext.Provider>
                 </LibraryContext.Provider>
             </ConnectionContext.Provider>
         </ComponentContext.Provider>
@@ -180,6 +197,7 @@ export function useVisual(): Visual {
     const {libraryComponents, setLibraryComponents} = useContext(LibraryContext);
     const {components, setComponents, updateComponent, getComponentById} = useContext(ComponentContext);
     const {connections, setConnections} = useContext(ConnectionContext);
+    const {toObject, fromObject} = useContext(ObjectContext);
 
     return {
         libraryComponents,
@@ -190,5 +208,7 @@ export function useVisual(): Visual {
         connections,
         setConnections,
         getComponentById,
+        toObject,
+        fromObject,
     }
 }

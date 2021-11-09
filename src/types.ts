@@ -37,7 +37,7 @@ export interface Constraint {
     toId: string;
     code: string;
     type: EditorType;
-    visual?: string;
+    visualJson?: [ components: any[], connections: any[] ];
 }
 
 export interface Socket {

@@ -10,18 +10,6 @@ import {socketYAxisPlacement} from "../../utils";
 export const VisualEditor = () => {
     const visual = useVisual();
 
-    function generateCode(components: VComponent[], connections: Connection[]): string {
-        let code = "";
-        components.reverse().forEach((component: VComponent) => {
-            const compConnections = connections.filter((connection: Connection) => {
-                return connection.toComponentId === component.id;
-            });
-            code += component.code(compConnections, component.outputs ?? []);
-        })
-
-        return code;
-    }
-
     const [newConnection, setNewConnection] = useState<Connection | null>(null);
     const [mousePosition, setMousePosition] = useState<{ x: number, y: number } | null>(null);
 
@@ -32,7 +20,6 @@ export const VisualEditor = () => {
     }, [])
 
     useEffect(() => {
-        console.log(generateCode(visual.components, visual.connections));
         if (newConnection?.fromComponentId && newConnection.toComponentId) {
             visual.setConnections([...visual.connections, newConnection]);
             setNewConnection(null);

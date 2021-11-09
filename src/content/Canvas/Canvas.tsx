@@ -1,7 +1,6 @@
 import React, {FC, useState} from 'react';
 import {Arrow, Layer, Line, Stage} from 'react-konva';
 import {KonvaEventObject} from "konva/lib/Node";
-import {useRete} from "../../rete/useRete";
 import {Constraint, EditorType, Elem, ElemType} from "../../types";
 import {useElements} from "../../wrappers/ElementsWrapper";
 import {useConstraints} from "../../wrappers/ConstraintsWrapper";
@@ -10,6 +9,7 @@ import {clamp, getPoints} from "../../utils";
 import {CanvasInput} from "./CanvasInput";
 import {CanvasButton} from "./CanvasButton";
 import {CanvasText} from "./CanvasText";
+import { VisualWrapper } from '../VisualEditor/VisualWrapper';
 
 let constraintIds: Array<string> = [];
 
@@ -219,10 +219,12 @@ export const Canvas: FC = () => {
                     })}
                 </Layer>
             </Stage>
-            <ConstraintEditor
-                onClose={onClose}
-                open={open}
-            />
+            <VisualWrapper>
+                <ConstraintEditor
+                    onClose={onClose}
+                    open={open}
+                />
+            </VisualWrapper>
         </div>
     );
 };

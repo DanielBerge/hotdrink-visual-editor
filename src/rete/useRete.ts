@@ -38,14 +38,7 @@ export function useRete(): [(HTMLElement: HTMLElement) => void, any] {
 
     function onClose() {
         if (constraints.current && editor.type === EditorType.VISUAL) {
-            constraints.updateConstraint(constraints.current, {
-                ...constraints.current,
-                code: editor.code,
-                type: EditorType.VISUAL,
-                //rete: editorRef.current.toJSON(),
-            })
         }
-        constraints.setCurrent(undefined);
     }
 
     return [setContainer, onClose];
