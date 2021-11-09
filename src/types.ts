@@ -55,13 +55,18 @@ export interface Connection {
     fromSocket?: Socket;
 }
 
-export interface VComponent {
-    id: string;
+export interface VComponent extends LibraryComponent {
     x: number;
     y: number;
     width: number;
     height: number;
+}
+
+export interface LibraryComponent {
+    id: string;
+    label: string;
     inputs?: Socket[];
     outputs?: Socket[];
-    code(inputConnections: Connection[]): string;
+
+    code(inputConnections: Connection[], outputSockets: Socket[]): string;
 }

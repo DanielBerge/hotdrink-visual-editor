@@ -131,6 +131,7 @@ export const Canvas: FC = () => {
                         Array.from(Array(height).keys()).filter((i) => i % snapSpace === 0).map((y) => {
                             return (
                                 <Line
+                                    key={y}
                                     points={[0, y, width, y]}
                                     width={width}
                                     stroke="gray"
@@ -143,6 +144,7 @@ export const Canvas: FC = () => {
                         Array.from(Array(width).keys()).filter((i) => i % snapSpace === 0).map((x) => {
                             return (
                                 <Line
+                                    key={x}
                                     points={[x, 0, x, height]}
                                     width={width}
                                     stroke="gray"

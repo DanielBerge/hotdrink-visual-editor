@@ -1,6 +1,6 @@
 import {VComponent, Connection, Socket} from "../../types";
 import {FC} from "react";
-import {Group, Rect} from "react-konva";
+import {Group, Rect, Text} from "react-konva";
 import Konva from "konva";
 import {ComponentSocket} from "./ComponentSocket";
 
@@ -21,7 +21,6 @@ export const VisualComponent: FC<Props> = ({component, updateComponent, setNewCo
         })
     }
 
-
     return (
         <Group>
             <Rect
@@ -29,13 +28,23 @@ export const VisualComponent: FC<Props> = ({component, updateComponent, setNewCo
                 y={component.y}
                 width={component.width}
                 height={component.height}
-                fill="red"
+                fill="gray"
+                strokeWidth={1}
+                stroke={'black'}
                 draggable
                 onDragMove={onDragMove}
                 cornerRadius={10}
             />
+            <Text
+                x={component.x + component.width / 3}
+                y={component.y + 10}
+                fill={'black'}
+                text={component.label}
+                fontSize={20}
+            />
             {component.inputs?.map((input: Socket, index) => {
                 return <ComponentSocket
+                    key={index}
                     component={component}
                     socket={input}
                     index={index}
@@ -46,6 +55,7 @@ export const VisualComponent: FC<Props> = ({component, updateComponent, setNewCo
             })}
             {component.outputs?.map((output: Socket, index) => {
                 return <ComponentSocket
+                    key={index}
                     component={component}
                     socket={output}
                     index={index}
