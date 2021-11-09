@@ -69,7 +69,7 @@ const initialComponents: VComponent[] = [
         ],
         code: (inputConnections: Connection[], outputSockets: Socket[]) => {
             if (inputConnections.length === 1 && outputSockets.length === 1) {
-                return `const ${outputSockets[0].variable} = ${inputConnections[0].fromSocket?.variable ?? ""} + 100;\n`;
+                return `const ${outputSockets[0].variable} = parseInt(${inputConnections[0].fromSocket?.variable ?? ""}) + 100;\n`;
             }
             return "";
         }

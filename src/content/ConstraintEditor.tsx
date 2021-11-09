@@ -30,8 +30,6 @@ export const ConstraintEditor: FC<Props> = ({open, onClose}) => {
     }
 
     useEffect(() => {
-        console.log("ConstraintEditor: useEffect");
-        console.log(constraints.current?.visualJson);
         editor.setType(constraints.current?.type ?? EditorType.VISUAL);
         visual.fromObject(constraints.current?.visualJson);
     }, [constraints.current])
