@@ -8,10 +8,15 @@ const initialComponents: VComponent[] = [
     {
         id: "1",
         x: 100,
-        y: 10,
+        y: 100,
         width: 200,
         height: 200,
         outputs: [
+            {
+                id: "1",
+                label: "a",
+                variable: "initial",
+            },
             {
                 id: "1",
                 label: "a",
@@ -37,11 +42,38 @@ const initialComponents: VComponent[] = [
         ],
         code: (inputConnections: Connection[]) => {
             if (inputConnections.length === 1) {
-                return `return ${inputConnections[0].fromSocket?.variable ?? ""}`;
+                return `return ${inputConnections[0].fromSocket?.variable ?? ""};\n`;
             }
             return "";
         }
     },
+    {
+        id: "3",
+        x: 300,
+        y: 100,
+        width: 200,
+        height: 200,
+        inputs: [
+            {
+                id: "3",
+                label: "a",
+                variable: "a",
+            },
+        ],
+        outputs: [
+            {
+                id: "3",
+                label: "a",
+                variable: "output",
+            },
+        ],
+        code: (inputConnections: Connection[]) => {
+            if (inputConnections.length === 1) {
+                return `const output = ${inputConnections[0].fromSocket?.variable ?? ""} + 100;\n`;
+            }
+            return "";
+        }
+    }
 ]
 
 export interface Visual {

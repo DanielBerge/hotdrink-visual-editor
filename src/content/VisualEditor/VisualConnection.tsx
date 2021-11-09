@@ -13,10 +13,11 @@ export const VisualConnection: FC<Props> = ({connection, getComponentById}) => {
     const toComponent = getComponentById(connection.toComponentId ?? "");
     return (
         <Line
-            points={[fromComponent.x + fromComponent.width,
-                socketYAxisPlacement(fromComponent, connection.fromSocketIndex ?? 0),
+            points={[
+                fromComponent.x + fromComponent.width,
+                socketYAxisPlacement(fromComponent, connection.fromSocketIndex ?? 0, fromComponent.outputs?.length),
                 toComponent.x,
-                socketYAxisPlacement(toComponent, connection.toSocketIndex ?? 0),
+                socketYAxisPlacement(toComponent, connection.toSocketIndex ?? 0, toComponent.inputs?.length),
             ]}
             stroke={"black"}
             strokeWidth={2}

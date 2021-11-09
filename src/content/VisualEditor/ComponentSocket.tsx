@@ -19,7 +19,7 @@ export const ComponentSocket: FC<Props> = ({component, socket, index, output, se
         <>
             <Circle
                 x={output ? component.x + component.width : component.x}
-                y={socketYAxisPlacement(component, index)}
+                y={socketYAxisPlacement(component, index, output ? component.outputs?.length : component.inputs?.length)}
                 radius={10}
                 fill="green"
                 onClick={() => {
@@ -47,7 +47,7 @@ export const ComponentSocket: FC<Props> = ({component, socket, index, output, se
             <Text
                 text={socket.label}
                 x={output ? component.x + component.width + labelPadding : component.x + labelPadding}
-                y={socketYAxisPlacement(component, index)}
+                y={socketYAxisPlacement(component, index, output ? component.outputs?.length : component.inputs?.length)}
             />
         </>
     )

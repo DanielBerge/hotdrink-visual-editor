@@ -12,7 +12,7 @@ export const VisualEditor = () => {
 
     function generateCode(components: VComponent[], connections: Connection[]): string {
         let code = "";
-        components.forEach((component: VComponent) => {
+        components.reverse().forEach((component: VComponent) => {
             const compConnections = connections.filter((connection: Connection) => {
                 return connection.toComponentId === component.id;
             });
@@ -52,7 +52,7 @@ export const VisualEditor = () => {
                     <Line
                         points={[
                             visual.getComponentById(newConnection.fromComponentId ?? "")?.x ?? 0,
-                            socketYAxisPlacement(visual.getComponentById(newConnection.fromComponentId ?? ""), newConnection.fromSocketIndex!),
+                            socketYAxisPlacement(visual.getComponentById(newConnection.fromComponentId ?? ""), newConnection.fromSocketIndex!, visual.getComponentById(newConnection.fromComponentId ?? "")?.outputs?.length),
                             mousePosition?.x ?? 0,
                             mousePosition?.y ?? 0
                         ]}

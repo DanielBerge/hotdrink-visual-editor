@@ -1,5 +1,5 @@
 export interface BlockConnection {
-    key: string;
+    id: string;
     title: string;
 }
 
@@ -12,12 +12,12 @@ export class Block {
         this.outputs = [];
     }
 
-    addInput(title: string, key: string) {
-        this.inputs.push({title, key});
+    addInput(title: string, id: string) {
+        this.inputs.push({title, id});
     }
 
-    addOutput(title: string, key: string) {
-        this.outputs.push({title, key});
+    addOutput(title: string, id: string) {
+        this.outputs.push({title, id});
     }
 
     build(): any {
