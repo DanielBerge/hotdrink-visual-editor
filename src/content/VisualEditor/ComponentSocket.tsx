@@ -11,7 +11,7 @@ interface Props {
     index: number;
     output: boolean;
     connection: Connection | null;
-    setNewConnection: (connection: Connection) => void;
+    setNewConnection: (connection: Connection | null) => void;
 }
 
 export const ComponentSocket: FC<Props> = ({component, socket, index, output, setNewConnection, connection}) => {
@@ -23,7 +23,9 @@ export const ComponentSocket: FC<Props> = ({component, socket, index, output, se
                 radius={10}
                 fill="green"
                 onClick={() => {
-                    if (connection?.fromComponentId && !output) {
+                    if (connection?.fromComponentId === component.id) {
+                        setNewConnection(null);
+                    } else if (connection?.fromComponentId && !output) {
                         setNewConnection(
                             {
                                 ...connection,

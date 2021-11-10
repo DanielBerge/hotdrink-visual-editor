@@ -7,7 +7,7 @@ import {ComponentSocket} from "./ComponentSocket";
 interface Props {
     component: VComponent;
     updateComponent: (oldComponent: VComponent, newComponent: VComponent) => void;
-    setNewConnection: (connection: Connection) => void;
+    setNewConnection: (connection: Connection | null) => void;
     connection: Connection | null;
 }
 

@@ -16,11 +16,11 @@ export const ConstraintProperties = () => {
                 }
                 if (key === "code") {
                     return (
-                        <>
+                        <div key={key}>
                             <p>{upperCaseFirst(key)}: </p>
                             <code
                                 className={"block whitespace-pre border border-black p-2"}>{constraints.current![key as keyof Constraint] as string}</code>
-                        </>
+                        </div>
                     )
                 }
                 if (key === "visualJson") return <></>;

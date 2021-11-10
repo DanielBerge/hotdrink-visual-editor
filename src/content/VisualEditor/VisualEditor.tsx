@@ -3,7 +3,7 @@ import {VisualComponent} from "./VisualComponent";
 import {useVisual} from "./VisualWrapper";
 import {VisualConnection} from "./VisualConnection";
 import {useEffect, useState} from "react";
-import {Connection, LibraryComponent, VComponent} from "../../types";
+import {Connection, LibraryComponent} from "../../types";
 import {socketYAxisPlacement} from "../../utils";
 
 
@@ -14,10 +14,16 @@ export const VisualEditor = () => {
     const [mousePosition, setMousePosition] = useState<{ x: number, y: number } | null>(null);
 
     useEffect(() => {
-        window.onmousemove = (e) => {
+        function listener(e: MouseEvent) {
             setMousePosition({x: e.clientX, y: e.clientY});
+        }
+
+        window.addEventListener('mousemove', (e) => listener(e));
+
+        return () => {
+            window.removeEventListener('mousemove', listener);
         };
-    }, [])
+    }, []);
 
     useEffect(() => {
         if (newConnection?.fromComponentId && newConnection.toComponentId) {
@@ -58,20 +64,6 @@ export const VisualEditor = () => {
                     height={500}
                     className="bg-gray-100"
                 >
-                    {newConnection &&
-                    <Layer>
-                        <Line
-                            points={[
-                                visual.getComponentById(newConnection.fromComponentId ?? "")?.x ?? 0,
-                                socketYAxisPlacement(visual.getComponentById(newConnection.fromComponentId ?? ""), newConnection.fromSocketIndex!, visual.getComponentById(newConnection.fromComponentId ?? "")?.outputs?.length),
-                                mousePosition?.x ?? 0,
-                                mousePosition?.y ?? 0
-                            ]}
-                            strokeWidth={3}
-                            fill={"black"}
-                        />
-                    </Layer>
-                    }
                     <Layer>
                         {visual.components.map((component) => {
                             return (
@@ -95,6 +87,18 @@ export const VisualEditor = () => {
                                 />
                             )
                         })}
+                        {newConnection && <Line
+                            points={[
+                                visual.getComponentById(newConnection.fromComponentId ?? "")?.x + visual.getComponentById(newConnection.fromComponentId ?? "")?.width ?? 0,
+                                socketYAxisPlacement(visual.getComponentById(newConnection.fromComponentId ?? ""), newConnection.fromSocketIndex!, visual.getComponentById(newConnection.fromComponentId ?? "")?.outputs?.length),
+                                mousePosition!.x - 330,
+                                mousePosition!.y - 145,
+                            ]}
+                            strokeWidth={6}
+                            stroke="black"
+                            lineCap="round"
+                            lineJoin="round"
+                        />}
                     </Layer>
                 </Stage>
             </div>

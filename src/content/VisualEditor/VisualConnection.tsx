@@ -19,8 +19,8 @@ export const VisualConnection: FC<Props> = ({connection, getComponentById}) => {
                 toComponent.x,
                 socketYAxisPlacement(toComponent, connection.toSocketIndex ?? 0, toComponent.inputs?.length),
             ]}
-            stroke={"black"}
-            strokeWidth={2}
+            stroke="black"
+            strokeWidth={5}
             lineCap="round"
             lineJoin="round"
         />
