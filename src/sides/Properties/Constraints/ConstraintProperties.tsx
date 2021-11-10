@@ -23,7 +23,7 @@ export const ConstraintProperties = () => {
                         </div>
                     )
                 }
-                if (key === "visualJson") return <></>;
+                if (key === "visualJson") return <div key={key}/>;
                 return <div key={key}>{upperCaseFirst(key)}: {constraints.current![key as keyof Constraint]}</div>
             })}
         </>

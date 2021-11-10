@@ -28,7 +28,7 @@ const initialComponents: VComponent[] = [
     {
         id: "2",
         label: "Output",
-        x: 600,
+        x: 700,
         y: 100,
         width: 200,
         height: 200,
@@ -46,34 +46,6 @@ const initialComponents: VComponent[] = [
             return "";
         }
     },
-    {
-        id: "3",
-        label: "Add 100",
-        x: 300,
-        y: 100,
-        width: 200,
-        height: 200,
-        inputs: [
-            {
-                id: "3",
-                label: "a",
-                variable: "a",
-            },
-        ],
-        outputs: [
-            {
-                id: "3",
-                label: "a",
-                variable: "addhundred",
-            },
-        ],
-        code: (inputConnections: Connection[], outputSockets: Socket[]) => {
-            if (inputConnections.length === 1 && outputSockets.length === 1) {
-                return `const ${outputSockets[0].variable} = parseInt(${inputConnections[0].fromSocket?.variable ?? ""}) + 100;\n`;
-            }
-            return "";
-        }
-    }
 ]
 
 const initialLibraryComponents: LibraryComponent[] = [
@@ -128,6 +100,35 @@ const initialLibraryComponents: LibraryComponent[] = [
         code: (inputConnections: Connection[], outputSockets: Socket[]) => {
             if (inputConnections.length === 1 && outputSockets.length === 1) {
                 return `const ${outputSockets[0].variable} = ${inputConnections[0].fromSocket?.variable ?? ""} + 100;\n`;
+            }
+            return "";
+        }
+    },
+    {
+        id: "4",
+        label: "Multiply",
+        inputs: [
+            {
+                id: "4",
+                label: "a",
+                variable: "a",
+            },
+            {
+                id: "5",
+                label: "b",
+                variable: "b",
+            },
+        ],
+        outputs: [
+            {
+                id: "4",
+                label: "a",
+                variable: "multiply",
+            },
+        ],
+        code: (inputConnections: Connection[], outputSockets: Socket[]) => {
+            if (inputConnections.length === 2 && outputSockets.length === 1) {
+                return `const ${outputSockets[0].variable} = ${inputConnections[0].fromSocket?.variable ?? ""} * ${inputConnections[1].fromSocket?.variable ?? ""};\n`;
             }
             return "";
         }

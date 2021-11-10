@@ -9,21 +9,20 @@ import {socketYAxisPlacement} from "../../utils";
 
 export const VisualEditor = () => {
     const visual = useVisual();
-
     const [newConnection, setNewConnection] = useState<Connection | null>(null);
     const [mousePosition, setMousePosition] = useState<{ x: number, y: number } | null>(null);
+    const [filter, setFilter] = useState<string>("");
 
     useEffect(() => {
-        function listener(e: MouseEvent) {
+        function onMouseMove(e: MouseEvent) {
             setMousePosition({x: e.clientX, y: e.clientY});
         }
 
-        window.addEventListener('mousemove', (e) => listener(e));
-
+        window.addEventListener('mousemove', onMouseMove);
         return () => {
-            window.removeEventListener('mousemove', listener);
+            window.removeEventListener('mousemove', onMouseMove);
         };
-    }, []);
+    }, [newConnection]);
 
     useEffect(() => {
         if (newConnection?.fromComponentId && newConnection.toComponentId) {
@@ -35,7 +34,12 @@ export const VisualEditor = () => {
     return (
         <div className="flex flex-row">
             <div className="w-60 h-40 bg-gray -700 p-3">
-                {visual.libraryComponents.map((component: LibraryComponent) => {
+                <label>Search: </label>
+                <input
+                    className="border border-black"
+                    onChange={(e) => setFilter(e.target.value)}
+                />
+                {visual.libraryComponents.filter((component) => component.label.toLowerCase().includes(filter.toLowerCase())).map((component: LibraryComponent) => {
                     return (
                         <div
                             key={component.id}

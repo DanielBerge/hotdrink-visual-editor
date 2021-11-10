@@ -23,7 +23,9 @@ export const ConstraintEditor: FC<Props> = ({open, onClose}) => {
             const compConnections = connections.filter((connection: Connection) => {
                 return connection.toComponentId === component.id;
             });
-            code += component.code(compConnections, component.outputs ?? []);
+            if (compConnections.length > 0) {
+                code += component.code(compConnections, component.outputs ?? []);
+            }
         })
 
         return code;
