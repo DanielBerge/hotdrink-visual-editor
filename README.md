@@ -39,4 +39,3 @@ Currently only supporting one way constraint.
 
 Legge til "transformer style" på arrows i tillegg til componentene.
 Make the constraints like a graph, with arrows. Check hotdrink documentation for inspiration.
-Skrive stikkord i masteroppgaven om dette ^^.

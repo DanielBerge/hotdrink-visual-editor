@@ -19,7 +19,15 @@ export const ConstraintEditor: FC<Props> = ({open, onClose}) => {
 
     function generateCode(components: VComponent[], connections: Connection[]): string {
         let code = "";
-        components.reverse().forEach((component: VComponent) => {
+        components.sort((a, b) => {
+            if (a.x < b.x) {
+                return -1;
+            }
+            if (a.x > b.x) {
+                return 1;
+            }
+            return 0;
+        }).forEach((component: VComponent) => {
             const compConnections = connections.filter((connection: Connection) => {
                 return connection.toComponentId === component.id;
             });

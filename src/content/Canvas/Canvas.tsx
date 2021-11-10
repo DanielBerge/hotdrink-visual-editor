@@ -9,7 +9,7 @@ import {clamp, getPoints} from "../../utils";
 import {CanvasInput} from "./CanvasInput";
 import {CanvasButton} from "./CanvasButton";
 import {CanvasText} from "./CanvasText";
-import { VisualWrapper } from '../VisualEditor/VisualWrapper';
+import {VisualWrapper} from '../VisualEditor/VisualWrapper';
 
 let constraintIds: Array<string> = [];
 
