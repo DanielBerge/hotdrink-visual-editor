@@ -94,7 +94,7 @@ export const VisualEditor = () => {
                         {newConnection && <Line
                             points={[
                                 visual.getComponentById(newConnection.fromComponentId ?? "")?.x + visual.getComponentById(newConnection.fromComponentId ?? "")?.width ?? 0,
-                                socketYAxisPlacement(visual.getComponentById(newConnection.fromComponentId ?? ""), newConnection.fromSocketIndex!, visual.getComponentById(newConnection.fromComponentId ?? "")?.outputs?.length),
+                                socketYAxisPlacement(visual.getComponentById(newConnection.fromComponentId ?? ""), newConnection.fromSocketIndex!, visual.getComponentById(newConnection.fromComponentId ?? "")?.outputs?.length, true),
                                 mousePosition!.x - 330,
                                 mousePosition!.y - 145,
                             ]}

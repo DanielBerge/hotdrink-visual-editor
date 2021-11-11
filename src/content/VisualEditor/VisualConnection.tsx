@@ -15,9 +15,9 @@ export const VisualConnection: FC<Props> = ({connection, getComponentById}) => {
         <Line
             points={[
                 fromComponent.x + fromComponent.width,
-                socketYAxisPlacement(fromComponent, connection.fromSocketIndex ?? 0, fromComponent.outputs?.length),
+                socketYAxisPlacement(fromComponent, connection.fromSocketIndex ?? 0, fromComponent.outputs?.length, true),
                 toComponent.x,
-                socketYAxisPlacement(toComponent, connection.toSocketIndex ?? 0, toComponent.inputs?.length),
+                socketYAxisPlacement(toComponent, connection.toSocketIndex ?? 0, toComponent.inputs?.length, true),
             ]}
             stroke="black"
             strokeWidth={5}

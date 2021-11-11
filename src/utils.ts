@@ -171,12 +171,12 @@ export function clamp(num: number, max: number): number {
     return num;
 }
 
-export function socketYAxisPlacement(component: VComponent, index: number, length: number | undefined) {
+export function socketYAxisPlacement(component: VComponent, index: number, length: number | undefined, includeY: boolean = false) {
     if (length) {
         if (length === 1) {
-            return component.y + component.height / 2;
+            return includeY ? component.y + component.height / 2 : component.height / 2;
         }
-        return component.y + (component.height / (length * 2)) * index
+        return includeY ? component.y + (component.height / (length * 2)) * index : (component.height / (length * 2)) * index;
     }
     return 0;
 }
