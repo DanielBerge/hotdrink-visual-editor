@@ -1,5 +1,5 @@
 import React, {FC, useContext, useState} from "react";
-import {Connection, LibraryComponent, Socket, VComponent} from "../../types";
+import {Connection, LibraryComponent, VComponent} from "../../types";
 
 const ComponentContext = React.createContext<any>({})
 const ConnectionContext = React.createContext<any>({})
@@ -21,7 +21,7 @@ const initialComponents: VComponent[] = [
                 variable: "initial",
             },
         ],
-        code: (inputConnections: Connection[], outputSockets: Socket[]) => {
+        code: (inputConnections: Connection[], component) => {
             return "";
         }
     },
@@ -39,7 +39,7 @@ const initialComponents: VComponent[] = [
                 variable: "a",
             },
         ],
-        code: (inputConnections: Connection[], outputSockets: Socket[]) => {
+        code: (inputConnections: Connection[], component) => {
             if (inputConnections.length === 1) {
                 return `return ${inputConnections[0].fromSocket?.variable ?? ""};\n`;
             }
@@ -59,7 +59,7 @@ const initialLibraryComponents: LibraryComponent[] = [
                 variable: "initial",
             },
         ],
-        code: (inputConnections: Connection[], outputSockets: Socket[]) => {
+        code: (inputConnections: Connection[], component) => {
             return "";
         }
     },
@@ -73,7 +73,7 @@ const initialLibraryComponents: LibraryComponent[] = [
                 variable: "a",
             },
         ],
-        code: (inputConnections: Connection[], outputSockets: Socket[]) => {
+        code: (inputConnections: Connection[], component) => {
             if (inputConnections.length === 1) {
                 return `return ${inputConnections[0].fromSocket?.variable ?? ""};\n`;
             }
@@ -97,9 +97,9 @@ const initialLibraryComponents: LibraryComponent[] = [
                 variable: "addhundred",
             },
         ],
-        code: (inputConnections: Connection[], outputSockets: Socket[]) => {
-            if (inputConnections.length === 1 && outputSockets.length === 1) {
-                return `const ${outputSockets[0].variable} = ${inputConnections[0].fromSocket?.variable ?? ""} + 100;\n`;
+        code: (inputConnections: Connection[], component) => {
+            if (inputConnections.length === 1 && component.outputs?.length === 1) {
+                return `const ${component.outputs[0].variable} = ${inputConnections[0].fromSocket?.variable ?? ""} + 100;\n`;
             }
             return "";
         }
@@ -107,16 +107,12 @@ const initialLibraryComponents: LibraryComponent[] = [
     {
         id: "4",
         label: "Multiply",
+        inputField: "Multiply by",
         inputs: [
             {
                 id: "4",
                 label: "a",
                 variable: "a",
-            },
-            {
-                id: "5",
-                label: "b",
-                variable: "b",
             },
         ],
         outputs: [
@@ -126,9 +122,12 @@ const initialLibraryComponents: LibraryComponent[] = [
                 variable: "multiply",
             },
         ],
-        code: (inputConnections: Connection[], outputSockets: Socket[]) => {
-            if (inputConnections.length === 2 && outputSockets.length === 1) {
-                return `const ${outputSockets[0].variable} = ${inputConnections[0].fromSocket?.variable ?? ""} * ${inputConnections[1].fromSocket?.variable ?? ""};\n`;
+        code: (inputConnections: Connection[], component) => {
+            if (inputConnections.length === 1 && component.outputs?.length === 1) {
+                return `const ${component.outputs[0].variable} = ${inputConnections[0].fromSocket?.variable ?? ""} * ${component.value};\n`;
+            }
+            if (inputConnections.length === 2 && component.outputs?.length === 1) {
+                return `const ${component.outputs[0].variable} = ${inputConnections[0].fromSocket?.variable ?? ""} * ${inputConnections[1].fromSocket?.variable ?? ""};\n`;
             }
             return "";
         }
@@ -144,8 +143,8 @@ export interface Visual {
     connections: Connection[],
     setConnections: (connections: Connection[]) => void,
     getComponentById: (id: string) => VComponent,
-    toObject: () => [ components: VComponent[], connections: Connection[] ],
-    fromObject: (object: [ components: VComponent[], connections: Connection[] ] | undefined) => void,
+    toObject: () => [components: VComponent[], connections: Connection[]],
+    fromObject: (object: [components: VComponent[], connections: Connection[]] | undefined) => void,
 }
 
 export const VisualWrapper: FC = (props) => {
@@ -153,14 +152,14 @@ export const VisualWrapper: FC = (props) => {
     const [components, setComponents] = useState(initialComponents);
     const [connections, setConnections] = useState<Connection[]>([]);
 
-    function toObject(): [ components: VComponent[], connections: Connection[] ] {
+    function toObject(): [components: VComponent[], connections: Connection[]] {
         return [
             components,
             connections
         ]
     }
 
-    function fromObject(object: [ components: VComponent[], connections: Connection[] ]): void {
+    function fromObject(object: [components: VComponent[], connections: Connection[]]): void {
         if (object) {
             setComponents(object[0]);
             setConnections(object[1]);

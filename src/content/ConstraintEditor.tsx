@@ -2,7 +2,7 @@ import {Modal} from "@mui/material";
 import React, {FC, useEffect} from "react";
 import {CodeEditor} from "./CodeEditor";
 import {useEditor} from "../wrappers/EditorWrapper";
-import {Connection, EditorType, VComponent} from "../types";
+import {Connection, EditorType, LibraryComponent, VComponent} from "../types";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
 import {VisualEditor} from "./VisualEditor/VisualEditor";
 import {useVisual} from "./VisualEditor/VisualWrapper";
@@ -32,7 +32,7 @@ export const ConstraintEditor: FC<Props> = ({open, onClose}) => {
                 return connection.toComponentId === component.id;
             });
             if (compConnections.length > 0) {
-                code += component.code(compConnections, component.outputs ?? []);
+                code += component.code(compConnections, component);
             }
         })
 

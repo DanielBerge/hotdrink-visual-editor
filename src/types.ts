@@ -60,6 +60,7 @@ export interface VComponent extends LibraryComponent {
     y: number;
     width: number;
     height: number;
+    value?: any;
 }
 
 export interface LibraryComponent {
@@ -67,6 +68,7 @@ export interface LibraryComponent {
     label: string;
     inputs?: Socket[];
     outputs?: Socket[];
+    inputField?: string;
 
-    code(inputConnections: Connection[], outputSockets: Socket[]): string;
+    code(inputConnections: Connection[], outputSockets: VComponent): string;
 }
