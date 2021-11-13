@@ -96,11 +96,12 @@ export class HTMLBuilder {
 }
 `);
         let counter = 0;
+        //FIXME Convert to multiple fromIds and toIds
         for (let i = 0; i < constraints.length; i++) {
-            const fromBindingType = elements.getElementById(constraints[i].fromId).binding;
-            const toBindingType = elements.getElementById(constraints[i].toId).binding;
-            this.add(`bind(document.getElementById("${constraints[i].fromId}"), Array.from(system.variables())[${counter++}]._owner, ${fromBindingType});`)
-            this.add(`bind(document.getElementById("${constraints[i].toId}"), Array.from(system.variables())[${counter++}]._owner, ${toBindingType});`)
+            const fromBindingType = elements.getElementById(constraints[i].fromIds[0]).binding;
+            const toBindingType = elements.getElementById(constraints[i].toIds[0]).binding;
+            this.add(`bind(document.getElementById("${constraints[i].fromIds[0]}"), Array.from(system.variables())[${counter++}]._owner, ${fromBindingType});`)
+            this.add(`bind(document.getElementById("${constraints[i].toIds[0]}"), Array.from(system.variables())[${counter++}]._owner, ${toBindingType});`)
         }
 
         this.add("</script>")

@@ -2,7 +2,7 @@ import {Modal} from "@mui/material";
 import React, {FC, useEffect} from "react";
 import {CodeEditor} from "./CodeEditor";
 import {useEditor} from "../wrappers/EditorWrapper";
-import {Connection, EditorType, LibraryComponent, VComponent} from "../types";
+import {Connection, EditorType, VComponent} from "../types";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
 import {VisualEditor} from "./VisualEditor/VisualEditor";
 import {useVisual} from "./VisualEditor/VisualWrapper";
@@ -40,9 +40,9 @@ export const ConstraintEditor: FC<Props> = ({open, onClose}) => {
     }
 
     useEffect(() => {
-        editor.setType(constraints.current?.type ?? EditorType.VISUAL);
-        visual.fromObject(constraints.current?.visualJson);
-    }, [constraints.current])
+        editor.setType(constraints.currentMethod?.type ?? EditorType.VISUAL);
+        visual.fromObject(constraints.currentMethod?.visualJson);
+    }, [constraints.currentMethod]);
 
     return <Modal
         open={open}
@@ -50,17 +50,17 @@ export const ConstraintEditor: FC<Props> = ({open, onClose}) => {
             const code = generateCode(visual.components ?? [], visual.connections ?? []);
             console.log(code);
             editor.setCode(code);
-            if (constraints.current) {
-                constraints.updateConstraint(constraints.current, {
-                    ...constraints.current,
-                    code: code,
-                    type: editor.type,
-                    visualJson: visual.toObject(),
-                })
+            if (constraints.current && constraints.currentMethod) {
+                constraints.updateMethod(constraints.currentMethod, {
+                    ...constraints.currentMethod,
+                    code,
+                    visualJson: visual.toObject()
+                }, constraints.current);
             }
             visual.setConnections([]);
             visual.setComponents([]);
             constraints.setCurrent(undefined);
+            constraints.setCurrentMethod(undefined);
             onClose();
         }}
         color="white"

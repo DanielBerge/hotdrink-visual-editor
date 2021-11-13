@@ -19,13 +19,15 @@ export const CodeEditor = () => {
     }
 
     function handleEditorChange(value: string | undefined, _: monaco.editor.IModelContentChangedEvent) {
-        if (constraints.current && editor.type === EditorType.CODE) {
-            constraints.updateConstraint(constraints.current, {
-                ...constraints.current,
-                code: value ?? "",
-                type: EditorType.CODE,
-                visualJson: undefined,
-            });
+        if (constraints.current && constraints.currentMethod && editor.type === EditorType.CODE) {
+            constraints.setCurrentMethod(
+                constraints.updateMethod(constraints.currentMethod, {
+                    ...constraints.currentMethod,
+                    code: value ?? "",
+                    type: EditorType.CODE,
+                    visualJson: undefined,
+                }, constraints.current)
+            )
         }
     }
 
@@ -33,11 +35,11 @@ export const CodeEditor = () => {
         <div className="flex h-96 flex-col">
             <p
                 className="p-2"
-            >Variables in scope: {constraints.current?.fromId}</p>
+            >Variables in scope: {constraints.current?.fromIds}</p>
             <Editor
                 height="100%"
                 defaultLanguage={"javascript"}
-                defaultValue={constraints.current?.code ?? ""}
+                defaultValue={constraints.currentMethod?.code ?? ""}
                 beforeMount={handleBeforeMount}
                 onChange={handleEditorChange}
                 onMount={handleOnMount}

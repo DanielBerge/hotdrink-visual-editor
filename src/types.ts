@@ -32,12 +32,21 @@ export interface Elem {
     id: string;
 }
 
-export interface Constraint {
-    fromId: string;
-    toId: string;
+export interface Method {
+    id: string;
     code: string;
     type: EditorType;
-    visualJson?: [ components: any[], connections: any[] ];
+    visualJson?: [components: any[], connections: any[]];
+}
+
+export interface Constraint {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    fromIds: string[];
+    toIds: string[];
+    methods: Method[];
 }
 
 export interface Socket {

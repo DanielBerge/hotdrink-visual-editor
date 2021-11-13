@@ -12,6 +12,11 @@ export const ConstraintDropDown: FC<Props> = ({constraintKey}) => {
     const constraints = useConstraints();
     const elements = useElements();
 
+    //TODO Multiple constraints selection
+    return (
+        <div></div>
+    )
+    /**
     return (
         <div key={constraintKey} className="flex">
             <div>{upperCaseFirst(constraintKey)}:</div>
@@ -38,4 +43,5 @@ export const ConstraintDropDown: FC<Props> = ({constraintKey}) => {
             </select>
         </div>
     );
+     **/
 }

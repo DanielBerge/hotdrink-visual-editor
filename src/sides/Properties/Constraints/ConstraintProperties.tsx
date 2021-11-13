@@ -14,7 +14,10 @@ export const ConstraintProperties = () => {
                 if (key === "fromId" || key === "toId") {
                     return <ConstraintDropDown key={key} constraintKey={key}/>
                 }
-                if (key === "code") {
+                if (key === "methods") return null;
+                //TODO Print out correctly
+                /**
+                 if (key === "method") {
                     return (
                         <div key={key}>
                             <p>{upperCaseFirst(key)}: </p>
@@ -23,7 +26,8 @@ export const ConstraintProperties = () => {
                         </div>
                     )
                 }
-                if (key === "visualJson") return <div key={key}/>;
+                 if (key === "visualJson") return <div key={key}/>;
+                 **/
                 return <div key={key}>{upperCaseFirst(key)}: {constraints.current![key as keyof Constraint]}</div>
             })}
         </>

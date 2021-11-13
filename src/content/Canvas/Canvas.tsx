@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
-import {Arrow, Layer, Line, Stage} from 'react-konva';
+import {Arrow, Group, Layer, Line, Rect, Stage} from 'react-konva';
 import {KonvaEventObject} from "konva/lib/Node";
-import {Constraint, EditorType, Elem, ElemType} from "../../types";
+import {Constraint, Elem, ElemType} from "../../types";
 import {useElements} from "../../wrappers/ElementsWrapper";
 import {useConstraints} from "../../wrappers/ConstraintsWrapper";
 import {ConstraintEditor} from "../ConstraintEditor";
@@ -35,14 +35,17 @@ export const Canvas: FC = () => {
             }
             if (constraintIds.length === 2) {
                 constraints.setNewConstraint(false);
-                if (constraints.constraints.find((constraint) => constraint.fromId === constraintIds[0] && constraint.toId === constraintIds[1]) === undefined) {
+                if (constraints.constraints.find((constraint) => constraint.fromIds.includes(constraintIds[0]) && constraint.fromIds.includes(constraintIds[1])) === undefined) {
                     constraints.setConstraints([
                         ...constraints.constraints,
                         {
-                            fromId: constraintIds[0],
-                            toId: constraintIds[1],
-                            type: EditorType.VISUAL,
-                            code: "",
+                            x: 0,
+                            y: 0,
+                            width: 100,
+                            height: 100,
+                            fromIds: [constraintIds[0]],
+                            toIds: [constraintIds[1]],
+                            methods: [],
                         }
                     ])
                 } else {
@@ -81,6 +84,14 @@ export const Canvas: FC = () => {
         } else {
             throw new Error("Could not find element to move");
         }
+    }
+
+    function onDragConstraintMove(e: KonvaEventObject<DragEvent>, constraint: Constraint) {
+        constraints.updateConstraint(constraint, {
+            ...constraint,
+            x: e.target.x(),
+            y: e.target.y(),
+        })
     }
 
     function onTransform(e: KonvaEventObject<Event>, node: any) {
@@ -156,29 +167,83 @@ export const Canvas: FC = () => {
                 </Layer>
                 <Layer>
                     {constraints.constraints.map((constraint: Constraint) => {
-                        const from = elements.getElementById(constraint.fromId);
-                        const to = elements.getElementById(constraint.toId);
-                        if (to === undefined || from === undefined) {
-                            console.error(`Constraint ids, does not have matching canvas elements: ${constraint.fromId} -> ${constraint.toId}`)
-                            return null;
-                        }
                         return (
-                            <Arrow
-                                key={from.id + to.id}
-                                onClick={() => {
-                                    constraints.setCurrent(constraint);
-                                    elements.setCurrent(undefined);
-                                }}
-                                onDblClick={() => {
-                                    setOpen(true)
-                                    constraints.setCurrent(constraint);
-                                    elements.setCurrent(undefined);
-                                }}
-                                points={getPoints(from, to)}
-                                stroke="red"
-                                fill="red"
-                                strokeWidth={5}
-                            />
+                            <Group>
+                                <Rect
+                                    x={constraint.x}
+                                    y={constraint.y}
+                                    width={constraint.width}
+                                    height={constraint.height}
+                                    onClick={() => {
+                                        constraints.setCurrent(constraint);
+                                        elements.setCurrent(undefined);
+                                    }}
+                                    fill="red"
+                                    onDragMove={(e) => onDragConstraintMove(e, constraint)}
+                                    draggable
+                                />
+                                {constraint.methods.map((method, index) => {
+                                    return <Rect
+                                        key={method.id}
+                                        x={constraint.x}
+                                        y={constraint.y + index * 30}
+                                        width={constraint.width / 2}
+                                        height={20}
+                                        fill={"green"}
+                                        onClick={() => {
+                                            console.log(method)
+                                            setOpen(true)
+                                            constraints.setCurrent(constraint);
+                                            constraints.setCurrentMethod(method);
+                                            elements.setCurrent(undefined);
+                                        }}
+                                    />
+                                })}
+                                {
+                                    constraint.fromIds.map((fromId: string) => {
+                                        const from = elements.getElementById(fromId);
+                                        if (from === undefined) {
+                                            console.error(`Constraint id, does not have matching canvas element: ${fromId}`)
+                                            return null;
+                                        }
+                                        return (
+                                            <Arrow
+                                                key={"From" + from.id}
+                                                onClick={() => {
+                                                    constraints.setCurrent(constraint);
+                                                    elements.setCurrent(undefined);
+                                                }}
+                                                points={getPoints(from, constraint)}
+                                                stroke="red"
+                                                fill="red"
+                                                strokeWidth={5}
+                                            />
+                                        )
+                                    })
+                                }
+                                {
+                                    constraint.toIds.map((toId: string) => {
+                                        const to = elements.getElementById(toId);
+                                        if (to === undefined) {
+                                            console.error(`Constraint id, does not have matching canvas element: ${toId}`)
+                                            return null;
+                                        }
+                                        return (
+                                            <Arrow
+                                                key={"To" + to.id}
+                                                onClick={() => {
+                                                    constraints.setCurrent(constraint);
+                                                    elements.setCurrent(undefined);
+                                                }}
+                                                points={getPoints(constraint, to)}
+                                                stroke="red"
+                                                fill="red"
+                                                strokeWidth={5}
+                                            />
+                                        )
+                                    })
+                                }
+                            </Group>
                         )
                     })}
                 </Layer>

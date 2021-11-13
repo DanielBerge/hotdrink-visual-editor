@@ -16,7 +16,8 @@ interface Editor {
 
 const EditorWrapper: FC = (props) => {
     const constraints = useConstraints();
-    const [code, setCode] = useState(constraints.current?.code ?? "");
+    //TODO Use correct method or remove code
+    const [code, setCode] = useState(constraints.current?.methods[0].code ?? "");
     const [type, setType] = useState(EditorType.VISUAL);
 
     return (

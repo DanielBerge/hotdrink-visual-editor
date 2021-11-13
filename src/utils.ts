@@ -1,4 +1,4 @@
-import {Component, ConstraintSpec, defaultConstraintSystem, maskNone, Method, VariableReference} from "hotdrink";
+import {defaultConstraintSystem, VariableReference} from "hotdrink";
 import {Constraint, Elem, VComponent} from "./types";
 
 export const idToValue = new Map();
@@ -66,22 +66,24 @@ export function runJs(constraints: Constraint[], elements: any) {
         for (const constraint of constraints) {
             let system = defaultConstraintSystem;
 
-            const func = eval(`(${constraint.fromId}) => {
+            //TODO Make multiple methods and bindings
+            /**
+             const func = eval(`(${constraint.fromId}) => {
                 ${constraint.code}
             }`)
-            const method1 = new Method(2, [0], [1], [maskNone], func);
+             const method1 = new Method(2, [0], [1], [maskNone], func);
 
-            const cspec = new ConstraintSpec([method1]);
+             const cspec = new ConstraintSpec([method1]);
 
-            const comp = new Component(`Component${freshIndex()}`);
-            const varA = comp.emplaceVariable(constraint.fromId, undefined);
-            const varB = comp.emplaceVariable(constraint.toId, undefined);
+             const comp = new Component(`Component${freshIndex()}`);
+             const varA = comp.emplaceVariable(constraint.fromId, undefined);
+             const varB = comp.emplaceVariable(constraint.toId, undefined);
 
-            comp.emplaceConstraint(`C${freshIndex()}`, cspec, [varA, varB], false);
+             comp.emplaceConstraint(`C${freshIndex()}`, cspec, [varA, varB], false);
 
-            system.addComponent(comp);
+             system.addComponent(comp);
 
-            try {
+             try {
                 const fromBindingType = elements.getElementById(constraint.fromId).binding;
                 const toBindingType = elements.getElementById(constraint.toId).binding;
                 DOMBind(document.getElementById(constraint.fromId), comp.vs[constraint.fromId], fromBindingType);
@@ -89,6 +91,7 @@ export function runJs(constraints: Constraint[], elements: any) {
             } catch (e) {
                 console.log(e);
             }
+             **/
         }
     } catch (e) {
         console.error(e);
@@ -117,7 +120,7 @@ export function lowerCaseFirst(string: string): string {
     return string.slice(0, 1).toLowerCase() + string.slice(1);
 }
 
-export function getPoints(from: Elem, to: Elem) {
+export function getPoints(from: Constraint | Elem, to: Constraint | Elem) {
     let fromX = from.x;
     let fromY = from.y;
     let toX = to.x;
