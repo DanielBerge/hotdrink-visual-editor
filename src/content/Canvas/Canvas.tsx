@@ -12,6 +12,7 @@ import {CanvasText} from "./CanvasText";
 import {VisualWrapper} from '../VisualEditor/VisualWrapper';
 
 let constraintIds: Array<string> = [];
+let selectedConstraint: Constraint | undefined;
 
 const width = window.screen.availWidth - 600;
 const height = window.innerHeight;
@@ -28,14 +29,30 @@ export const Canvas: FC = () => {
     }
 
 
-    function onClick(element: Elem) {
+    function onClick(element: Elem | Constraint) {
+        let pushed = false;
         if (constraints.newConstraint) {
-            if (constraintIds.length < 2) {
-                constraintIds.push(element.id);
+            if (constraintIds.length < 2 || selectedConstraint === undefined) {
+                if ("type" in element) {
+                    constraintIds.push(element.id);
+                    pushed = true;
+                } else {
+                    selectedConstraint = element;
+                }
+                console.log("Detected")
             }
             if (constraintIds.length === 2) {
                 constraints.setNewConstraint(false);
-                if (constraints.constraints.find((constraint) => constraint.fromIds.includes(constraintIds[0]) && constraint.fromIds.includes(constraintIds[1])) === undefined) {
+                const foundInverseConstraint = constraints.constraints.find((constraint) => constraint.toIds.includes(constraintIds[0]) && constraint.fromIds.includes(constraintIds[1]));
+                const foundExactConstraint = constraints.constraints.find((constraint) => constraint.fromIds.includes(constraintIds[0]) && constraint.toIds.includes(constraintIds[1]));
+                if (foundInverseConstraint && !foundExactConstraint) {
+                    console.log("Found constraint");
+                    constraints.updateConstraint(foundInverseConstraint, {
+                        ...foundInverseConstraint,
+                        fromIds: [...foundInverseConstraint.fromIds, constraintIds[0]],
+                        toIds: [...foundInverseConstraint.toIds, constraintIds[1]]
+                    });
+                } else if (!foundExactConstraint) {
                     constraints.setConstraints([
                         ...constraints.constraints,
                         {
@@ -52,10 +69,30 @@ export const Canvas: FC = () => {
                     console.warn("Tried to create already existing constraint, aborting");
                 }
                 constraintIds = [];
+            } else if (constraintIds.length === 1 && selectedConstraint !== undefined) {
+                constraints.setNewConstraint(false);
+                if (pushed) {
+                    constraints.updateConstraint(selectedConstraint, {
+                        ...selectedConstraint,
+                        toIds: [...selectedConstraint.toIds, ...constraintIds],
+                    });
+                } else {
+                    constraints.updateConstraint(selectedConstraint, {
+                        ...selectedConstraint,
+                        fromIds: [...selectedConstraint.fromIds, ...constraintIds],
+                    });
+                }
+                constraintIds = [];
+                selectedConstraint = undefined;
             }
         }
-        elements.setCurrent(element);
-        constraints.setCurrent(undefined);
+        if ("type" in element) {
+            elements.setCurrent(element);
+            constraints.setCurrent(undefined);
+        } else {
+            constraints.setCurrent(element);
+            elements.setCurrent(undefined);
+        }
     }
 
     function restrictPlacement(e: any, elem: Elem) {
@@ -87,11 +124,13 @@ export const Canvas: FC = () => {
     }
 
     function onDragConstraintMove(e: KonvaEventObject<DragEvent>, constraint: Constraint) {
-        constraints.updateConstraint(constraint, {
-            ...constraint,
-            x: e.target.x(),
-            y: e.target.y(),
-        })
+        constraints.setCurrent(
+            constraints.updateConstraint(constraint, {
+                ...constraint,
+                x: e.target.x(),
+                y: e.target.y(),
+            })
+        )
     }
 
     function onTransform(e: KonvaEventObject<Event>, node: any) {
@@ -177,6 +216,7 @@ export const Canvas: FC = () => {
                                     onClick={() => {
                                         constraints.setCurrent(constraint);
                                         elements.setCurrent(undefined);
+                                        onClick(constraint);
                                     }}
                                     fill="red"
                                     onDragMove={(e) => onDragConstraintMove(e, constraint)}
@@ -191,7 +231,6 @@ export const Canvas: FC = () => {
                                         height={20}
                                         fill={"green"}
                                         onClick={() => {
-                                            console.log(method)
                                             setOpen(true)
                                             constraints.setCurrent(constraint);
                                             constraints.setCurrentMethod(method);

@@ -50,49 +50,18 @@ const initialComponents: VComponent[] = [
 
 const initialLibraryComponents: LibraryComponent[] = [
     {
-        id: "1",
-        label: "Input",
-        outputs: [
-            {
-                id: "1",
-                label: "a",
-                variable: "initial",
-            },
-        ],
-        code: (inputConnections: Connection[], component) => {
-            return "";
-        }
-    },
-    {
-        id: "2",
-        label: "Output",
-        inputs: [
-            {
-                id: "2",
-                label: "a",
-                variable: "a",
-            },
-        ],
-        code: (inputConnections: Connection[], component) => {
-            if (inputConnections.length === 1) {
-                return `return ${inputConnections[0].fromSocket?.variable ?? ""};\n`;
-            }
-            return "";
-        }
-    },
-    {
         id: "3",
         label: "Add 100",
         inputs: [
             {
-                id: "3",
+                id: "1",
                 label: "a",
                 variable: "a",
             },
         ],
         outputs: [
             {
-                id: "3",
+                id: "1",
                 label: "a",
                 variable: "addhundred",
             },
@@ -164,7 +133,7 @@ export const VisualWrapper: FC = (props) => {
             setComponents(object[0]);
             setConnections(object[1]);
         } else {
-            setComponents(initialComponents);
+            setComponents([]);
             setConnections([]);
         }
     }

@@ -47,20 +47,22 @@ export const ConstraintEditor: FC<Props> = ({open, onClose}) => {
     return <Modal
         open={open}
         onClose={() => {
-            const code = generateCode(visual.components ?? [], visual.connections ?? []);
-            console.log(code);
-            editor.setCode(code);
-            if (constraints.current && constraints.currentMethod) {
-                constraints.updateMethod(constraints.currentMethod, {
-                    ...constraints.currentMethod,
-                    code,
-                    visualJson: visual.toObject()
-                }, constraints.current);
+            console.log(constraints.currentMethod?.type)
+            if (constraints.currentMethod?.type === EditorType.VISUAL) {
+                const code = generateCode(visual.components ?? [], visual.connections ?? []);
+                console.log(code);
+                if (constraints.current && constraints.currentMethod) {
+                    constraints.updateMethod(constraints.currentMethod, {
+                        ...constraints.currentMethod,
+                        code,
+                        visualJson: visual.toObject()
+                    }, constraints.current);
+                }
+                visual.setConnections([]);
+                visual.setComponents([]);
+                constraints.setCurrent(undefined);
+                constraints.setCurrentMethod(undefined);
             }
-            visual.setConnections([]);
-            visual.setComponents([]);
-            constraints.setCurrent(undefined);
-            constraints.setCurrentMethod(undefined);
             onClose();
         }}
         color="white"

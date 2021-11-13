@@ -5,12 +5,14 @@ import {VisualConnection} from "./VisualConnection";
 import {useEffect, useState} from "react";
 import {Connection, LibraryComponent} from "../../types";
 import {socketYAxisPlacement} from "../../utils";
+import {useConstraints} from "../../wrappers/ConstraintsWrapper";
 
 
 export const VisualEditor = () => {
     const visual = useVisual();
     const [newConnection, setNewConnection] = useState<Connection | null>(null);
     const [mousePosition, setMousePosition] = useState<{ x: number, y: number } | null>(null);
+    const constraints = useConstraints();
     const [filter, setFilter] = useState<string>("");
 
     useEffect(() => {
@@ -30,6 +32,52 @@ export const VisualEditor = () => {
             setNewConnection(null);
         }
     }, [newConnection]);
+
+    useEffect(() => {
+        if (visual.components.length === 0) {
+            visual.setComponents([
+                ...constraints.current?.fromIds.map((id, index) => ({
+                    id: `input-${id}`,
+                    label: `Input: ${id}`,
+                    x: 100,
+                    y: 220 * index + 20,
+                    width: 200,
+                    height: 200,
+                    outputs: [
+                        {
+                            id: `output-${index}`,
+                            variable: id,
+                            label: `Output: ${id}`,
+                        }
+                    ],
+                    code: (inputConnections: Connection[], component: any) => {
+                        return "";
+                    }
+                })) ?? [],
+                ...constraints.current?.toIds.map((id, index) => ({
+                    id: `output-${id}`,
+                    label: `Output: ${id}`,
+                    x: 700,
+                    y: 220 * index + 20,
+                    width: 200,
+                    height: 200,
+                    inputs: [
+                        {
+                            id: `input-${index}`,
+                            variable: id,
+                            label: `Input: ${id}`,
+                        }
+                    ],
+                    code: (inputConnections: Connection[], component: any) => {
+                        if (inputConnections.length === 1) {
+                            return `return ${inputConnections[0].fromSocket?.variable ?? ""};\n`;
+                        }
+                        return "";
+                    }
+                })) ?? [],
+            ]);
+        }
+    }, [visual.components]);
 
     return (
         <div className="flex flex-row">
