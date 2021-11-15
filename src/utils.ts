@@ -1,5 +1,13 @@
-import {defaultConstraintSystem, VariableReference} from "hotdrink";
-import {Constraint, Elem, VComponent} from "./types";
+import {
+    Component,
+    ConstraintSpec,
+    constraintSystemToJson,
+    defaultConstraintSystem,
+    maskNone,
+    Method,
+    VariableReference
+} from "hotdrink";
+import {Constraint, Elem, VComponent, VMethod} from "./types";
 
 export const idToValue = new Map();
 export const valueToId = new Map();
@@ -64,35 +72,38 @@ export function runJs(constraints: Constraint[], elements: any) {
     const freshIndex = () => ++index;
     try {
         for (const constraint of constraints) {
-            let system = defaultConstraintSystem;
 
-            //TODO Make multiple methods and bindings
-            /**
-             const func = eval(`(${constraint.fromId}) => {
-                ${constraint.code}
+            const func = (method: VMethod) => eval(`(${constraint.fromIds.join(", ")}) => {
+                ${method.code}
             }`)
-             const method1 = new Method(2, [0], [1], [maskNone], func);
 
-             const cspec = new ConstraintSpec([method1]);
+            const unionIds = Array.from(new Set([...constraint.fromIds, ...constraint.toIds]));
+            const methods = constraint.methods.map((method) => {
+                return new Method(
+                    unionIds.length,
+                    constraint.fromIds.map((id) => unionIds.indexOf(id)),
+                    method.outputIds.map((id) => unionIds.indexOf(id)),
+                    [...constraint.fromIds.map(() => maskNone)],
+                    func(method));
+            });
 
-             const comp = new Component(`Component${freshIndex()}`);
-             const varA = comp.emplaceVariable(constraint.fromId, undefined);
-             const varB = comp.emplaceVariable(constraint.toId, undefined);
-
-             comp.emplaceConstraint(`C${freshIndex()}`, cspec, [varA, varB], false);
-
-             system.addComponent(comp);
-
-             try {
-                const fromBindingType = elements.getElementById(constraint.fromId).binding;
-                const toBindingType = elements.getElementById(constraint.toId).binding;
-                DOMBind(document.getElementById(constraint.fromId), comp.vs[constraint.fromId], fromBindingType);
-                DOMBind(document.getElementById(constraint.toId), comp.vs[constraint.toId], toBindingType);
+            const cspec = new ConstraintSpec(methods);
+            const comp = new Component(`Component${freshIndex()}`);
+            const vars = unionIds.map((id) => {
+                return comp.emplaceVariable(id, null);
+            })
+            comp.emplaceConstraint(`C${freshIndex()}`, cspec, vars, false);
+            defaultConstraintSystem.addComponent(comp);
+            try {
+                for (const id of unionIds) {
+                    const bindingType = elements.getElementById(id).binding;
+                    DOMBind(document.getElementById(id), comp.vs[id], bindingType);
+                }
             } catch (e) {
-                console.log(e);
+                console.error(e);
             }
-             **/
         }
+        console.log(constraintSystemToJson(defaultConstraintSystem))
     } catch (e) {
         console.error(e);
     }

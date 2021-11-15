@@ -32,10 +32,12 @@ export interface Elem {
     id: string;
 }
 
-export interface Method {
+export interface VMethod {
     id: string;
     code: string;
     type: EditorType;
+    //TODO Kan output ids bare være en string?
+    outputIds: string[];
     visualJson?: [components: any[], connections: any[]];
 }
 
@@ -46,7 +48,7 @@ export interface Constraint {
     height: number;
     fromIds: string[];
     toIds: string[];
-    methods: Method[];
+    methods: VMethod[];
 }
 
 export interface Socket {

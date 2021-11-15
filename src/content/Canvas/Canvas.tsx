@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {Arrow, Group, Layer, Line, Rect, Stage} from 'react-konva';
 import {KonvaEventObject} from "konva/lib/Node";
-import {Constraint, Elem, ElemType} from "../../types";
+import {Constraint, EditorType, Elem, ElemType} from "../../types";
 import {useElements} from "../../wrappers/ElementsWrapper";
 import {useConstraints} from "../../wrappers/ConstraintsWrapper";
 import {ConstraintEditor} from "../ConstraintEditor";
@@ -39,7 +39,6 @@ export const Canvas: FC = () => {
                 } else {
                     selectedConstraint = element;
                 }
-                console.log("Detected")
             }
             if (constraintIds.length === 2) {
                 constraints.setNewConstraint(false);
@@ -50,7 +49,13 @@ export const Canvas: FC = () => {
                     constraints.updateConstraint(foundInverseConstraint, {
                         ...foundInverseConstraint,
                         fromIds: [...foundInverseConstraint.fromIds, constraintIds[0]],
-                        toIds: [...foundInverseConstraint.toIds, constraintIds[1]]
+                        toIds: [...foundInverseConstraint.toIds, constraintIds[1]],
+                        methods: [...foundInverseConstraint.methods, {
+                            id: `${constraintIds[1]}`,
+                            code: "",
+                            type: EditorType.VISUAL,
+                            outputIds: [constraintIds[1]],
+                        }]
                     });
                 } else if (!foundExactConstraint) {
                     constraints.setConstraints([
@@ -62,7 +67,14 @@ export const Canvas: FC = () => {
                             height: 100,
                             fromIds: [constraintIds[0]],
                             toIds: [constraintIds[1]],
-                            methods: [],
+                            methods: [
+                                {
+                                    id: `${constraintIds[1]}`,
+                                    code: "",
+                                    type: EditorType.VISUAL,
+                                    outputIds: [constraintIds[1]],
+                                }
+                            ],
                         }
                     ])
                 } else {

@@ -1,5 +1,5 @@
 import React, {FC, useContext, useState} from "react";
-import {Constraint, EditorType, Method} from "../types";
+import {Constraint, EditorType, VMethod} from "../types";
 
 const initialConstraints: Constraint[] = [
     {
@@ -7,21 +7,21 @@ const initialConstraints: Constraint[] = [
         y: 100,
         width: 100,
         height: 100,
-        fromIds: ["initial", "initial2"],
-        toIds: ["initial2", "initial"],
+        fromIds: ["celcius", "fahrenheit"],
+        toIds: ["fahrenheit", "celcius"],
         methods: [
             {
                 id: "1",
                 type: EditorType.VISUAL,
-                code: "const positive = initial >= 0;\n" +
-                    "return positive;"
+                code: "return celcius * (9/5) + 32",
+                outputIds: ["fahrenheit"],
             },
             {
                 id: "2",
                 type: EditorType.VISUAL,
-                code: "const positive = initial >= 0;\n" +
-                    "return positive;"
-            }
+                code: "return (fahrenheit - 32) * (5/9)",
+                outputIds: ["celcius"],
+            },
         ]
     }
 ]
@@ -39,9 +39,9 @@ interface Constraints {
     current: Constraint | undefined;
     setCurrent: (newConstraint: Constraint | undefined) => void;
     deleteConstraintsConnected: (elementId: string) => void;
-    currentMethod: Method | undefined;
-    setCurrentMethod: (method: Method | undefined) => void;
-    updateMethod: (oldMethod: Method, newMethod: Method, constraint: Constraint) => Method;
+    currentMethod: VMethod | undefined;
+    setCurrentMethod: (method: VMethod | undefined) => void;
+    updateMethod: (oldMethod: VMethod, newMethod: VMethod, constraint: Constraint) => VMethod;
 }
 
 const ConstraintsWrapper: FC = (props) => {
@@ -61,7 +61,7 @@ const ConstraintsWrapper: FC = (props) => {
         return newConstraint;
     }
 
-    function updateMethod(oldMethod: Method, newMethod: Method, constraint: Constraint) {
+    function updateMethod(oldMethod: VMethod, newMethod: VMethod, constraint: Constraint) {
         const index = constraints.findIndex((thisConstraint) => thisConstraint === constraint);
         if (index !== -1) {
             constraints[index].methods = constraints[index].methods.map((method) => method.id === oldMethod.id ? newMethod : method);

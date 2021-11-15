@@ -11,7 +11,7 @@ const initialElements: Elem[] = [
         subType: InputType.Number,
         binding: Binding.Value,
         value: "",
-        id: "initial",
+        id: "celcius",
     },
     {
         height: 50,
@@ -19,10 +19,10 @@ const initialElements: Elem[] = [
         x: 200,
         y: 300,
         type: ElemType.Input,
-        subType: InputType.Text,
+        subType: InputType.Number,
         binding: Binding.Value,
         value: "value2",
-        id: "initial2",
+        id: "fahrenheit",
     }
 ]
 

@@ -54,7 +54,7 @@ export const VisualEditor = () => {
                         return "";
                     }
                 })) ?? [],
-                ...constraints.current?.toIds.map((id, index) => ({
+                ...constraints.currentMethod?.outputIds.map((id, index) => ({
                     id: `output-${id}`,
                     label: `Output: ${id}`,
                     x: 700,
