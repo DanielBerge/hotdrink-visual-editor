@@ -1,9 +1,9 @@
-import {Arrow} from "react-konva";
 import {getPoints} from "../../../utils";
 import React, {FC} from "react";
 import {Constraint} from "../../../types";
 import {ElementsWrapperProps} from "../../../wrappers/ElementsWrapper";
 import {ConstraintsWrapperProps} from "../../../wrappers/ConstraintsWrapper";
+import {CanvasConstraintArrow} from "./CanvasConstraintArrow";
 
 interface Props {
     constraint: Constraint;
@@ -22,16 +22,13 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
                         return null;
                     }
                     return (
-                        <Arrow
-                            key={"From" + from.id}
-                            onClick={() => {
-                                constraints.setCurrent(constraint);
-                                elements.setCurrent(undefined);
-                            }}
+                        <CanvasConstraintArrow
+                            id={`From${from.id}`}
+                            constraints={constraints}
+                            constraint={constraint}
                             points={getPoints(from, constraint)}
-                            stroke="red"
-                            fill="red"
-                            strokeWidth={5}
+                            elements={elements}
+                            selected={constraints.current === constraint}
                         />
                     )
                 })
@@ -44,16 +41,13 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
                         return null;
                     }
                     return (
-                        <Arrow
-                            key={"To" + to.id}
-                            onClick={() => {
-                                constraints.setCurrent(constraint);
-                                elements.setCurrent(undefined);
-                            }}
+                        <CanvasConstraintArrow
+                            id={`To${to.id}`}
+                            constraints={constraints}
+                            constraint={constraint}
                             points={getPoints(constraint, to)}
-                            stroke="red"
-                            fill="red"
-                            strokeWidth={5}
+                            elements={elements}
+                            selected={constraints.current === constraint}
                         />
                     )
                 })

@@ -50,6 +50,7 @@ export const CanvasConstraintRect: FC<Props> = ({constraints, constraint, elemen
                 ref={(ref) => trRef.current = ref}
                 rotateEnabled={false}
                 resizeEnabled={false}
+                borderStrokeWidth={2}
             />}
         </>
     )
