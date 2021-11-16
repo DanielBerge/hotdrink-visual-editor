@@ -1,6 +1,7 @@
 # Getting Started with Create React App
 
 ## Future features
+* Redigere ID på component.
 * Change from output and input components to Textfield and Button.
 * Legge til "transformer style" på constraints i tillegg til componentene.
 * IF block only has one input, and binary operation, add a input field in block.

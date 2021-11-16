@@ -1,22 +1,20 @@
 import React, {FC, useState} from 'react';
-import {Arrow, Group, Layer, Line, Rect, Stage} from 'react-konva';
+import {Layer, Stage} from 'react-konva';
 import {KonvaEventObject} from "konva/lib/Node";
 import {Constraint, EditorType, Elem, ElemType} from "../../types";
 import {useElements} from "../../wrappers/ElementsWrapper";
 import {useConstraints} from "../../wrappers/ConstraintsWrapper";
 import {ConstraintEditor} from "../ConstraintEditor";
-import {clamp, getPoints} from "../../utils";
 import {CanvasInput} from "./CanvasInput";
 import {CanvasButton} from "./CanvasButton";
 import {CanvasText} from "./CanvasText";
 import {VisualWrapper} from '../VisualEditor/VisualWrapper';
+import {CanvasGrid} from "./CanvasGrid";
+import {CanvasConstraints} from "./CanvasConstraints";
+import {HEIGHT, restrictPlacement, restrictSize, WIDTH} from "./canvasUtils";
 
 let constraintIds: Array<string> = [];
 let selectedConstraint: Constraint | undefined;
-
-const width = window.screen.availWidth - 600;
-const height = window.innerHeight;
-const snapSpace = 10;
 
 export const Canvas: FC = () => {
     const elements = useElements();
@@ -115,17 +113,6 @@ export const Canvas: FC = () => {
         }
     }
 
-    function restrictPlacement(e: any, elem: Elem) {
-        e.target.x(clamp(e.target.x(), width - elem.width));
-        e.target.x(Math.round(e.target.x() / snapSpace) * snapSpace);
-        e.target.y(clamp(e.target.y(), height - elem.height));
-        e.target.y(Math.round(e.target.y() / snapSpace) * snapSpace);
-    }
-
-    function restrictSize(e: any) {
-        e.target.width(Math.round(e.target.width() / snapSpace) * snapSpace);
-        e.target.height(Math.round(e.target.height() / snapSpace) * snapSpace);
-    }
 
     function onDragMove(e: KonvaEventObject<DragEvent>, elem: Elem) {
         const found = elements.getElementById(elem.id);
@@ -141,16 +128,6 @@ export const Canvas: FC = () => {
         } else {
             throw new Error("Could not find element to move");
         }
-    }
-
-    function onDragConstraintMove(e: KonvaEventObject<DragEvent>, constraint: Constraint) {
-        constraints.setCurrent(
-            constraints.updateConstraint(constraint, {
-                ...constraint,
-                x: e.target.x(),
-                y: e.target.y(),
-            })
-        )
     }
 
     function onTransform(e: KonvaEventObject<Event>, node: any) {
@@ -191,121 +168,13 @@ export const Canvas: FC = () => {
     return (
         <div className="">
             <Stage
-                width={width}
-                height={height}
+                width={WIDTH}
+                height={HEIGHT}
                 className="bg-gray-100"
                 onClick={checkDeselect}
             >
-                <Layer>
-                    {
-                        Array.from(Array(height).keys()).filter((i) => i % snapSpace === 0).map((y) => {
-                            return (
-                                <Line
-                                    key={y}
-                                    points={[0, y, width, y]}
-                                    width={width}
-                                    stroke="gray"
-                                    strokeWidth={0.5}
-                                />
-                            )
-                        })
-                    }
-                    {
-                        Array.from(Array(width).keys()).filter((i) => i % snapSpace === 0).map((x) => {
-                            return (
-                                <Line
-                                    key={x}
-                                    points={[x, 0, x, height]}
-                                    width={width}
-                                    stroke="gray"
-                                    strokeWidth={0.5}
-                                />
-                            )
-                        })
-                    }
-                </Layer>
-                <Layer>
-                    {constraints.constraints.map((constraint: Constraint) => {
-                        return (
-                            <Group>
-                                <Rect
-                                    x={constraint.x}
-                                    y={constraint.y}
-                                    width={constraint.width}
-                                    height={constraint.height}
-                                    onClick={() => {
-                                        constraints.setCurrent(constraint);
-                                        elements.setCurrent(undefined);
-                                        onClick(constraint);
-                                    }}
-                                    fill="red"
-                                    onDragMove={(e) => onDragConstraintMove(e, constraint)}
-                                    draggable
-                                />
-                                {constraint.methods.map((method, index) => {
-                                    return <Rect
-                                        key={method.id}
-                                        x={constraint.x}
-                                        y={constraint.y + index * 30}
-                                        width={constraint.width / 2}
-                                        height={20}
-                                        fill={"green"}
-                                        onClick={() => {
-                                            setOpen(true)
-                                            constraints.setCurrent(constraint);
-                                            constraints.setCurrentMethod(method);
-                                            elements.setCurrent(undefined);
-                                        }}
-                                    />
-                                })}
-                                {
-                                    constraint.fromIds.map((fromId: string) => {
-                                        const from = elements.getElementById(fromId);
-                                        if (from === undefined) {
-                                            console.error(`Constraint id, does not have matching canvas element: ${fromId}`)
-                                            return null;
-                                        }
-                                        return (
-                                            <Arrow
-                                                key={"From" + from.id}
-                                                onClick={() => {
-                                                    constraints.setCurrent(constraint);
-                                                    elements.setCurrent(undefined);
-                                                }}
-                                                points={getPoints(from, constraint)}
-                                                stroke="red"
-                                                fill="red"
-                                                strokeWidth={5}
-                                            />
-                                        )
-                                    })
-                                }
-                                {
-                                    constraint.toIds.map((toId: string) => {
-                                        const to = elements.getElementById(toId);
-                                        if (to === undefined) {
-                                            console.error(`Constraint id, does not have matching canvas element: ${toId}`)
-                                            return null;
-                                        }
-                                        return (
-                                            <Arrow
-                                                key={"To" + to.id}
-                                                onClick={() => {
-                                                    constraints.setCurrent(constraint);
-                                                    elements.setCurrent(undefined);
-                                                }}
-                                                points={getPoints(constraint, to)}
-                                                stroke="red"
-                                                fill="red"
-                                                strokeWidth={5}
-                                            />
-                                        )
-                                    })
-                                }
-                            </Group>
-                        )
-                    })}
-                </Layer>
+                <CanvasGrid/>
+                <CanvasConstraints onClick={onClick} setOpen={setOpen} elements={elements} constraints={constraints}/>
                 <Layer>
                     {elements.elements.map((element: Elem, key: number) => {
                         switch (element.type) {
