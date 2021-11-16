@@ -2,16 +2,16 @@
 
 ## Future features
 * Change from output and input components to Textfield and Button.
+* Legge til "transformer style" på constraints i tillegg til componentene.
 * IF block only has one input, and binary operation, add a input field in block.
 * Create blockbuilder button for binary operations.
+* Visualize constraint flow in HTML run mode
 * Exporting and importing project
 * Drag from edge to create constraint, maybe a circle?
 * Export to REACT
 * Collision detection på elements i canvas i tillegg til kanter
-* Visualize constraint flow in HTML run mode
 * Legge til variable references i hotdrink to json?
 * Hide/show constraints
-* Endre react render plugin til å virke med hooks? Og rete.control?
 
 ## Meeting notes
 
@@ -31,11 +31,8 @@ isBefore, isBetween, isAfter, isSameDay, isSameMonth, isSameYear, isSameHour, is
 ### Boolean operators: 
 and, or, not, isTrue, isFalse
 
+### Nov 16
+Another way of creating methods for constraints?
+Meeting about DSL?
+Maybe group arrows that are both ways?
 
-### Questions
-Decide on how to group constraints, fahrenheit celsius, etc. + multiplier?
-How to do multiple input variables to one constraint.
-Currently only supporting one way constraint.
-
-Legge til "transformer style" på arrows i tillegg til componentene.
-Make the constraints like a graph, with arrows. Check hotdrink documentation for inspiration.

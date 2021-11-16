@@ -84,15 +84,23 @@ export const Canvas: FC = () => {
             } else if (constraintIds.length === 1 && selectedConstraint !== undefined) {
                 constraints.setNewConstraint(false);
                 if (pushed) {
-                    constraints.updateConstraint(selectedConstraint, {
-                        ...selectedConstraint,
-                        toIds: [...selectedConstraint.toIds, ...constraintIds],
-                    });
+                    constraints.setCurrent(
+                        constraints.updateConstraint(selectedConstraint, {
+                            ...selectedConstraint,
+                            toIds: [...selectedConstraint.toIds, ...constraintIds],
+                            methods: [...selectedConstraint.methods, {
+                                id: `${constraintIds[0]}`,
+                                code: "",
+                                type: EditorType.VISUAL,
+                                outputIds: [constraintIds[0]],
+                            }]
+                        }));
                 } else {
-                    constraints.updateConstraint(selectedConstraint, {
-                        ...selectedConstraint,
-                        fromIds: [...selectedConstraint.fromIds, ...constraintIds],
-                    });
+                    constraints.setCurrent(
+                        constraints.updateConstraint(selectedConstraint, {
+                            ...selectedConstraint,
+                            fromIds: [...selectedConstraint.fromIds, ...constraintIds],
+                        }));
                 }
                 constraintIds = [];
                 selectedConstraint = undefined;
