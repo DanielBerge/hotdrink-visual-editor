@@ -10,7 +10,7 @@ import {CanvasButton} from "./CanvasButton";
 import {CanvasText} from "./CanvasText";
 import {VisualWrapper} from '../VisualEditor/VisualWrapper';
 import {CanvasGrid} from "./CanvasGrid";
-import {CanvasConstraints} from "./CanvasConstraints";
+import {CanvasConstraints} from "./Constraints/CanvasConstraints";
 import {HEIGHT, restrictPlacement, restrictSize, WIDTH} from "./canvasUtils";
 
 let constraintIds: Array<string> = [];

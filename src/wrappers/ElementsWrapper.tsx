@@ -29,7 +29,7 @@ const initialElements: Elem[] = [
 const ElementContext = React.createContext<any>({})
 const CurrentContext = React.createContext<any>({});
 
-interface Elements {
+export interface ElementsWrapperProps {
     elements: Elem[];
     addElement: (element: Elem) => void;
     updateElement: (oldElem: Elem, newElem: Elem) => Elem;
@@ -78,7 +78,7 @@ const ElementsWrapper: FC = (props) => {
 }
 
 
-function useElements(): Elements {
+function useElements(): ElementsWrapperProps {
     const {elements, addElement, updateElement, getElementById, deleteElement} = useContext(ElementContext);
     const {current, setCurrent} = useContext(CurrentContext);
 

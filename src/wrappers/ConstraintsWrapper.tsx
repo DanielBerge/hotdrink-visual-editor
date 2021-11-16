@@ -30,7 +30,7 @@ const ConstraintContext = React.createContext<any>({})
 const NewConstraintContext = React.createContext<any>(false);
 const CurrentContext = React.createContext<any>({});
 
-interface Constraints {
+export interface ConstraintsWrapperProps {
     constraints: Constraint[];
     setConstraints: (constraints: Constraint[]) => void;
     updateConstraint: (oldConstraint: Constraint, newConstraint: Constraint) => Constraint;
@@ -89,7 +89,7 @@ const ConstraintsWrapper: FC = (props) => {
     )
 }
 
-function useConstraints(): Constraints {
+function useConstraints(): ConstraintsWrapperProps {
     const {constraints, setConstraints, updateConstraint, deleteConstraintsConnected} = useContext(ConstraintContext);
     const {newConstraint, setNewConstraint} = useContext(NewConstraintContext);
     const {current, setCurrent, currentMethod, setCurrentMethod, updateMethod} = useContext(CurrentContext);

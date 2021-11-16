@@ -1,11 +1,10 @@
 import React, {FC, useContext, useState} from "react";
-import {useConstraints} from "./ConstraintsWrapper";
 import {EditorType} from "../types";
 
 
 const TypeContext = React.createContext<any>({});
 
-interface Editor {
+export interface EditorWrapperProps {
     type: EditorType;
     setType: (type: EditorType) => void;
 }
@@ -21,7 +20,7 @@ const EditorWrapper: FC = (props) => {
     )
 }
 
-function useEditor(): Editor {
+function useEditor(): EditorWrapperProps {
     const {type, setType} = useContext(TypeContext);
 
     return {
