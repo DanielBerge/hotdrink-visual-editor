@@ -20,7 +20,7 @@ Labels to compoents in visual view, Input Textfield1, Output Textfield2
 
 Button med "binary" operation som kan generere dsl for en spesifikk operasjon (inp "+") out dsl
 
-Han skal hjelpe å lage DSL generator, så jeg lager først et API som kan generere Rete komponenter på en slags måte.
+Han skal hjelpe å lage DSL generator, så jeg lager først et API som kan generere Grete komponenter på en slags måte.
 
 ### Number operators: 
 +, -, *, /, %, <, >, <=, >=, ==, !=, isPos, isNeg, isZero, isOdd, isEven, max, min, abs, round, ceil, floor

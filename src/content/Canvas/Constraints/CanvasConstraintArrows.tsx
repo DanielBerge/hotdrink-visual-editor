@@ -57,8 +57,6 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
                         console.error(`Constraint id, does not have matching canvas element: ${toId}`)
                         return null;
                     }
-                    console.log(constraints.currentMethod?.outputIds);
-                    console.log(to.id)
                     return (
                         <CanvasConstraintArrow
                             key={`To${to.id}`}

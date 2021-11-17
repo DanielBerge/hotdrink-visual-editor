@@ -28,7 +28,7 @@ export const CanvasConstraintArrow: FC<Props> = ({id, constraints, constraint, e
                 points={points}
                 stroke="red"
                 fill="red"
-                opacity={hidden ? 0.15 : 1}
+                opacity={hidden && constraints.currentMethod ? 0.15 : 1}
                 strokeWidth={5}
             />
             {multiway &&
