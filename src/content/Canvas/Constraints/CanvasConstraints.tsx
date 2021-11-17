@@ -17,9 +17,9 @@ export const CanvasConstraints: FC<Props> = ({onClick, setOpen, constraints, ele
 
     return (
         <Layer>
-            {constraints.constraints.map((constraint: Constraint) => {
+            {constraints.constraints.map((constraint: Constraint, index) => {
                 return (
-                    <Group>
+                    <Group key={index}>
                         <CanvasConstraintRect
                             constraints={constraints}
                             elements={elements}
@@ -30,9 +30,10 @@ export const CanvasConstraints: FC<Props> = ({onClick, setOpen, constraints, ele
                         {constraint.methods.map((method, index) => {
                             return <Rect
                                 key={method.id}
-                                x={constraint.x}
-                                y={constraint.y + index * 30}
+                                x={constraint.x + constraint.width / 4}
+                                y={constraint.y + index * 30 + 10}
                                 width={constraint.width / 2}
+                                cornerRadius={20}
                                 height={20}
                                 fill={"green"}
                                 onClick={() => {

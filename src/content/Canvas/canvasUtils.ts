@@ -1,4 +1,4 @@
-import {Elem} from "../../types";
+import {Constraint, Elem} from "../../types";
 import {clamp} from "../../utils";
 
 export const WIDTH = window.screen.availWidth - 600;
@@ -15,4 +15,48 @@ export function restrictPlacement(e: any, elem: Elem) {
 export function restrictSize(e: any) {
     e.target.width(Math.round(e.target.width() / SNAP_SPACE) * SNAP_SPACE);
     e.target.height(Math.round(e.target.height() / SNAP_SPACE) * SNAP_SPACE);
+}
+
+export function getPoints(from: Constraint | Elem, to: Constraint | Elem) {
+    let fromX = from.x;
+    let fromY = from.y;
+    let toX = to.x;
+    let toY = to.y;
+    let fromHeight = from.height;
+    let toHeight = to.height;
+    let fromWidth = from.width;
+    let toWidth = to.width;
+    const spaceFromEnd = 8;
+
+    function calculatePlacement(side: number, from: number, to: number) {
+        return side / 2 + Math.max(Math.min(side / 2, (from - to) / 2), -side / 2);
+    }
+
+    if (Math.abs(fromX - toX) > Math.abs(fromY - toY)) {
+        if (fromX < toX) {
+            toY += calculatePlacement(toHeight, fromY, toY);
+            fromY += fromHeight / 2;
+            fromX += fromWidth;
+            toX -= spaceFromEnd;
+        } else if (fromX > toX) {
+            toY += calculatePlacement(toHeight, fromY, toY);
+            fromY += fromHeight / 2;
+            toX += toWidth;
+            toX += spaceFromEnd;
+        }
+    } else {
+        if (fromY < toY) {
+            toX += calculatePlacement(toWidth, fromX, toX);
+            fromX += fromWidth / 2;
+            fromY += fromHeight;
+            toY -= spaceFromEnd;
+        } else if (fromY > toY) {
+            toX += calculatePlacement(toWidth, fromX, toX);
+            fromX += fromWidth / 2;
+            toY += toHeight;
+            toY += spaceFromEnd;
+        }
+    }
+
+    return [fromX, fromY, toX, toY]
 }

@@ -3,7 +3,6 @@
 ## Future features
 * Redigere ID på component.
 * Change from output and input components to Textfield and Button.
-* Legge til "transformer style" på constraints i tillegg til componentene.
 * IF block only has one input, and binary operation, add a input field in block.
 * Create blockbuilder button for binary operations.
 * Visualize constraint flow in HTML run mode
@@ -33,7 +32,7 @@ isBefore, isBetween, isAfter, isSameDay, isSameMonth, isSameYear, isSameHour, is
 and, or, not, isTrue, isFalse
 
 ### Nov 16
-Another way of creating methods for constraints?
 Meeting about DSL?
-Maybe group arrows that are both ways?
+
+# Jakko: jaakko.jarvi@utu.fi
 

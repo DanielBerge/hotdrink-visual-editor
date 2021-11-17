@@ -5,8 +5,8 @@ const initialElements: Elem[] = [
     {
         height: 50,
         width: 200,
-        x: 100,
-        y: 100,
+        x: 170,
+        y: 310,
         type: ElemType.Input,
         subType: InputType.Number,
         binding: Binding.Value,
@@ -16,8 +16,8 @@ const initialElements: Elem[] = [
     {
         height: 50,
         width: 150,
-        x: 200,
-        y: 300,
+        x: 830,
+        y: 320,
         type: ElemType.Input,
         subType: InputType.Number,
         binding: Binding.Value,

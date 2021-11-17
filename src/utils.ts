@@ -131,49 +131,6 @@ export function lowerCaseFirst(string: string): string {
     return string.slice(0, 1).toLowerCase() + string.slice(1);
 }
 
-export function getPoints(from: Constraint | Elem, to: Constraint | Elem) {
-    let fromX = from.x;
-    let fromY = from.y;
-    let toX = to.x;
-    let toY = to.y;
-    let fromHeight = from.height;
-    let toHeight = to.height;
-    let fromWidth = from.width;
-    let toWidth = to.width;
-    const spaceFromEnd = 8;
-
-    function calculatePlacement(side: number, from: number, to: number) {
-        return side / 2 + Math.max(Math.min(side / 2, (from - to) / 2), -side / 2);
-    }
-
-    if (Math.abs(fromX - toX) > Math.abs(fromY - toY)) {
-        if (fromX < toX) {
-            toY += calculatePlacement(toHeight, fromY, toY);
-            fromY += fromHeight / 2;
-            fromX += fromWidth;
-            toX -= spaceFromEnd;
-        } else if (fromX > toX) {
-            toY += calculatePlacement(toHeight, fromY, toY);
-            fromY += fromHeight / 2;
-            toX += toWidth;
-            toX += spaceFromEnd;
-        }
-    } else {
-        if (fromY < toY) {
-            toX += calculatePlacement(toWidth, fromX, toX);
-            fromX += fromWidth / 2;
-            fromY += fromHeight;
-            toY -= spaceFromEnd;
-        } else if (fromY > toY) {
-            toX += calculatePlacement(toWidth, fromX, toX);
-            fromX += fromWidth / 2;
-            toY += toHeight;
-            toY += spaceFromEnd;
-        }
-    }
-
-    return [fromX, fromY, toX, toY]
-}
 
 export function clamp(num: number, max: number): number {
     if (num < 0) {

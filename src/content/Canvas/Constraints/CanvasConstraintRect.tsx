@@ -41,6 +41,7 @@ export const CanvasConstraintRect: FC<Props> = ({constraints, constraint, elemen
                     elements.setCurrent(undefined);
                     onClick(constraint);
                 }}
+                cornerRadius={50}
                 fill="red"
                 onDragMove={(e) => onDragConstraintMove(e, constraint)}
                 draggable

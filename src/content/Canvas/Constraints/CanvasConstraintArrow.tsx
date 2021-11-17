@@ -11,9 +11,10 @@ interface Props {
     elements: ElementsWrapperProps;
     points: number[];
     selected: boolean;
+    multiway: boolean;
 }
 
-export const CanvasConstraintArrow: FC<Props> = ({id, constraints, constraint, elements, points, selected}) => {
+export const CanvasConstraintArrow: FC<Props> = ({id, constraints, constraint, elements, points, multiway}) => {
 
     return (
         <>
@@ -28,6 +29,20 @@ export const CanvasConstraintArrow: FC<Props> = ({id, constraints, constraint, e
                 fill="red"
                 strokeWidth={5}
             />
+            {multiway &&
+            <Arrow
+                key={`${id}-2`}
+                onClick={() => {
+                    constraints.setCurrent(constraint);
+                    elements.setCurrent(undefined);
+                }}
+                points={points}
+                stroke="red"
+                fill="red"
+                strokeWidth={5}
+                pointerAtBeginning={true}
+            />
+            }
         </>
     )
 }

@@ -162,6 +162,7 @@ export const Canvas: FC = () => {
         const clickedOnEmpty = e.target === e.target.getStage();
         if (clickedOnEmpty) {
             elements.setCurrent(undefined);
+            constraints.setCurrent(undefined);
         }
     };
 

@@ -3,8 +3,8 @@ import {Constraint, EditorType, VMethod} from "../types";
 
 const initialConstraints: Constraint[] = [
     {
-        x: 100,
-        y: 100,
+        x: 560,
+        y: 270,
         width: 100,
         height: 100,
         fromIds: ["celcius", "fahrenheit"],
