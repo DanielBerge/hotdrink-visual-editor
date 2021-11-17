@@ -163,6 +163,7 @@ export const Canvas: FC = () => {
         if (clickedOnEmpty) {
             elements.setCurrent(undefined);
             constraints.setCurrent(undefined);
+            constraints.setCurrentMethod(undefined);
         }
     };
 

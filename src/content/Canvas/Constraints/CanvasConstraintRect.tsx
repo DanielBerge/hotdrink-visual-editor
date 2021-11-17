@@ -38,6 +38,7 @@ export const CanvasConstraintRect: FC<Props> = ({constraints, constraint, elemen
                 height={constraint.height}
                 onClick={() => {
                     constraints.setCurrent(constraint);
+                    constraints.setCurrentMethod(undefined);
                     elements.setCurrent(undefined);
                     onClick(constraint);
                 }}

@@ -45,6 +45,7 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
                             elements={elements}
                             multiway={false}
                             selected={constraints.current === constraint}
+                            hidden={false}
                         />
                     )
                 })
@@ -56,6 +57,8 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
                         console.error(`Constraint id, does not have matching canvas element: ${toId}`)
                         return null;
                     }
+                    console.log(constraints.currentMethod?.outputIds);
+                    console.log(to.id)
                     return (
                         <CanvasConstraintArrow
                             key={`To${to.id}`}
@@ -66,6 +69,7 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
                             elements={elements}
                             multiway={false}
                             selected={constraints.current === constraint}
+                            hidden={!constraints.currentMethod?.outputIds.includes(to.id) ?? false}
                         />
                     )
                 })
@@ -87,6 +91,7 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
                             elements={elements}
                             multiway={true}
                             selected={constraints.current === constraint}
+                            hidden={!constraints.currentMethod?.outputIds.includes(connection) ?? false}
                         />
                     )
                 })

@@ -37,6 +37,11 @@ export const CanvasConstraints: FC<Props> = ({onClick, setOpen, constraints, ele
                                 height={20}
                                 fill={"green"}
                                 onClick={() => {
+                                    constraints.setCurrentMethod(method);
+                                    constraints.setCurrent(constraint);
+                                    elements.setCurrent(undefined);
+                                }}
+                                onDblClick={() => {
                                     setOpen(true)
                                     constraints.setCurrent(constraint);
                                     constraints.setCurrentMethod(method);
