@@ -36,7 +36,7 @@ export const VisualComponent: FC<Props> = ({component, updateComponent, setNewCo
             draggable
             onDragMove={onDragMove}
         >
-            {component.inputField &&
+            {component.inputField && component.inputs?.length === 1 &&
             <Html
                 children={<input
                     value={component.value}

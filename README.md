@@ -1,6 +1,7 @@
 # Getting Started with Create React App
 
 ## Future features
+* Fikse visual programmer sin connection.
 * IF block only has one input, and binary operation, add a input field in block.
 * Create blockbuilder button for binary operations.
 * Visualize constraint flow in HTML run mode

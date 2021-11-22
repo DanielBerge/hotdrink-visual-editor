@@ -1,52 +1,24 @@
 import React, {FC, useContext, useState} from "react";
 import {Connection, LibraryComponent, VComponent} from "../../types";
+import {LibraryComponentBuilder} from "../../libraryComponentBuilder";
 
 const ComponentContext = React.createContext<any>({})
 const ConnectionContext = React.createContext<any>({})
 const LibraryContext = React.createContext<any>({})
 const ObjectContext = React.createContext<any>({})
 
-const initialComponents: VComponent[] = [
-    {
-        id: "1",
-        label: "Input",
-        x: 100,
-        y: 100,
-        width: 200,
-        height: 200,
-        outputs: [
-            {
-                id: "1",
-                label: "Initial",
-                variable: "initial",
-            },
-        ],
-        code: (inputConnections: Connection[], component) => {
-            return "";
-        }
-    },
-    {
-        id: "2",
-        label: "Output",
-        x: 700,
-        y: 100,
-        width: 200,
-        height: 200,
-        inputs: [
-            {
-                id: "2",
-                label: "a",
-                variable: "a",
-            },
-        ],
-        code: (inputConnections: Connection[], component) => {
-            if (inputConnections.length === 1) {
-                return `return ${inputConnections[0].fromSocket?.variable ?? ""};\n`;
-            }
-            return "";
-        }
-    },
-]
+const builder: LibraryComponentBuilder = new LibraryComponentBuilder("3", "Addition");
+builder.addOutput({
+    id: "1",
+    label: "Added",
+    variable: "add",
+});
+builder.addInput({
+    id: "1",
+    label: "Number 1",
+});
+builder.operatorCode("+");
+builder.setInputField("Add by");
 
 const initialLibraryComponents: LibraryComponent[] = [
     {
@@ -56,7 +28,7 @@ const initialLibraryComponents: LibraryComponent[] = [
             {
                 id: "1",
                 label: "a",
-                variable: "a",
+                variable: "",
             },
         ],
         outputs: [
@@ -100,8 +72,10 @@ const initialLibraryComponents: LibraryComponent[] = [
             }
             return "";
         }
-    }
+    },
+    builder.build(),
 ]
+
 
 export interface Visual {
     libraryComponents: LibraryComponent[];
@@ -118,7 +92,7 @@ export interface Visual {
 
 export const VisualWrapper: FC = (props) => {
     const [libraryComponents, setLibraryComponents] = useState<LibraryComponent[]>(initialLibraryComponents);
-    const [components, setComponents] = useState(initialComponents);
+    const [components, setComponents] = useState<VComponent[]>([]);
     const [connections, setConnections] = useState<Connection[]>([]);
 
     function toObject(): [components: VComponent[], connections: Connection[]] {
