@@ -1,7 +1,6 @@
 # Getting Started with Create React App
 
 ## Future features
-* Change from output and input components to Textfield and Button.
 * IF block only has one input, and binary operation, add a input field in block.
 * Create blockbuilder button for binary operations.
 * Visualize constraint flow in HTML run mode
@@ -35,4 +34,3 @@ and, or, not, isTrue, isFalse
 Meeting about DSL?
 
 # Jakko: jaakko.jarvi@utu.fi
-

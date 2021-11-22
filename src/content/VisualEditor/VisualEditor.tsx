@@ -4,8 +4,9 @@ import {useVisual} from "./VisualWrapper";
 import {VisualConnection} from "./VisualConnection";
 import {useEffect, useState} from "react";
 import {Connection, LibraryComponent} from "../../types";
-import {socketYAxisPlacement} from "../../utils";
+import {socketYAxisPlacement, upperCaseFirst} from "../../utils";
 import {useConstraints} from "../../wrappers/ConstraintsWrapper";
+import {useElements} from "../../wrappers/ElementsWrapper";
 
 
 export const VisualEditor = () => {
@@ -13,6 +14,7 @@ export const VisualEditor = () => {
     const [newConnection, setNewConnection] = useState<Connection | null>(null);
     const [mousePosition, setMousePosition] = useState<{ x: number, y: number } | null>(null);
     const constraints = useConstraints();
+    const elements = useElements();
     const [filter, setFilter] = useState<string>("");
 
     useEffect(() => {
@@ -35,28 +37,33 @@ export const VisualEditor = () => {
 
     useEffect(() => {
         if (visual.components.length === 0) {
+            const outPutElem = elements.getElementById(constraints.currentMethod?.outputId ?? "");
             visual.setComponents([
-                ...constraints.current?.fromIds.map((id, index) => ({
-                    id: `input-${id}`,
-                    label: `Input: ${id}`,
-                    x: 100,
-                    y: 220 * index + 20,
-                    width: 200,
-                    height: 200,
-                    outputs: [
-                        {
-                            id: `output-${index}`,
-                            variable: id,
-                            label: `Output: ${id}`,
+                ...constraints.current?.fromIds.map((id, index) => {
+                    const elem = elements.getElementById(id);
+                    const type = elem?.type ?? "";
+                    return ({
+                        id: `${upperCaseFirst(type)}-${id}`,
+                        label: `${upperCaseFirst(type)}: ${id}`,
+                        x: 100,
+                        y: 220 * index + 20,
+                        width: 200,
+                        height: 200,
+                        outputs: [
+                            {
+                                id: `output-${index}`,
+                                variable: id,
+                                label: `Output: ${id}`,
+                            }
+                        ],
+                        code: (inputConnections: Connection[], component: any) => {
+                            return "";
                         }
-                    ],
-                    code: (inputConnections: Connection[], component: any) => {
-                        return "";
-                    }
-                })) ?? [],
+                    })
+                }) ?? [],
                 {
-                    id: `output-${constraints.currentMethod?.outputId}`,
-                    label: `Output: ${constraints.currentMethod?.outputId}`,
+                    id: `${upperCaseFirst(outPutElem?.type ?? "")}-${constraints.currentMethod?.outputId}`,
+                    label: ` ${upperCaseFirst(outPutElem?.type ?? "")}: ${constraints.currentMethod?.outputId}`,
                     x: 700,
                     y: 240,
                     width: 200,

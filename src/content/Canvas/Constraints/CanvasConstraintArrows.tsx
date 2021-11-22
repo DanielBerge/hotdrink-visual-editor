@@ -45,7 +45,7 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
                             elements={elements}
                             multiway={false}
                             selected={constraints.current === constraint}
-                            hidden={false}
+                            hidden={constraints.current !== constraint}
                         />
                     )
                 })

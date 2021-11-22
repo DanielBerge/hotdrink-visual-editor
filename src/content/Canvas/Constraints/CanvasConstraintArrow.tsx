@@ -15,7 +15,7 @@ interface Props {
     hidden: boolean;
 }
 
-export const CanvasConstraintArrow: FC<Props> = ({id, constraints, constraint, elements, points, multiway, hidden}) => {
+export const CanvasConstraintArrow: FC<Props> = ({id, constraints, constraint, elements, points, multiway, hidden, selected}) => {
 
     return (
         <>
@@ -42,6 +42,7 @@ export const CanvasConstraintArrow: FC<Props> = ({id, constraints, constraint, e
                 stroke="red"
                 fill="red"
                 strokeWidth={5}
+                opacity={!selected && constraints.currentMethod ? 0.15 : 1}
                 pointerAtBeginning={true}
             />
             }
