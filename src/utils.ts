@@ -82,7 +82,7 @@ export function runJs(constraints: Constraint[], elements: any) {
                 return new Method(
                     unionIds.length,
                     constraint.fromIds.map((id) => unionIds.indexOf(id)),
-                    method.outputIds.map((id) => unionIds.indexOf(id)),
+                    [unionIds.indexOf(method.outputId)],
                     [...constraint.fromIds.map(() => maskNone)],
                     func(method));
             });

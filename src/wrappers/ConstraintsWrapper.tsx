@@ -14,13 +14,13 @@ const initialConstraints: Constraint[] = [
                 id: "1",
                 type: EditorType.VISUAL,
                 code: "return celcius * (9/5) + 32",
-                outputIds: ["fahrenheit"],
+                outputId: "fahrenheit",
             },
             {
                 id: "2",
                 type: EditorType.VISUAL,
                 code: "return (fahrenheit - 32) * (5/9)",
-                outputIds: ["celcius"],
+                outputId: "celcius",
             },
         ]
     }

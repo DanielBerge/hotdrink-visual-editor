@@ -36,8 +36,7 @@ export interface VMethod {
     id: string;
     code: string;
     type: EditorType;
-    //TODO Kan output ids bare være en string?
-    outputIds: string[];
+    outputId: string;
     visualJson?: [components: any[], connections: any[]];
 }
 

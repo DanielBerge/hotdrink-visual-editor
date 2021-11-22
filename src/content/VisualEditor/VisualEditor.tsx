@@ -54,18 +54,18 @@ export const VisualEditor = () => {
                         return "";
                     }
                 })) ?? [],
-                ...constraints.currentMethod?.outputIds.map((id, index) => ({
-                    id: `output-${id}`,
-                    label: `Output: ${id}`,
+                {
+                    id: `output-${constraints.currentMethod?.outputId}`,
+                    label: `Output: ${constraints.currentMethod?.outputId}`,
                     x: 700,
-                    y: 220 * index + 20,
+                    y: 240,
                     width: 200,
                     height: 200,
                     inputs: [
                         {
-                            id: `input-${index}`,
-                            variable: id,
-                            label: `Input: ${id}`,
+                            id: `input`,
+                            variable: constraints.currentMethod?.outputId ?? "",
+                            label: `Input: ${constraints.currentMethod?.outputId}`,
                         }
                     ],
                     code: (inputConnections: Connection[], component: any) => {
@@ -74,7 +74,7 @@ export const VisualEditor = () => {
                         }
                         return "";
                     }
-                })) ?? [],
+                } ?? [],
             ]);
         }
     }, [visual.components]);

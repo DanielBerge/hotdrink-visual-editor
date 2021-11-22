@@ -2,10 +2,51 @@ import {upperCaseFirst} from "../../../utils";
 import {Binding, Elem, InputType} from "../../../types";
 import {ComponentDropDown} from "./ComponentDropDown";
 import {useElements} from "../../../wrappers/ElementsWrapper";
+import {useConstraints} from "../../../wrappers/ConstraintsWrapper";
+import {ChangeEvent} from "react";
 
 export const ComponentProperties = () => {
     const elements = useElements();
-    const inputs = ["value", "height", "width"]
+    const constraints = useConstraints();
+    const inputs = ["value", "height", "width", "id"]
+
+    function updateId(e: ChangeEvent<HTMLInputElement>, oldId: string) {
+        const exists = elements.elements.find(element => element.id === e.target.value);
+        if (exists) {
+            alert("Element with this id already exists");
+            return;
+        } else {
+            updateKey(e, "id");
+            constraints.constraints.forEach((constraint) => {
+                if (constraint.toIds.includes(oldId) || constraint.fromIds.includes(oldId)) {
+                    constraints.updateConstraint(constraint, {
+                        ...constraint,
+                        toIds: constraint.toIds.map(id => id === oldId ? e.target.value : id),
+                        fromIds: constraint.fromIds.map(id => id === oldId ? e.target.value : id),
+                        methods: constraint.methods.map(method => {
+                            return method.outputId === oldId ? {
+                                ...method,
+                                outputId: e.target.value,
+                                code: method.code.replaceAll(oldId, e.target.value),
+                            } : {
+                                ...method,
+                                code: method.code.replaceAll(oldId, e.target.value),
+                            }
+                        }),
+                    })
+                }
+            })
+        }
+    }
+
+    function updateKey(e: ChangeEvent<HTMLInputElement>, key: string) {
+        elements.setCurrent(
+            elements.updateElement(elements.current, {
+                ...elements.current,
+                [key]: e.target.value,
+            })
+        );
+    }
 
     return (
         <>
@@ -18,12 +59,11 @@ export const ComponentProperties = () => {
                             <input
                                 value={elements.current[key as keyof Elem]}
                                 onChange={(e) => {
-                                    elements.setCurrent(
-                                        elements.updateElement(elements.current, {
-                                            ...elements.current,
-                                            [key]: e.target.value,
-                                        })
-                                    );
+                                    if (key === "id") {
+                                        updateId(e, elements.current.id);
+                                    } else {
+                                        updateKey(e, key);
+                                    }
                                 }}
                             />
                         </div>

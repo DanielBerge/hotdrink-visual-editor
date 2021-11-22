@@ -52,7 +52,7 @@ export const Canvas: FC = () => {
                             id: `${constraintIds[1]}`,
                             code: "",
                             type: EditorType.VISUAL,
-                            outputIds: [constraintIds[1]],
+                            outputId: constraintIds[1],
                         }]
                     });
                 } else if (!foundExactConstraint) {
@@ -70,7 +70,7 @@ export const Canvas: FC = () => {
                                     id: `${constraintIds[1]}`,
                                     code: "",
                                     type: EditorType.VISUAL,
-                                    outputIds: [constraintIds[1]],
+                                    outputId: constraintIds[1],
                                 }
                             ],
                         }
@@ -90,7 +90,7 @@ export const Canvas: FC = () => {
                                 id: `${constraintIds[0]}`,
                                 code: "",
                                 type: EditorType.VISUAL,
-                                outputIds: [constraintIds[0]],
+                                outputId: constraintIds[0],
                             }]
                         }));
                 } else {

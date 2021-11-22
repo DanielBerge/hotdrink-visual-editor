@@ -67,7 +67,7 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
                             elements={elements}
                             multiway={false}
                             selected={constraints.current === constraint}
-                            hidden={!constraints.currentMethod?.outputIds.includes(to.id) ?? false}
+                            hidden={constraints.currentMethod?.outputId !== to.id ?? false}
                         />
                     )
                 })
@@ -89,7 +89,7 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
                             elements={elements}
                             multiway={true}
                             selected={constraints.current === constraint}
-                            hidden={!constraints.currentMethod?.outputIds.includes(connection) ?? false}
+                            hidden={constraints.currentMethod?.outputId !== connection ?? false}
                         />
                     )
                 })

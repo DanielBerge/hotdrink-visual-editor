@@ -1,7 +1,6 @@
 # Getting Started with Create React App
 
 ## Future features
-* Redigere ID på component.
 * Change from output and input components to Textfield and Button.
 * IF block only has one input, and binary operation, add a input field in block.
 * Create blockbuilder button for binary operations.
@@ -12,6 +11,7 @@
 * Collision detection på elements i canvas i tillegg til kanter
 * Legge til variable references i hotdrink to json?
 * Hide/show constraints
+* VisualJson blir ikke oppdatert når man redigerer id på component
 
 ## Meeting notes
 
