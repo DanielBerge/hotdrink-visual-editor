@@ -47,7 +47,7 @@ export const ComponentSocket: FC<Props> = ({component, socket, index, output, se
                 }}
             />
             <Text
-                text={socket.label}
+                text={socket.variable}
                 x={output ? component.width + labelPadding : labelPadding}
                 y={socketYAxisPlacement(component, index, output ? component.outputs?.length : component.inputs?.length)}
             />

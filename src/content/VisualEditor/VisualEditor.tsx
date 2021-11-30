@@ -72,7 +72,6 @@ export const VisualEditor = () => {
                         {
                             id: `input`,
                             variable: constraints.currentMethod?.outputId ?? "",
-                            label: `Input: ${constraints.currentMethod?.outputId}`,
                         }
                     ],
                     code: (inputConnections: Connection[], component: any) => {

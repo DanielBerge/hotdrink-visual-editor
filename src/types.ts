@@ -52,8 +52,7 @@ export interface Constraint {
 
 export interface Socket {
     id: string;
-    variable?: string;
-    label: string;
+    variable: string;
 }
 
 export interface Connection {

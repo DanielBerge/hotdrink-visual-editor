@@ -10,12 +10,11 @@ const ObjectContext = React.createContext<any>({})
 const builder: LibraryComponentBuilder = new LibraryComponentBuilder("3", "Addition");
 builder.addOutput({
     id: "1",
-    label: "Added",
-    variable: "add",
+    variable: "added",
 });
 builder.addInput({
     id: "1",
-    label: "Number 1",
+    variable: "Number",
 });
 builder.operatorCode("+");
 builder.setInputField("Add by");
@@ -27,14 +26,12 @@ const initialLibraryComponents: LibraryComponent[] = [
         inputs: [
             {
                 id: "1",
-                label: "a",
-                variable: "",
+                variable: "NumberToAdd",
             },
         ],
         outputs: [
             {
                 id: "1",
-                label: "a",
                 variable: "addhundred",
             },
         ],
@@ -52,14 +49,12 @@ const initialLibraryComponents: LibraryComponent[] = [
         inputs: [
             {
                 id: "4",
-                label: "a",
                 variable: "a",
             },
         ],
         outputs: [
             {
                 id: "4",
-                label: "a",
                 variable: "multiply",
             },
         ],

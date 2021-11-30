@@ -1,7 +1,7 @@
 # Getting Started with Create React App
 
 ## Future features
-* Fikse visual programmer sin connection.
+* Fikse visual programmer sin connection. (Føles litt broken)
 * IF block only has one input, and binary operation, add a input field in block.
 * Create blockbuilder button for binary operations.
 * Visualize constraint flow in HTML run mode
@@ -15,11 +15,7 @@
 
 ## Meeting notes
 
-### Nov.2
-Labels to compoents in visual view, Input Textfield1, Output Textfield2
-
-Button med "binary" operation som kan generere dsl for en spesifikk operasjon (inp "+") out dsl
-
+### Nov 2.
 Han skal hjelpe å lage DSL generator, så jeg lager først et API som kan generere Grete komponenter på en slags måte.
 
 ### Number operators: 
@@ -31,7 +27,7 @@ isBefore, isBetween, isAfter, isSameDay, isSameMonth, isSameYear, isSameHour, is
 ### Boolean operators: 
 and, or, not, isTrue, isFalse
 
-### Nov 16
-Meeting about DSL?
-
 # Jakko: jaakko.jarvi@utu.fi
+
+## Nov 22.
+Spørre knut anders om string intrepolation i xtext
