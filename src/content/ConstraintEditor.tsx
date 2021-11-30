@@ -47,7 +47,6 @@ export const ConstraintEditor: FC<Props> = ({open, onClose}) => {
     return <Modal
         open={open}
         onClose={() => {
-            console.log(constraints.currentMethod?.type)
             if (constraints.currentMethod?.type === EditorType.VISUAL) {
                 const code = generateCode(visual.components ?? [], visual.connections ?? []);
                 console.log(code);

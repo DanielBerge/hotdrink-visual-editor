@@ -43,7 +43,7 @@ export const VisualEditor = () => {
                     const elem = elements.getElementById(id);
                     const type = elem?.type ?? "";
                     return ({
-                        id: `${upperCaseFirst(type)}-${id}`,
+                        id: `${upperCaseFirst(type)}-${id}-${Math.random().toString(36).substring(2, 15)}`,
                         label: `${upperCaseFirst(type)}: ${id}`,
                         x: 100,
                         y: 220 * index + 20,
@@ -62,7 +62,7 @@ export const VisualEditor = () => {
                     })
                 }) ?? [],
                 {
-                    id: `${upperCaseFirst(outPutElem?.type ?? "")}-${constraints.currentMethod?.outputId}`,
+                    id: `${upperCaseFirst(outPutElem?.type ?? "")}-${constraints.currentMethod?.outputId}-${Math.random().toString(36).substring(2, 15)}`,
                     label: ` ${upperCaseFirst(outPutElem?.type ?? "")}: ${constraints.currentMethod?.outputId}`,
                     x: 700,
                     y: 240,

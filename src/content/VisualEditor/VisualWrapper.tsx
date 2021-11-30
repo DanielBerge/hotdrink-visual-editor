@@ -7,7 +7,7 @@ const ConnectionContext = React.createContext<any>({})
 const LibraryContext = React.createContext<any>({})
 const ObjectContext = React.createContext<any>({})
 
-const builder: LibraryComponentBuilder = new LibraryComponentBuilder("3", "Addition");
+const builder: LibraryComponentBuilder = new LibraryComponentBuilder("8", "Addition");
 builder.addOutput({
     id: "1",
     variable: "added",
