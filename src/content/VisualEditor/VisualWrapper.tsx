@@ -1,23 +1,49 @@
 import React, {FC, useContext, useState} from "react";
 import {Connection, LibraryComponent, VComponent} from "../../types";
-import {LibraryComponentBuilder} from "../../libraryComponentBuilder";
 
 const ComponentContext = React.createContext<any>({})
 const ConnectionContext = React.createContext<any>({})
 const LibraryContext = React.createContext<any>({})
 const ObjectContext = React.createContext<any>({})
 
-const builder: LibraryComponentBuilder = new LibraryComponentBuilder("8", "Addition");
-builder.addOutput({
-    id: "1",
-    variable: "added",
-});
-builder.addInput({
-    id: "1",
-    variable: "Number",
-});
-builder.operatorCode("+");
-builder.setInputField("Add by");
+const libInput = [{
+    label: "Add", inputs: [], output: "Add", codeLine: "a + textBox"
+}, {
+    label: "Division",
+    inputs: [{variable: "divisor"}, {variable: "dividend"},],
+    output: "Division",
+    codeLine: "dividend / divisor"
+}, {
+    label: "Concat", inputs: [{variable: "str"}], output: "Concat", codeLine: "textBox.concat(str);"
+}]
+
+function dslToLib(library: any): LibraryComponent[] {
+    let freshIndex = 0;
+    return library.map((lib: any) => {
+        let codeStr: string = lib.codeLine;
+        lib.inputs = lib.inputs.map((input: any, index: number) => {
+            return {
+                id: index,
+                variable: input.variable,
+            }
+        })
+        lib.outputs = [{
+            id: 0,
+            variable: lib.output,
+        }]
+        lib.id = "lib-" + freshIndex++;
+        lib.code = (inputConnections: Connection[], component: VComponent) => {
+            lib.inputs.forEach((input: any, index: number) => {
+                codeStr = codeStr.replace(input.variable, inputConnections[index]?.fromSocket?.variable ?? input.variable);
+            })
+            if (inputConnections.length > 1 && component.outputs?.length === 1) {
+                return `const ${component.outputs[0].variable} = ${codeStr};\n`
+            }
+            return "";
+        }
+        return lib;
+    });
+}
 
 const initialLibraryComponents: LibraryComponent[] = [
     {
@@ -68,7 +94,7 @@ const initialLibraryComponents: LibraryComponent[] = [
             return "";
         }
     },
-    builder.build(),
+    ...dslToLib(libInput)
 ]
 
 
@@ -89,6 +115,8 @@ export const VisualWrapper: FC = (props) => {
     const [libraryComponents, setLibraryComponents] = useState<LibraryComponent[]>(initialLibraryComponents);
     const [components, setComponents] = useState<VComponent[]>([]);
     const [connections, setConnections] = useState<Connection[]>([]);
+
+    console.log(dslToLib(libInput));
 
     function toObject(): [components: VComponent[], connections: Connection[]] {
         return [
