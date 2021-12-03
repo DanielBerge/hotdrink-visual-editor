@@ -36,8 +36,8 @@ function dslToLib(library: any): LibraryComponent[] {
             lib.inputs.forEach((input: any, index: number) => {
                 codeStr = codeStr.replace(input.variable, inputConnections[index]?.fromSocket?.variable ?? input.variable);
             })
-            if (inputConnections.length > 1 && component.outputs?.length === 1) {
-                return `const ${component.outputs[0].variable} = ${codeStr};\n`
+            if (inputConnections.length >= 1 && component.outputs?.length === 1) {
+                return `const ${component.outputs[0].variable} = ${codeStr}\n`
             }
             return "";
         }
