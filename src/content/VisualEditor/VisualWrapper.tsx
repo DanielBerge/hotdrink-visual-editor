@@ -104,6 +104,7 @@ export interface Visual {
     components: VComponent[],
     setComponents: (components: VComponent[]) => void,
     updateComponent: (oldComponent: VComponent, newComponent: VComponent) => void,
+    deleteComponent: (component: VComponent) => void,
     connections: Connection[],
     setConnections: (connections: Connection[]) => void,
     getComponentById: (id: string) => VComponent,
@@ -142,12 +143,19 @@ export const VisualWrapper: FC = (props) => {
         setComponents(newComponents);
     }
 
+    function deleteComponent(toDelete: VComponent) {
+        const newComponents = components.filter(component => toDelete.id !== component.id);
+        const newConnections = connections.filter(connection => toDelete.id !== connection.fromSocket?.id && toDelete.id !== connection.toSocket?.id);
+        setComponents(newComponents);
+        setConnections(newConnections);
+    }
+
     function getComponentById(id: string): VComponent | undefined {
         return components.find(component => component.id === id);
     }
 
     return (
-        <ComponentContext.Provider value={{components, setComponents, updateComponent, getComponentById}}>
+        <ComponentContext.Provider value={{components, setComponents, updateComponent, getComponentById, deleteComponent}}>
             <ConnectionContext.Provider value={{connections, setConnections}}>
                 <LibraryContext.Provider value={{libraryComponents, setLibraryComponents}}>
                     <ObjectContext.Provider value={{toObject, fromObject}}>
@@ -161,7 +169,7 @@ export const VisualWrapper: FC = (props) => {
 
 export function useVisual(): Visual {
     const {libraryComponents, setLibraryComponents} = useContext(LibraryContext);
-    const {components, setComponents, updateComponent, getComponentById} = useContext(ComponentContext);
+    const {components, setComponents, updateComponent, getComponentById, deleteComponent} = useContext(ComponentContext);
     const {connections, setConnections} = useContext(ConnectionContext);
     const {toObject, fromObject} = useContext(ObjectContext);
 
@@ -171,6 +179,7 @@ export function useVisual(): Visual {
         components,
         setComponents,
         updateComponent,
+        deleteComponent,
         connections,
         setConnections,
         getComponentById,

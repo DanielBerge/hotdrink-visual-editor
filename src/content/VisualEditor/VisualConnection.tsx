@@ -11,6 +11,9 @@ interface Props {
 export const VisualConnection: FC<Props> = ({connection, getComponentById}) => {
     const fromComponent = getComponentById(connection.fromComponentId ?? "");
     const toComponent = getComponentById(connection.toComponentId ?? "");
+    if (fromComponent === undefined || toComponent === undefined) {
+        return null;
+    }
     return (
         <Line
             points={[

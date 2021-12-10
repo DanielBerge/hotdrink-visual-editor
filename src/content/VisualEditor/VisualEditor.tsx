@@ -129,6 +129,7 @@ export const VisualEditor = () => {
                                     key={component.id}
                                     component={component}
                                     updateComponent={visual.updateComponent}
+                                    deleteComponent={visual.deleteComponent}
                                     setNewConnection={setNewConnection}
                                     connection={newConnection}
                                 />
