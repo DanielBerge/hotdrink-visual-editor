@@ -3,7 +3,6 @@
 ## Future features
 * Visual DSL: Støtte inner textboks, må støtte typer (int, string osv.) og type tekstbokser (text, date, dropdown, etc.)
 * String concatination med variabler i kode (DSL), hjelp?
-* Slette connections til visual editor
 * Fikse visual programmer sin connection. (Føles litt broken)
 * IF block only has one input, and binary operation, add a input field in block.
 * Create blockbuilder button for binary operations.

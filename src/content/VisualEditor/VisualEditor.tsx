@@ -143,6 +143,7 @@ export const VisualEditor = () => {
                                     key={index}
                                     connection={connection}
                                     getComponentById={visual.getComponentById}
+                                    deleteConnection={visual.deleteConnection}
                                 />
                             )
                         })}

@@ -107,6 +107,7 @@ export interface Visual {
     deleteComponent: (component: VComponent) => void,
     connections: Connection[],
     setConnections: (connections: Connection[]) => void,
+    deleteConnection: (connection: Connection) => void,
     getComponentById: (id: string) => VComponent,
     toObject: () => [components: VComponent[], connections: Connection[]],
     fromObject: (object: [components: VComponent[], connections: Connection[]] | undefined) => void,
@@ -150,13 +151,18 @@ export const VisualWrapper: FC = (props) => {
         setConnections(newConnections);
     }
 
+    function deleteConnection(toDelete: Connection) {
+        const newConnections = connections.filter(connection => toDelete.fromComponentId !== connection.fromComponentId && toDelete.toComponentId !== connection.toComponentId);
+        setConnections(newConnections);
+    }
+
     function getComponentById(id: string): VComponent | undefined {
         return components.find(component => component.id === id);
     }
 
     return (
         <ComponentContext.Provider value={{components, setComponents, updateComponent, getComponentById, deleteComponent}}>
-            <ConnectionContext.Provider value={{connections, setConnections}}>
+            <ConnectionContext.Provider value={{connections, setConnections, deleteConnection}}>
                 <LibraryContext.Provider value={{libraryComponents, setLibraryComponents}}>
                     <ObjectContext.Provider value={{toObject, fromObject}}>
                         {props.children}
@@ -170,7 +176,7 @@ export const VisualWrapper: FC = (props) => {
 export function useVisual(): Visual {
     const {libraryComponents, setLibraryComponents} = useContext(LibraryContext);
     const {components, setComponents, updateComponent, getComponentById, deleteComponent} = useContext(ComponentContext);
-    const {connections, setConnections} = useContext(ConnectionContext);
+    const {connections, setConnections, deleteConnection} = useContext(ConnectionContext);
     const {toObject, fromObject} = useContext(ObjectContext);
 
     return {
@@ -182,6 +188,7 @@ export function useVisual(): Visual {
         deleteComponent,
         connections,
         setConnections,
+        deleteConnection,
         getComponentById,
         toObject,
         fromObject,
