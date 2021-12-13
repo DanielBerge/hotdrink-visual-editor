@@ -36,6 +36,7 @@ export interface ConstraintsWrapperProps {
     updateConstraint: (oldConstraint: Constraint, newConstraint: Constraint) => Constraint;
     newConstraint: boolean;
     setNewConstraint: (newConstraint: boolean) => void;
+    deleteConstraint: (constraint: Constraint | undefined) => void;
     current: Constraint | undefined;
     setCurrent: (newConstraint: Constraint | undefined) => void;
     deleteConstraintsConnected: (elementId: string) => void;
@@ -73,13 +74,18 @@ const ConstraintsWrapper: FC = (props) => {
         return newMethod;
     }
 
+    function deleteConstraint(toDelete: Constraint) {
+        const newConstraints = constraints.filter((constraint) => constraint.fromIds !== toDelete.fromIds && constraint.toIds !== toDelete.toIds);
+        setConstraints(newConstraints);
+    }
+
     function deleteConstraintsConnected(elementId: string) {
         //TODO Kan være feil
         setConstraints(constraints.filter((constraint) => constraint.toIds.includes(elementId) || constraint.fromIds.includes(elementId)));
     }
 
     return (
-        <ConstraintContext.Provider value={{constraints, setConstraints, updateConstraint, deleteConstraintsConnected}}>
+        <ConstraintContext.Provider value={{constraints, setConstraints, updateConstraint, deleteConstraintsConnected, deleteConstraint}}>
             <NewConstraintContext.Provider value={{newConstraint, setNewConstraint}}>
                 <CurrentContext.Provider value={{current, setCurrent, currentMethod, setCurrentMethod, updateMethod}}>
                     {props.children}
@@ -90,7 +96,7 @@ const ConstraintsWrapper: FC = (props) => {
 }
 
 function useConstraints(): ConstraintsWrapperProps {
-    const {constraints, setConstraints, updateConstraint, deleteConstraintsConnected} = useContext(ConstraintContext);
+    const {constraints, setConstraints, updateConstraint, deleteConstraintsConnected, deleteConstraint} = useContext(ConstraintContext);
     const {newConstraint, setNewConstraint} = useContext(NewConstraintContext);
     const {current, setCurrent, currentMethod, setCurrentMethod, updateMethod} = useContext(CurrentContext);
 
@@ -100,6 +106,7 @@ function useConstraints(): ConstraintsWrapperProps {
         updateConstraint,
         newConstraint,
         setNewConstraint,
+        deleteConstraint,
         current,
         setCurrent,
         deleteConstraintsConnected,

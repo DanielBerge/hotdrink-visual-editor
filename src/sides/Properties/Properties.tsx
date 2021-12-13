@@ -30,6 +30,16 @@ export const Properties = () => {
                 </button>
             )}
             <ComponentProperties/>
+            {constraints.current && (
+                <button
+                    className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"
+                    onClick={() => {
+                        constraints.deleteConstraint(constraints.current);
+                        constraints.setCurrent(undefined);
+                    }}
+                >Delete
+                </button>
+            )}
             <ConstraintProperties/>
             <button
                 className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"

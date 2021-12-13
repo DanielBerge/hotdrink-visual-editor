@@ -2,10 +2,8 @@
 
 ## Future features
 * Visual DSL: Støtte inner textboks, må støtte typer (int, string osv.) og type tekstbokser (text, date, dropdown, etc.)
-* String concatination med variabler i kode (DSL), hjelp?
+* String interpolation med variabler i kode (DSL), hjelp?
 * Fikse visual programmer sin connection. (Føles litt broken)
-* IF block only has one input, and binary operation, add a input field in block.
-* Create blockbuilder button for binary operations.
 * Visualize constraint flow in HTML run mode
 * Exporting and importing project
 * Drag from edge to create constraint, maybe a circle?
@@ -30,6 +28,3 @@ isBefore, isBetween, isAfter, isSameDay, isSameMonth, isSameYear, isSameHour, is
 and, or, not, isTrue, isFalse
 
 # Jakko: jaakko.jarvi@utu.fi
-
-## Nov 22.
-Spørre knut anders om string intrepolation i xtext

@@ -49,6 +49,7 @@ export const VisualComponent: FC<Props> = ({
                         value={component.value}
                         onChange={onValueChange}
                         placeholder={component.inputField}
+                        type="text"
                         style={{width: 100, marginLeft: component.width / 4, marginTop: component.height / 2}}
                     />}
                 />}
