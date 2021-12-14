@@ -1,6 +1,8 @@
 # Getting Started with Create React App
 
 ## Future features
+* Lage bibliotek
+* Import knapp for bibliotek?
 * Visual DSL: Støtte inner textboks, må støtte typer (int, string osv.) og type tekstbokser (text, date, dropdown, etc.)
 * String interpolation med variabler i kode (DSL), hjelp?
 * Fikse visual programmer sin connection. (Føles litt broken)
@@ -14,9 +16,6 @@
 * VisualJson blir ikke oppdatert når man redigerer id på component
 
 ## Meeting notes
-
-### Nov 2.
-Han skal hjelpe å lage DSL generator, så jeg lager først et API som kan generere Grete komponenter på en slags måte.
 
 ### Number operators: 
 +, -, *, /, %, <, >, <=, >=, ==, !=, isPos, isNeg, isZero, isOdd, isEven, max, min, abs, round, ceil, floor

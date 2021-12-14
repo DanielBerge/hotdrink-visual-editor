@@ -7,15 +7,16 @@ const LibraryContext = React.createContext<any>({})
 const ObjectContext = React.createContext<any>({})
 
 const libInput = [{
-    label: "Add", inputs: [], output: "Add", codeLine: "a + textBox"
-}, {
-    label: "Division",
-    inputs: [{variable: "divisor"}, {variable: "dividend"},],
-    output: "Division",
-    codeLine: "dividend / divisor"
-}, {
-    label: "Concat", inputs: [{variable: "str"}], output: "Concat", codeLine: "textBox.concat(str);"
-}]
+    label: "Add",inputs:[],output: "Add", params: [{name: "textBox"}],codeLine: "a + textBox"}, {
+    label: "Division",inputs:[{variable: "divisor"}, {variable: "dividend"}],output: "Division", params: [],codeLine: "dividend / divisor"}, {
+    label: "Subtract",inputs:[{variable: "num1"}, {variable: "num2"}],output: "Subtract", params: [],codeLine: "num1 - num2"}, {
+    label: "Multiplication",inputs:[{variable: "num1"}, {variable: "num2"}],output: "Multiplication", params: [],codeLine: "num1 * num2"}, {
+    label: "Modulo",inputs:[{variable: "divisor"}, {variable: "dividend"}],output: "Modulo", params: [],codeLine: "dividend % divisor"}, {
+    label: "LessThan",inputs:[{variable: "num1"}, {variable: "num2"}],output: "LessThan", params: [],codeLine: "num1 < num2"}, {
+    label: "BiggerThan",inputs:[{variable: "num1"}, {variable: "num2"}],output: "BiggerThan", params: [],codeLine: "num1 > num2"}, {
+    label: "Length",inputs:[{variable: "str"}],output: "Length", params: [],codeLine: "str.length"}, {
+    label: "Concat",inputs:[{variable: "str"}],output: "Concat", params: [{name: "textBox", type: "textbox"}],codeLine: "textBox.concat(str);"}, {
+    label: "And",inputs:[{variable: "bool1"}, {variable: "bool2"}],output: "And", params: [],codeLine: "(bool1 === \"true\") && (bool2 === \"true\")"}]
 
 function dslToLib(library: any): LibraryComponent[] {
     let freshIndex = 0;
@@ -161,7 +162,8 @@ export const VisualWrapper: FC = (props) => {
     }
 
     return (
-        <ComponentContext.Provider value={{components, setComponents, updateComponent, getComponentById, deleteComponent}}>
+        <ComponentContext.Provider
+            value={{components, setComponents, updateComponent, getComponentById, deleteComponent}}>
             <ConnectionContext.Provider value={{connections, setConnections, deleteConnection}}>
                 <LibraryContext.Provider value={{libraryComponents, setLibraryComponents}}>
                     <ObjectContext.Provider value={{toObject, fromObject}}>
@@ -175,7 +177,13 @@ export const VisualWrapper: FC = (props) => {
 
 export function useVisual(): Visual {
     const {libraryComponents, setLibraryComponents} = useContext(LibraryContext);
-    const {components, setComponents, updateComponent, getComponentById, deleteComponent} = useContext(ComponentContext);
+    const {
+        components,
+        setComponents,
+        updateComponent,
+        getComponentById,
+        deleteComponent
+    } = useContext(ComponentContext);
     const {connections, setConnections, deleteConnection} = useContext(ConnectionContext);
     const {toObject, fromObject} = useContext(ObjectContext);
 
