@@ -23,7 +23,6 @@ export const VisualEditor = () => {
     const [offset, setOffset] = useState<{ x: number, y: number }>({x: 0, y: 0});
 
     function onMouseMove(e: KonvaEventObject<MouseEvent>) {
-        console.log(offset);
         setMousePosition({x: e.evt.clientX - offset.x - 5, y: e.evt.clientY - offset.y - 5});
     }
 
