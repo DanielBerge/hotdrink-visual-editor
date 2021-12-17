@@ -2,12 +2,15 @@ import {Layer, Line, Stage} from "react-konva"
 import {VisualComponent} from "./VisualComponent";
 import {useVisual} from "./VisualWrapper";
 import {VisualConnection} from "./VisualConnection";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Connection, LibraryComponent} from "../../types";
 import {socketYAxisPlacement, upperCaseFirst} from "../../utils";
 import {useConstraints} from "../../wrappers/ConstraintsWrapper";
 import {useElements} from "../../wrappers/ElementsWrapper";
+import {KonvaEventObject} from "konva/lib/Node";
 
+const componentWidth = 150;
+const componentHeight = 150;
 
 export const VisualEditor = () => {
     const visual = useVisual();
@@ -16,17 +19,24 @@ export const VisualEditor = () => {
     const constraints = useConstraints();
     const elements = useElements();
     const [filter, setFilter] = useState<string>("");
+    const stageRef = React.useRef(null);
+    const [offset, setOffset] = useState<{ x: number, y: number }>({x: 0, y: 0});
+
+    function onMouseMove(e: KonvaEventObject<MouseEvent>) {
+        console.log(offset);
+        setMousePosition({x: e.evt.clientX - offset.x - 5, y: e.evt.clientY - offset.y - 5});
+    }
 
     useEffect(() => {
-        function onMouseMove(e: MouseEvent) {
-            setMousePosition({x: e.clientX, y: e.clientY});
+        if (stageRef.current) {
+            setOffset({
+                // @ts-ignore
+                x: stageRef?.current.getBoundingClientRect().x,
+                // @ts-ignore
+                y: stageRef?.current.getBoundingClientRect().y,
+            });
         }
-
-        window.addEventListener('mousemove', onMouseMove);
-        return () => {
-            window.removeEventListener('mousemove', onMouseMove);
-        };
-    }, [newConnection]);
+    }, [stageRef]);
 
     useEffect(() => {
         if (newConnection?.fromComponentId && newConnection.toComponentId) {
@@ -46,9 +56,9 @@ export const VisualEditor = () => {
                         id: `${upperCaseFirst(type)}-${id}-${Math.random().toString(36).substring(2, 15)}`,
                         label: `${upperCaseFirst(type)}: ${id}`,
                         x: 100,
-                        y: 220 * index + 20,
-                        width: 200,
-                        height: 200,
+                        y: 200 * index + 20,
+                        width: componentWidth,
+                        height: componentHeight,
                         outputs: [
                             {
                                 id: `output-${index}`,
@@ -64,10 +74,10 @@ export const VisualEditor = () => {
                 {
                     id: `${upperCaseFirst(outPutElem?.type ?? "")}-${constraints.currentMethod?.outputId}-${Math.random().toString(36).substring(2, 15)}`,
                     label: ` ${upperCaseFirst(outPutElem?.type ?? "")}: ${constraints.currentMethod?.outputId}`,
-                    x: 700,
-                    y: 240,
-                    width: 200,
-                    height: 200,
+                    x: 550,
+                    y: 170,
+                    width: componentWidth,
+                    height: componentHeight,
                     inputs: [
                         {
                             id: `input`,
@@ -87,40 +97,46 @@ export const VisualEditor = () => {
 
     return (
         <div className="flex flex-row">
-            <div className="w-60 h-40 bg-gray -700 p-3">
+            <div className="w-60 bg-gray p-3">
                 <label>Search: </label>
                 <input
                     className="border border-black"
                     onChange={(e) => setFilter(e.target.value)}
                 />
-                {visual.libraryComponents.filter((component) => component.label.toLowerCase().includes(filter.toLowerCase())).map((component: LibraryComponent) => {
-                    return (
-                        <div
-                            key={component.id}
-                            style={{width: "100", height: "100", backgroundColor: "gray"}}
-                            className="border border-black p-4 m-4 h-32 rounded-lg"
-                            draggable
-                            onDragEnd={(e) => {
-                                visual.setComponents([...visual.components, {
-                                    ...component,
-                                    id: component.id + Math.random().toString(36).substring(2, 15),
-                                    width: 200,
-                                    height: 200,
-                                    x: e.pageX - 400,
-                                    y: e.pageY - 200,
-                                }]);
-                            }}
-                        >
-                            {component.label}
-                        </div>
-                    )
-                })}
+                <div className="overflow-scroll h-96">
+                    {visual.libraryComponents.filter((component) => component.label.toLowerCase().includes(filter.toLowerCase())).map((component: LibraryComponent) => {
+                        return (
+                            <div
+                                key={component.id}
+                                style={{width: "100", height: "100", backgroundColor: "gray"}}
+                                className="border border-black p-4 m-4 h-32 rounded-lg"
+                                draggable
+                                onDragEnd={(e) => {
+                                    visual.setComponents([...visual.components, {
+                                        ...component,
+                                        id: component.id + Math.random().toString(36).substring(2, 15),
+                                        width: componentWidth,
+                                        height: componentHeight,
+                                        x: e.pageX - 400,
+                                        y: e.pageY - 200,
+                                    }]);
+                                }}
+                            >
+                                {component.label}
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
-            <div>
+            <div
+                // @ts-ignore
+                ref={(ref) => stageRef.current = ref}
+            >
                 <Stage
-                    width={window.innerWidth - 400}
+                    width={750}
                     height={500}
                     className="bg-gray-100"
+                    onMouseMove={onMouseMove}
                 >
                     <Layer>
                         {visual.components.map((component) => {
@@ -151,8 +167,8 @@ export const VisualEditor = () => {
                             points={[
                                 visual.getComponentById(newConnection.fromComponentId ?? "")?.x + visual.getComponentById(newConnection.fromComponentId ?? "")?.width ?? 0,
                                 socketYAxisPlacement(visual.getComponentById(newConnection.fromComponentId ?? ""), newConnection.fromSocketIndex!, visual.getComponentById(newConnection.fromComponentId ?? "")?.outputs?.length, true),
-                                mousePosition!.x - 330,
-                                mousePosition!.y - 145,
+                                mousePosition!.x,
+                                mousePosition!.y,
                             ]}
                             strokeWidth={6}
                             stroke="black"
