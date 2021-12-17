@@ -43,12 +43,12 @@ export const VisualComponent: FC<Props> = ({
             draggable
             onDragMove={onDragMove}
         >
-            {component.inputField && component.inputs?.length === 1 &&
+            {component.params && component.inputs?.length === 1 &&
                 <Html
                     children={<input
                         value={component.value}
                         onChange={onValueChange}
-                        placeholder={component.inputField}
+                        placeholder={component.params[0].name}
                         type="text"
                         style={{width: 100, marginLeft: component.width / 4, marginTop: component.height / 2}}
                     />}

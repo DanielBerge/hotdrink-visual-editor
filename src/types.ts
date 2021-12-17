@@ -72,12 +72,18 @@ export interface VComponent extends LibraryComponent {
     value?: any;
 }
 
+export interface Param {
+    index: number;
+    name: string;
+    type: string;
+}
+
 export interface LibraryComponent {
     id: string;
     label: string;
+    params?: Param[];
     inputs?: Socket[];
     outputs?: Socket[];
-    inputField?: string;
 
     code(inputConnections: Connection[], outputSockets: VComponent): string;
 }

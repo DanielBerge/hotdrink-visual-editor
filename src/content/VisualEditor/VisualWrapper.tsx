@@ -32,6 +32,13 @@ function dslToLib(library: any): LibraryComponent[] {
             id: 0,
             variable: lib.output,
         }]
+        lib.params = lib.params.map((param: any, index: number) => {
+            return {
+                id: index,
+                name: param.name,
+                type: param.type,
+            }
+        })
         lib.id = "lib-" + freshIndex++;
         lib.code = (inputConnections: Connection[], component: VComponent) => {
             lib.inputs.forEach((input: any, index: number) => {
@@ -45,59 +52,6 @@ function dslToLib(library: any): LibraryComponent[] {
         return lib;
     });
 }
-
-const initialLibraryComponents: LibraryComponent[] = [
-    {
-        id: "3",
-        label: "Add 100",
-        inputs: [
-            {
-                id: "1",
-                variable: "NumberToAdd",
-            },
-        ],
-        outputs: [
-            {
-                id: "1",
-                variable: "addhundred",
-            },
-        ],
-        code: (inputConnections: Connection[], component) => {
-            if (inputConnections.length === 1 && component.outputs?.length === 1) {
-                return `const ${component.outputs[0].variable} = ${inputConnections[0].fromSocket?.variable ?? ""} + 100;\n`;
-            }
-            return "";
-        }
-    },
-    {
-        id: "4",
-        label: "Multiply",
-        inputField: "Multiply by",
-        inputs: [
-            {
-                id: "4",
-                variable: "a",
-            },
-        ],
-        outputs: [
-            {
-                id: "4",
-                variable: "multiply",
-            },
-        ],
-        code: (inputConnections: Connection[], component) => {
-            if (inputConnections.length === 1 && component.outputs?.length === 1) {
-                return `const ${component.outputs[0].variable} = ${inputConnections[0].fromSocket?.variable ?? ""} * ${component.value};\n`;
-            }
-            if (inputConnections.length === 2 && component.outputs?.length === 1) {
-                return `const ${component.outputs[0].variable} = ${inputConnections[0].fromSocket?.variable ?? ""} * ${inputConnections[1].fromSocket?.variable ?? ""};\n`;
-            }
-            return "";
-        }
-    },
-    ...dslToLib(libInput)
-]
-
 
 export interface Visual {
     libraryComponents: LibraryComponent[];
@@ -115,7 +69,7 @@ export interface Visual {
 }
 
 export const VisualWrapper: FC = (props) => {
-    const [libraryComponents, setLibraryComponents] = useState<LibraryComponent[]>(initialLibraryComponents);
+    const [libraryComponents, setLibraryComponents] = useState<LibraryComponent[]>(dslToLib(libInput));
     const [components, setComponents] = useState<VComponent[]>([]);
     const [connections, setConnections] = useState<Connection[]>([]);
 

@@ -34,6 +34,9 @@ export const ConstraintEditor: FC<Props> = ({open, onClose}) => {
                 return connection.toComponentId === component.id;
             });
             if (compConnections.length > 0) {
+                if (component?.params?.length ?? -1 > 0) {
+                    code += `const ${component.params![0].name} = "${component.value}";\n`;
+                }
                 code += component.code(compConnections, component);
             }
         })
@@ -82,9 +85,7 @@ export const ConstraintEditor: FC<Props> = ({open, onClose}) => {
                                     constraints.setCurrentMethod(undefined);
                                 }
                                 onClose();
-                            }
-
-                            }>SAVE
+                            }}>SAVE
                             </button>
                         </div>
                         <div
@@ -103,47 +104,4 @@ export const ConstraintEditor: FC<Props> = ({open, onClose}) => {
             }
         </>
     )
-    /**
-     return <Modal
-     open={open}
-     draggable
-     onClose={() => {
-            if (constraints.currentMethod?.type === EditorType.VISUAL) {
-                const code = generateCode(visual.components ?? [], visual.connections ?? []);
-                console.log(code);
-                if (constraints.current && constraints.currentMethod) {
-                    constraints.updateMethod(constraints.currentMethod, {
-                        ...constraints.currentMethod,
-                        code,
-                        visualJson: visual.toObject()
-                    }, constraints.current);
-                }
-                visual.setConnections([]);
-                visual.setComponents([]);
-                constraints.setCurrent(undefined);
-                constraints.setCurrentMethod(undefined);
-            }
-            onClose();
-        }}
-     className="bg-transparent m-40"
-     >
-     <div
-     className="bg-white"
-     >
-     <button className="p-5" onClick={() => editor.setType(EditorType.VISUAL)}>Visual</button>
-     <button className="p-5" onClick={() => editor.setType(EditorType.CODE)}>Code</button>
-     <div
-     style={editor.type === EditorType.VISUAL ? {} : {display: 'none'}}
-     className="editor bg-white"
-     >
-     <VisualEditor/>
-     </div>
-     <div
-     style={editor.type === EditorType.CODE ? {} : {display: 'none'}}
-     >
-     <CodeEditor/>
-     </div>
-     </div>
-     </Modal>
-     **/
 }
