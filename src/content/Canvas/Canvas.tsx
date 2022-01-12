@@ -160,7 +160,7 @@ export const Canvas: FC = () => {
 
     const checkDeselect = (e: any) => {
         const clickedOnEmpty = e.target === e.target.getStage();
-        if (clickedOnEmpty) {
+        if (clickedOnEmpty && !open) {
             elements.setCurrent(undefined);
             constraints.setCurrent(undefined);
             constraints.setCurrentMethod(undefined);

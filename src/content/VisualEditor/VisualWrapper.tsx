@@ -13,10 +13,26 @@ const libInput = [{
     label: "Multiplication",inputs:[{variable: "num1"}, {variable: "num2"}],output: "Multiplication", params: [],codeLine: "num1 * num2"}, {
     label: "Modulo",inputs:[{variable: "divisor"}, {variable: "dividend"}],output: "Modulo", params: [],codeLine: "dividend % divisor"}, {
     label: "LessThan",inputs:[{variable: "num1"}, {variable: "num2"}],output: "LessThan", params: [],codeLine: "num1 < num2"}, {
-    label: "BiggerThan",inputs:[{variable: "num1"}, {variable: "num2"}],output: "BiggerThan", params: [],codeLine: "num1 > num2"}, {
+    label: "MoreThan",inputs:[{variable: "num1"}, {variable: "num2"}],output: "MoreThan", params: [],codeLine: "num1 > num2"}, {
+    label: "LessOrEqual",inputs:[{variable: "num1"}, {variable: "num2"}],output: "LessOrEqual", params: [],codeLine: "num1 <= num2"}, {
+    label: "MoreOrEqual",inputs:[{variable: "num1"}, {variable: "num2"}],output: "MoreOrEqual", params: [],codeLine: "num1 >= num2"}, {
+    label: "IsPositive",inputs:[{variable: "num"}],output: "IsPositive", params: [],codeLine: "num > 0"}, {
+    label: "IsNegative",inputs:[{variable: "num"}],output: "IsNegative", params: [],codeLine: "num < 0"}, {
+    label: "IsZero",inputs:[{variable: "num"}],output: "IsZero", params: [],codeLine: "num === 0"}, {
+    label: "IsOdd",inputs:[{variable: "num"}],output: "IsOdd", params: [],codeLine: "num % 2 === 1"}, {
+    label: "IsEven",inputs:[{variable: "num"}],output: "IsEven", params: [],codeLine: "num % 2 === 0"}, {
+    label: "Min",inputs:[{variable: "num1"}, {variable: "num2"}],output: "Min", params: [],codeLine: "Math.min(num1, num2)"}, {
+    label: "Max",inputs:[{variable: "num1"}, {variable: "num2"}],output: "Max", params: [],codeLine: "Math.max(num1, num2)"}, {
     label: "Length",inputs:[{variable: "str"}],output: "Length", params: [],codeLine: "str.length"}, {
-    label: "Concat",inputs:[{variable: "str"}],output: "Concat", params: [{name: "textBox", type: "textbox"}],codeLine: "textBox.concat(str);"}, {
-    label: "And",inputs:[{variable: "bool1"}, {variable: "bool2"}],output: "And", params: [],codeLine: "(bool1 === \"true\") && (bool2 === \"true\")"}]
+    label: "Concat",inputs:[{variable: "str"}],output: "Concat", params: [{name: "textBox", type: "text"}],codeLine: "textBox.concat(str)"}, {
+    label: "Contains",inputs:[{variable: "str"}],output: "Contains", params: [{name: "textBox"}],codeLine: "str.contains(textBox)"}, {
+    label: "ToLowerCase",inputs:[{variable: "str"}],output: "ToLowerCase", params: [],codeLine: "str.toLowerCase()"}, {
+    label: "ToUpperCase",inputs:[{variable: "str"}],output: "ToUpperCase", params: [],codeLine: "str.toUpperCase()"}, {
+    label: "And",inputs:[{variable: "bool1"}, {variable: "bool2"}],output: "And", params: [],codeLine: "(bool1 === \"true\") && (bool2 === \"true\")"}, {
+    label: "Or",inputs:[{variable: "bool1"}, {variable: "bool2"}],output: "Or", params: [],codeLine: "(bool1 === \"true\") || (bool2 === \"true\")"}, {
+    label: "Not",inputs:[{variable: "bool"}],output: "Not", params: [],codeLine: "!bool"}, {
+    label: "IsTrue",inputs:[{variable: "bool"}],output: "IsTrue", params: [],codeLine: "bool === \"true\""}, {
+    label: "IsFalse",inputs:[{variable: "bool"}],output: "IsFalse", params: [],codeLine: "bool === \"false\""}]
 
 function dslToLib(library: any): LibraryComponent[] {
     let freshIndex = 0;
@@ -72,8 +88,6 @@ export const VisualWrapper: FC = (props) => {
     const [libraryComponents, setLibraryComponents] = useState<LibraryComponent[]>(dslToLib(libInput));
     const [components, setComponents] = useState<VComponent[]>([]);
     const [connections, setConnections] = useState<Connection[]>([]);
-
-    console.log(dslToLib(libInput));
 
     function toObject(): [components: VComponent[], connections: Connection[]] {
         return [

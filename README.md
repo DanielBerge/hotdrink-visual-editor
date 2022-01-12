@@ -1,29 +1,26 @@
 # Getting Started with Create React App
 
 ## Future features
-* Lage bibliotek
-* Import knapp for bibliotek?
+* Disable muligheten til å gå ut av dialogboks uten å trykke på save knappen
+* Delete method of constraint when deleting component connected to it.
+* Ny måte å lage constraints på?
+* Visualisere metodene på en annen måte.
+* Unionen av inputs og outputs må være den samme for alle methods.
+* Datetime subtype og datetime library
+* Slider / range, select, checkbox, radio ?? Noen av disse jeg kan støtte?
 * Visual DSL: Støtte inner textboks, må støtte typer (int, string osv.) og type tekstbokser (text, date, dropdown, etc.)
 * String interpolation med variabler i kode (DSL), hjelp?
-* Fikse visual programmer sin connection. (Føles litt broken)
 * Visualize constraint flow in HTML run mode
 * Exporting and importing project
 * Drag from edge to create constraint, maybe a circle?
-* Export to REACT
-* Collision detection på elements i canvas i tillegg til kanter
-* Legge til variable references i hotdrink to json?
 * Hide/show constraints
 * VisualJson blir ikke oppdatert når man redigerer id på component
 
 ## Meeting notes
 
-### Number operators: 
-+, -, *, /, %, <, >, <=, >=, ==, !=, isPos, isNeg, isZero, isOdd, isEven, max, min, abs, round, ceil, floor
 ### String operators: 
-length, contains, startsWith, endsWith, indexOf, lastIndexOf, substring, toLowerCase, toUpperCase, trim, replace, split, join
+length, contains, startsWith, endsWith, indexOf, lastIndexOf, substring, toLowerCase, toUpperCase, trim, replace, split, join, **isEmpty**
 ### Date operators: 
 isBefore, isBetween, isAfter, isSameDay, isSameMonth, isSameYear, isSameHour, isSameMinute, isSameSecond, isSameMillisecond
-### Boolean operators: 
-and, or, not, isTrue, isFalse
 
 # Jakko: jaakko.jarvi@utu.fi
