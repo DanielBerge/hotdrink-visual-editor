@@ -1,10 +1,8 @@
 # Getting Started with Create React App
 
 ## Future features
-* Disable muligheten til å gå ut av dialogboks uten å trykke på save knappen
 * Delete method of constraint when deleting component connected to it.
 * Ny måte å lage constraints på?
-* Visualisere metodene på en annen måte.
 * Unionen av inputs og outputs må være den samme for alle methods.
 * Datetime subtype og datetime library
 * Slider / range, select, checkbox, radio ?? Noen av disse jeg kan støtte?

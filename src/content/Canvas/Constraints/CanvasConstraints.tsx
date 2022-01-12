@@ -1,10 +1,11 @@
 import React, {FC} from "react";
-import {Group, Layer, Rect} from "react-konva";
+import {Group, Layer} from "react-konva";
 import {Constraint, Elem} from "../../../types";
 import {CanvasConstraintRect} from "./CanvasConstraintRect";
 import {ConstraintsWrapperProps} from "../../../wrappers/ConstraintsWrapper";
 import {ElementsWrapperProps} from "../../../wrappers/ElementsWrapper";
 import {CanvasConstraintArrows} from "./CanvasConstraintArrows";
+import {CanvasMethodCircle} from "./CanvasMethodCircle";
 
 interface Props {
     onClick: (element: Elem | Constraint) => void;
@@ -28,25 +29,13 @@ export const CanvasConstraints: FC<Props> = ({onClick, setOpen, constraints, ele
                             selected={constraint === constraints.current}
                         />
                         {constraint.methods.map((method, index) => {
-                            return <Rect
-                                key={method.id}
-                                x={constraint.x + constraint.width / 4}
-                                y={constraint.y + index * 30 + 10}
-                                width={constraint.width / 2}
-                                cornerRadius={20}
-                                height={20}
-                                fill={"green"}
-                                onClick={() => {
-                                    constraints.setCurrentMethod(method);
-                                    constraints.setCurrent(constraint);
-                                    elements.setCurrent(undefined);
-                                }}
-                                onDblClick={() => {
-                                    setOpen(true)
-                                    constraints.setCurrent(constraint);
-                                    constraints.setCurrentMethod(method);
-                                    elements.setCurrent(undefined);
-                                }}
+                            return <CanvasMethodCircle
+                                setOpen={setOpen}
+                                constraint={constraint}
+                                constraints={constraints}
+                                elements={elements}
+                                method={method}
+                                index={index}
                             />
                         })}
                         <CanvasConstraintArrows constraint={constraint} elements={elements} constraints={constraints}/>
