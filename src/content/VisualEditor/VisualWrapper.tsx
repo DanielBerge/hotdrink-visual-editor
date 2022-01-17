@@ -7,10 +7,15 @@ const LibraryContext = React.createContext<any>({})
 const ObjectContext = React.createContext<any>({})
 
 const libInput = [{
-    label: "Add",inputs:[],output: "Add", params: [{name: "textBox", type: "number"}],codeLine: "a + textBox"}, {
+    label: "AddWith",inputs:[{variable: "num"}],output: "AddWith", params: [{name: "textBox", type: "number"}],codeLine: "a + textBox"}, {
+    label: "Add",inputs:[{variable: "num1"}, {variable: "num2"}],output: "Add", params: [],codeLine: "num1 + num2"}, {
+    label: "DivWith",inputs:[{variable: "dividend"}],output: "DivWith", params: [{name: "divisor", type: "number"}],codeLine: "dividend + divisor"}, {
     label: "Division",inputs:[{variable: "divisor"}, {variable: "dividend"}],output: "Division", params: [],codeLine: "dividend / divisor"}, {
+    label: "SubtractWith",inputs:[{variable: "num1"}],output: "SubtractWith", params: [{name: "num2", type: "number"}],codeLine: "num1 - num2"}, {
     label: "Subtract",inputs:[{variable: "num1"}, {variable: "num2"}],output: "Subtract", params: [],codeLine: "num1 - num2"}, {
+    label: "MultWith",inputs:[{variable: "num1"}],output: "MultWith", params: [{name: "multiplier", type: "number"}],codeLine: "num1 * multiplier"}, {
     label: "Multiplication",inputs:[{variable: "num1"}, {variable: "num2"}],output: "Multiplication", params: [],codeLine: "num1 * num2"}, {
+    label: "ModWith",inputs:[{variable: "dividend"}],output: "ModWith", params: [{name: "divisor", type: "number"}],codeLine: "dividend % divisor"}, {
     label: "Modulo",inputs:[{variable: "divisor"}, {variable: "dividend"}],output: "Modulo", params: [],codeLine: "dividend % divisor"}, {
     label: "LessThan",inputs:[{variable: "num1"}, {variable: "num2"}],output: "LessThan", params: [],codeLine: "num1 < num2"}, {
     label: "MoreThan",inputs:[{variable: "num1"}, {variable: "num2"}],output: "MoreThan", params: [],codeLine: "num1 > num2"}, {
@@ -28,12 +33,14 @@ const libInput = [{
     label: "Contains",inputs:[{variable: "str"}],output: "Contains", params: [{name: "textBox", type: "text"}],codeLine: "str.contains(textBox)"}, {
     label: "ToLowerCase",inputs:[{variable: "str"}],output: "ToLowerCase", params: [],codeLine: "str.toLowerCase()"}, {
     label: "ToUpperCase",inputs:[{variable: "str"}],output: "ToUpperCase", params: [],codeLine: "str.toUpperCase()"}, {
+    label: "IsEmpty",inputs:[{variable: "str"}],output: "IsEmpty", params: [],codeLine: "str === \"\" || str === undefined"}, {
     label: "And",inputs:[{variable: "bool1"}, {variable: "bool2"}],output: "And", params: [],codeLine: "(bool1 === \"true\") && (bool2 === \"true\")"}, {
     label: "Or",inputs:[{variable: "bool1"}, {variable: "bool2"}],output: "Or", params: [],codeLine: "(bool1 === \"true\") || (bool2 === \"true\")"}, {
     label: "Not",inputs:[{variable: "bool"}],output: "Not", params: [],codeLine: "!bool"}, {
     label: "IsTrue",inputs:[{variable: "bool"}],output: "IsTrue", params: [],codeLine: "bool === \"true\""}, {
     label: "IsFalse",inputs:[{variable: "bool"}],output: "IsFalse", params: [],codeLine: "bool === \"false\""}, {
-    label: "IsBefore",inputs:[{variable: "time"}],output: "IsBefore", params: [{name: "timeBox", type: "date"}],codeLine: "new Date(time).getTime() < new Date(timeBox).getTime() "}]
+    label: "IsBefore",inputs:[{variable: "time"}],output: "IsBefore", params: [{name: "timeBox", type: "date"}],codeLine: "new Date(time).getTime() < new Date(timeBox).getTime()"}, {
+    label: "IsAfter",inputs:[{variable: "time"}],output: "IsAfter", params: [{name: "timeBox", type: "date"}],codeLine: "new Date(time).getTime() > new Date(timeBox).getTime()"}]
 
 function dslToLib(library: any): LibraryComponent[] {
     let freshIndex = 0;

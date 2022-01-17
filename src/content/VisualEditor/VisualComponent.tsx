@@ -44,12 +44,13 @@ export const VisualComponent: FC<Props> = ({
         >
             {component.params && component.params.length > 0 && component.inputs?.length === 1 &&
                 <Html
+                    divProps={{style: {pointerEvents: 'none'}}}
                     children={<input
                         value={component.value}
                         onChange={onValueChange}
                         placeholder={component.params[0]?.name}
                         type={component.params[0]?.type}
-                        style={{width: 100, marginLeft: component.width / 4, marginTop: component.height / 2}}
+                        style={{width: 100, marginLeft: component.width / 4, marginTop: component.height / 2, pointerEvents: 'all'}}
                     />}
                 />}
             <Rect

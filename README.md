@@ -6,7 +6,6 @@
 * Ny måte å lage constraints på? Drag from edge to create constraint, maybe a circle?
 * Unionen av inputs og outputs må være den samme for alle methods i en constraint
 * Draggable dialog window?
-* Slider / range (Noen av disse jeg kan støtte?)
 * String interpolation med variabler i kode (DSL), hjelp?
 * Visualize constraint flow in HTML run mode
 * Exporting and importing project
