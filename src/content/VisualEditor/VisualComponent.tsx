@@ -62,7 +62,7 @@ export const VisualComponent: FC<Props> = ({
             />
             <Group>
                 <Text
-                    x={component.width / 3}
+                    x={10}
                     y={10}
                     fill={'black'}
                     text={component.label}

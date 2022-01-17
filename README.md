@@ -1,12 +1,12 @@
 # Getting Started with Create React App
 
 ## Future features
-* Miniatyrblokker burde inkludere input og output nodes visuellt
+* Matematisk blokk
 * Delete method of constraint when deleting component connected to it.
 * Ny måte å lage constraints på? Drag from edge to create constraint, maybe a circle?
 * Unionen av inputs og outputs må være den samme for alle methods i en constraint
-* Slider / range, select, checkbox, radio ?? Noen av disse jeg kan støtte?
-* Visual DSL: Støtte inner textboks, må støtte typer (int, string osv.) og type tekstbokser (text, date, dropdown, etc.)
+* Draggable dialog window?
+* Slider / range (Noen av disse jeg kan støtte?)
 * String interpolation med variabler i kode (DSL), hjelp?
 * Visualize constraint flow in HTML run mode
 * Exporting and importing project
@@ -16,7 +16,7 @@
 ## Meeting notes
 
 ### String operators: 
-length, contains, startsWith, endsWith, indexOf, lastIndexOf, substring, trim, replace, split, join
+length, contains, startsWith, endsWith, indexOf, lastIndexOf, substring, trim, replace, split
 ### Date operators: 
 isBetween, isSameDay, isSameMonth, isSameYear, isSameHour, isSameMinute, isSameSecond, isSameMillisecond
 

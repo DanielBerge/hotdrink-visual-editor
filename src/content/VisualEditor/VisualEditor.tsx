@@ -108,7 +108,7 @@ export const VisualEditor = () => {
                             <div
                                 key={component.id}
                                 style={{width: "100", height: "100", backgroundColor: "gray"}}
-                                className="border border-black p-4 m-4 h-32 rounded-lg"
+                                className="border border-black p-4 m-4 h-32 rounded-lg font-bold"
                                 draggable
                                 onDragEnd={(e) => {
                                     visual.setComponents([...visual.components, {
@@ -122,6 +122,12 @@ export const VisualEditor = () => {
                                 }}
                             >
                                 {component.label}
+                                <div
+                                    className={"font-light"}
+                                >
+                                    {"\nInputs:" + component.inputs?.length}
+                                    {"\nOutputs:" + component.outputs?.length}
+                                </div>
                             </div>
                         )
                     })}
