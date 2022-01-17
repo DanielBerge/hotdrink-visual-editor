@@ -7,6 +7,7 @@ export enum ElemType {
 export enum InputType {
     Text = "text",
     Number = "number",
+    Date = "date",
 }
 
 export enum EditorType {

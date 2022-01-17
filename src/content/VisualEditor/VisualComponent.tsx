@@ -48,7 +48,7 @@ export const VisualComponent: FC<Props> = ({
                         value={component.value}
                         onChange={onValueChange}
                         placeholder={component.params[0]?.name}
-                        type="text"
+                        type={component.params[0]?.type}
                         style={{width: 100, marginLeft: component.width / 4, marginTop: component.height / 2}}
                     />}
                 />}

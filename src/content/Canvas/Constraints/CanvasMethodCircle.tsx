@@ -33,7 +33,6 @@ export const CanvasMethodCircle: FC<Props> = ({setOpen, constraints, constraint,
                 setHover(true);
             }}
             onMouseLeave={() => {
-                constraints.setCurrentMethod(undefined);
                 setHover(false);
             }}
         >

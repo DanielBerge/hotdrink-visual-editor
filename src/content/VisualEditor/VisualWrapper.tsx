@@ -7,7 +7,7 @@ const LibraryContext = React.createContext<any>({})
 const ObjectContext = React.createContext<any>({})
 
 const libInput = [{
-    label: "Add",inputs:[],output: "Add", params: [{name: "textBox"}],codeLine: "a + textBox"}, {
+    label: "Add",inputs:[],output: "Add", params: [{name: "textBox", type: "number"}],codeLine: "a + textBox"}, {
     label: "Division",inputs:[{variable: "divisor"}, {variable: "dividend"}],output: "Division", params: [],codeLine: "dividend / divisor"}, {
     label: "Subtract",inputs:[{variable: "num1"}, {variable: "num2"}],output: "Subtract", params: [],codeLine: "num1 - num2"}, {
     label: "Multiplication",inputs:[{variable: "num1"}, {variable: "num2"}],output: "Multiplication", params: [],codeLine: "num1 * num2"}, {
@@ -24,15 +24,16 @@ const libInput = [{
     label: "Min",inputs:[{variable: "num1"}, {variable: "num2"}],output: "Min", params: [],codeLine: "Math.min(num1, num2)"}, {
     label: "Max",inputs:[{variable: "num1"}, {variable: "num2"}],output: "Max", params: [],codeLine: "Math.max(num1, num2)"}, {
     label: "Length",inputs:[{variable: "str"}],output: "Length", params: [],codeLine: "str.length"}, {
-    label: "Concat",inputs:[{variable: "str"}],output: "Concat", params: [{name: "textBox", type: "text"}],codeLine: "textBox.concat(str)"}, {
-    label: "Contains",inputs:[{variable: "str"}],output: "Contains", params: [{name: "textBox"}],codeLine: "str.contains(textBox)"}, {
+    label: "Concat",inputs:[{variable: "str"}],output: "Concat", params: [],codeLine: "textBox.concat(str)"}, {
+    label: "Contains",inputs:[{variable: "str"}],output: "Contains", params: [{name: "textBox", type: "text"}],codeLine: "str.contains(textBox)"}, {
     label: "ToLowerCase",inputs:[{variable: "str"}],output: "ToLowerCase", params: [],codeLine: "str.toLowerCase()"}, {
     label: "ToUpperCase",inputs:[{variable: "str"}],output: "ToUpperCase", params: [],codeLine: "str.toUpperCase()"}, {
     label: "And",inputs:[{variable: "bool1"}, {variable: "bool2"}],output: "And", params: [],codeLine: "(bool1 === \"true\") && (bool2 === \"true\")"}, {
     label: "Or",inputs:[{variable: "bool1"}, {variable: "bool2"}],output: "Or", params: [],codeLine: "(bool1 === \"true\") || (bool2 === \"true\")"}, {
     label: "Not",inputs:[{variable: "bool"}],output: "Not", params: [],codeLine: "!bool"}, {
     label: "IsTrue",inputs:[{variable: "bool"}],output: "IsTrue", params: [],codeLine: "bool === \"true\""}, {
-    label: "IsFalse",inputs:[{variable: "bool"}],output: "IsFalse", params: [],codeLine: "bool === \"false\""}]
+    label: "IsFalse",inputs:[{variable: "bool"}],output: "IsFalse", params: [],codeLine: "bool === \"false\""}, {
+    label: "IsBefore",inputs:[{variable: "time"}],output: "IsBefore", params: [{name: "timeBox", type: "date"}],codeLine: "new Date(time).getTime() < new Date(timeBox).getTime() "}]
 
 function dslToLib(library: any): LibraryComponent[] {
     let freshIndex = 0;

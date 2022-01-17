@@ -70,7 +70,6 @@ const ConstraintsWrapper: FC = (props) => {
         } else {
             console.warn("Could not find method to update");
         }
-        console.log(constraints[index].methods);
         return newMethod;
     }
 
@@ -82,10 +81,26 @@ const ConstraintsWrapper: FC = (props) => {
     function deleteConstraintsConnected(elementId: string) {
         //TODO Kan være feil
         setConstraints(constraints.filter((constraint) => constraint.toIds.includes(elementId) || constraint.fromIds.includes(elementId)));
+        /**
+        constraints.forEach((constraint) => {
+            constraint.methods.forEach((method) => {
+                if (method.outputId === elementId) {
+                    setConstraints([
+                        ...constraints,
+                        {
+                            ...constraint,
+                            methods: constraint.methods.filter((m) => m.outputId !== method.outputId)
+                        }
+                    ])
+                }
+            })
+        });
+         **/
     }
 
     return (
-        <ConstraintContext.Provider value={{constraints, setConstraints, updateConstraint, deleteConstraintsConnected, deleteConstraint}}>
+        <ConstraintContext.Provider
+            value={{constraints, setConstraints, updateConstraint, deleteConstraintsConnected, deleteConstraint}}>
             <NewConstraintContext.Provider value={{newConstraint, setNewConstraint}}>
                 <CurrentContext.Provider value={{current, setCurrent, currentMethod, setCurrentMethod, updateMethod}}>
                     {props.children}
@@ -96,7 +111,13 @@ const ConstraintsWrapper: FC = (props) => {
 }
 
 function useConstraints(): ConstraintsWrapperProps {
-    const {constraints, setConstraints, updateConstraint, deleteConstraintsConnected, deleteConstraint} = useContext(ConstraintContext);
+    const {
+        constraints,
+        setConstraints,
+        updateConstraint,
+        deleteConstraintsConnected,
+        deleteConstraint
+    } = useContext(ConstraintContext);
     const {newConstraint, setNewConstraint} = useContext(NewConstraintContext);
     const {current, setCurrent, currentMethod, setCurrentMethod, updateMethod} = useContext(CurrentContext);
 
