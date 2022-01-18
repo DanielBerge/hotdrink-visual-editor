@@ -190,6 +190,7 @@ export const Canvas: FC = () => {
                                         isSelected={element.id === elements.current?.id}
                                         onTransform={onTransform}
                                         onTransformEnd={onTransformEnd}
+                                        newConstraint={constraints.newConstraint}
                                     />
                                 )
                             case ElemType.Button:
@@ -202,11 +203,18 @@ export const Canvas: FC = () => {
                                         isSelected={element.id === elements.current?.id}
                                         onTransform={onTransform}
                                         onTransformEnd={onTransformEnd}
+                                        newConstraint={constraints.newConstraint}
                                     />
                                 )
                             case ElemType.Text:
                                 return (
-                                    <CanvasText key={key} element={element} onClick={onClick} onDragMove={onDragMove}/>
+                                    <CanvasText
+                                        key={key}
+                                        element={element}
+                                        onClick={onClick}
+                                        onDragMove={onDragMove}
+                                        newConstraint={constraints.newConstraint}
+                                    />
                                 )
                             default:
                                 return null;

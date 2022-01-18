@@ -7,13 +7,14 @@ interface Props {
     element: Elem;
     onClick: (element: Elem) => void;
     onDragMove: (e: KonvaEventObject<DragEvent>, element: Elem) => void;
+    newConstraint: boolean;
 }
 
-export const CanvasText: FC<Props> = ({element, onClick, onDragMove}) => {
+export const CanvasText: FC<Props> = ({element, onClick, onDragMove, newConstraint}) => {
     return (
         <Text
             text={element.value}
-            fill="black"
+            fill={newConstraint ? 'green' : 'black'}
             align="center"
             width={element.width}
             height={element.height}

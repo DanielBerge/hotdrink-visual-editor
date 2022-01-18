@@ -11,9 +11,10 @@ interface Props {
     onTransform: (e: KonvaEventObject<Event>, node: any) => void;
     onTransformEnd: (e: KonvaEventObject<Event>, node: any, element: Elem) => void;
     isSelected: boolean;
+    newConstraint: boolean;
 }
 
-export const CanvasButton: FC<Props> = ({element, onClick, onDragMove, onTransform, isSelected, onTransformEnd}) => {
+export const CanvasButton: FC<Props> = ({element, onClick, onDragMove, onTransform, isSelected, onTransformEnd, newConstraint}) => {
     const [shapeRef, trRef] = useTransformer(isSelected);
 
     return (
@@ -30,7 +31,7 @@ export const CanvasButton: FC<Props> = ({element, onClick, onDragMove, onTransfo
                 <Rect
                     width={element.width}
                     height={element.height}
-                    fill="black"
+                    fill={newConstraint ? 'green' : 'black'}
                     onTransform={(e) => onTransform(e, shapeRef.current)}
                     onTransformEnd={(e) => onTransformEnd(e, shapeRef.current, element)}
                 />
