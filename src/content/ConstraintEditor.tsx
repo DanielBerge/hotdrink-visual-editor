@@ -16,7 +16,8 @@ export const ConstraintEditor: FC<Props> = ({open, onClose}) => {
     const editor = useEditor();
     const visual = useVisual();
 
-    const [dialogPosition, setDialogPosition] = React.useState<{ x: number, y: number }>({x: 0, y: 0});
+    const [offset, setOffset] = React.useState({x: 0, y: 0});
+    const [dialogPosition, setDialogPosition] = React.useState<{ x: number, y: number }>({x: 200, y: 200});
 
 
     function generateCode(components: VComponent[], connections: Connection[]): string {
@@ -53,8 +54,8 @@ export const ConstraintEditor: FC<Props> = ({open, onClose}) => {
         <>
             {open && constraints.current &&
                 <div style={{
-                    left: 200,
-                    top: 200,
+                    left: dialogPosition.x,
+                    top: dialogPosition.y,
                     width: "1000px",
                     height: "600px",
                     position: "fixed",
@@ -62,10 +63,18 @@ export const ConstraintEditor: FC<Props> = ({open, onClose}) => {
                     zIndex: 1,
                 }}
                 >
-                    <div
-                        className="bg-white"
-                    >
-                        <div className="bg-gray-200">
+                    <div className="bg-white">
+                        <div className="bg-gray-200"
+                             onDragStart={(e) => {
+                                 setOffset({x: e.clientX - dialogPosition.x, y: e.clientY - dialogPosition.y});
+                             }}
+                             onDrag={(e) => {
+                                 if (e.clientX === 0 && e.clientY === 0) {
+                                     return;
+                                 }
+                                 setDialogPosition({x: e.clientX - offset.x, y: e.clientY - offset.y})
+                             }}
+                        >
                             <button className="p-5" onClick={() => editor.setType(EditorType.VISUAL)}>Visual</button>
                             <button className="p-5" onClick={() => editor.setType(EditorType.CODE)}>Code</button>
                             <button className="p-5 float-right text-red-600" onClick={() => {
