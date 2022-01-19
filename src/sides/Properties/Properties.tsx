@@ -18,36 +18,13 @@ export const Properties = () => {
     return (
         <>
             <h1 className={"font-bold text-lg"}>Properties</h1>
-            {elements.current && (
-                <button
-                    className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"
-                    onClick={() => {
-                        elements.deleteElement(elements.current.id);
-                        constraints.deleteConstraintsConnected(elements.current.id);
-                        elements.setCurrent(undefined);
-                    }}
-                >Delete
-                </button>
-            )}
-            <ComponentProperties/>
-            {constraints.current && (
-                <button
-                    className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"
-                    onClick={() => {
-                        constraints.deleteConstraint(constraints.current);
-                        constraints.setCurrent(undefined);
-                    }}
-                >Delete
-                </button>
-            )}
-            <ConstraintProperties/>
             <button
-                className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"
+                className="h-10 bg-red-800 text-white p-2 disabled:opacity-50 m-1"
                 onClick={() => setOpen(true)}
             >Run
             </button>
             <button
-                className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"
+                className="h-10 bg-red-800 text-white p-2 disabled:opacity-50 m-1"
                 onClick={async () => {
                     const zip = new JSZip();
                     let builder = new HTMLBuilder();
@@ -66,6 +43,29 @@ export const Properties = () => {
                 }}
             >Export
             </button>
+            <ComponentProperties/>
+            {elements.current && (
+                <button
+                    className="h-10 bg-red-800 text-white p-2 disabled:opacity-50 m-1"
+                    onClick={() => {
+                        elements.deleteElement(elements.current.id);
+                        constraints.deleteConstraintsConnected(elements.current.id);
+                        elements.setCurrent(undefined);
+                    }}
+                >Delete component
+                </button>
+            )}
+            <ConstraintProperties/>
+            {constraints.current && (
+                <button
+                    className="h-10 bg-red-800 text-white p-2 disabled:opacity-50 m-1"
+                    onClick={() => {
+                        constraints.deleteConstraint(constraints.current);
+                        constraints.setCurrent(undefined);
+                    }}
+                >Delete constraint
+                </button>
+            )}
             <Modal
                 open={open}
                 onBackdropClick={() => setOpen(false)}

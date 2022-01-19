@@ -1,6 +1,5 @@
 import React, {FC} from "react";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
-import {sideOffset} from "./Components";
 
 export const Constraints: FC = () => {
     const constraints = useConstraints();
@@ -11,17 +10,20 @@ export const Constraints: FC = () => {
 
     return (
         <>
-            <h1>Constraints</h1>
+            <h1 className="font-bold text-lg">
+                Constraints
+            </h1>
             <button
                 className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"
                 onClick={onCreate}
                 disabled={constraints.newConstraint}
             >Create constraint
             </button>
-            <div
-                draggable
-                className="w-24 bg-red p-3 m-1"
-                onDragEnd={(event => {
+            {/**
+             <div
+             draggable
+             className="w-24 bg-red p-3 m-1"
+             onDragEnd={(event => {
                     constraints.setConstraints([
                         ...constraints.constraints,
                         {
@@ -35,8 +37,9 @@ export const Constraints: FC = () => {
                         }
                     ])
                 })}
-            >Constraint
-            </div>
+             >Constraint
+             </div>
+             **/}
         </>
     )
 }

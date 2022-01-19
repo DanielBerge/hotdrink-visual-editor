@@ -30,6 +30,7 @@ export const CanvasConstraints: FC<Props> = ({onClick, setOpen, constraints, ele
                         />
                         {constraint.methods.map((method, index) => {
                             return <CanvasMethodCircle
+                                key={index}
                                 setOpen={setOpen}
                                 constraint={constraint}
                                 constraints={constraints}

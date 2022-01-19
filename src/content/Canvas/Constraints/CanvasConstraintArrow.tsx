@@ -15,7 +15,16 @@ interface Props {
     hidden: boolean;
 }
 
-export const CanvasConstraintArrow: FC<Props> = ({id, constraints, constraint, elements, points, multiway, hidden, selected}) => {
+export const CanvasConstraintArrow: FC<Props> = ({
+                                                     id,
+                                                     constraints,
+                                                     constraint,
+                                                     elements,
+                                                     points,
+                                                     multiway,
+                                                     hidden,
+                                                     selected
+                                                 }) => {
 
     return (
         <>
@@ -28,23 +37,25 @@ export const CanvasConstraintArrow: FC<Props> = ({id, constraints, constraint, e
                 points={points}
                 stroke="red"
                 fill="red"
-                opacity={hidden && constraints.currentMethod ? 0.15 : 1}
+                opacity={(hidden && constraints.currentMethod) ? 0.15 : 1}
                 strokeWidth={5}
             />
+            {//TODO Bug her: kan hende den vises selv om den ikke er valgt
+                 }
             {multiway &&
-            <Arrow
-                key={`${id}-2`}
-                onClick={() => {
-                    constraints.setCurrent(constraint);
-                    elements.setCurrent(undefined);
-                }}
-                points={points}
-                stroke="red"
-                fill="red"
-                strokeWidth={5}
-                opacity={!selected && constraints.currentMethod ? 0.15 : 1}
-                pointerAtBeginning={true}
-            />
+                <Arrow
+                    key={`${id}-2`}
+                    onClick={() => {
+                        constraints.setCurrent(constraint);
+                        elements.setCurrent(undefined);
+                    }}
+                    points={points}
+                    stroke="red"
+                    fill="red"
+                    strokeWidth={5}
+                    opacity={!selected && constraints.currentMethod ? 0.15 : 1}
+                    pointerAtBeginning={true}
+                />
             }
         </>
     )

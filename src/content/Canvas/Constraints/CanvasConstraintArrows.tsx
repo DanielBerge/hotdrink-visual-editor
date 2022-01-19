@@ -30,44 +30,44 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
         <>
             {
                 fromOneWay.map((fromId: string) => {
-                    const from = elements.getElementById(fromId);
-                    if (from === undefined) {
+                    const fromElem = elements.getElementById(fromId);
+                    if (fromElem === undefined) {
                         console.error(`Constraint id, does not have matching canvas element: ${fromId}`)
                         return null;
                     }
                     return (
                         <CanvasConstraintArrow
-                            key={`From${from.id}`}
-                            id={`From${from.id}`}
+                            key={`From${fromElem.id}`}
+                            id={`From${fromElem.id}`}
                             constraints={constraints}
                             constraint={constraint}
-                            points={getPoints(from, constraint)}
+                            points={getPoints(fromElem, constraint)}
                             elements={elements}
                             multiway={false}
                             selected={constraints.current === constraint}
-                            hidden={constraints.current !== constraint}
+                            hidden={constraints.current !== constraint ?? false}
                         />
                     )
                 })
             }
             {
                 toOneWay.map((toId: string) => {
-                    const to = elements.getElementById(toId);
-                    if (to === undefined) {
+                    const toElem = elements.getElementById(toId);
+                    if (toElem === undefined) {
                         console.error(`Constraint id, does not have matching canvas element: ${toId}`)
                         return null;
                     }
                     return (
                         <CanvasConstraintArrow
-                            key={`To${to.id}`}
-                            id={`To${to.id}`}
+                            key={`To${toElem.id}`}
+                            id={`To${toElem.id}`}
                             constraints={constraints}
                             constraint={constraint}
-                            points={getPoints(constraint, to)}
+                            points={getPoints(constraint, toElem)}
                             elements={elements}
                             multiway={false}
                             selected={constraints.current === constraint}
-                            hidden={constraints.currentMethod?.outputId !== to.id ?? false}
+                            hidden={constraints.current !== constraint ?? false}
                         />
                     )
                 })
