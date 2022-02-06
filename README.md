@@ -6,6 +6,7 @@
 * Delete method of constraint when deleting component connected to it.
 * Unionen av inputs og outputs må være den samme for alle methods i en constraint
 * Fikse export til å virke igjen, og bruke elgs bindings
+* Gjøre todos som jeg har liggende i koden
 * String interpolation med variabler i kode (DSL), hjelp?
 * Visualize constraint flow in HTML run mode
 * Hide/show constraints

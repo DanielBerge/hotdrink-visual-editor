@@ -5,36 +5,13 @@ import {
     defaultConstraintSystem,
     maskNone,
     Method,
-    VariableReference
+    VariableReference,
 } from "hotdrink";
-import {Constraint, Elem, VComponent, VMethod} from "./types";
+import {Constraint, VComponent, VMethod, Binding} from "./types";
 
 export const idToValue = new Map();
 export const valueToId = new Map();
 
-/**
-
- Binds a DOM element to a variable.
-
- This function binds a DOM element to a variable. When
- the variable changes, the DOM element's attribute is updated
- and vise versa.
-
- Parameters
- ----------
- @param element : HTMLElement
- The DOM element to bind to.
- @param value : VariableReference
- The variable to bind to.
- @param attribute : string
- The name of the attribute to bind to.
-
- Returns
- -------
- unsubscribe : function
- A function that will unbind the DOM element from the variable.
-
- */
 export function DOMBind(element: HTMLElement | null, value: VariableReference<any> | undefined, attribute: string) {
     if (element === null) {
         throw Error("DOM Element is null");
