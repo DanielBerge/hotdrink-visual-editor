@@ -17,6 +17,8 @@ export const ComponentProperties = () => {
             return;
         } else {
             updateKey(e, "id");
+            //TODO Covert this
+            /**
             constraints.constraints.forEach((constraint) => {
                 if (constraint.toIds.includes(oldId) || constraint.fromIds.includes(oldId)) {
                     constraints.updateConstraint(constraint, {
@@ -36,6 +38,7 @@ export const ComponentProperties = () => {
                     })
                 }
             })
+             **/
         }
     }
 

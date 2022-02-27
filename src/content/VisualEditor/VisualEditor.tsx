@@ -46,7 +46,7 @@ export const VisualEditor = () => {
 
     useEffect(() => {
         if (visual.components.length === 0) {
-            const outPutElem = elements.getElementById(constraints.currentMethod?.outputId ?? "");
+            const outPutElem = elements.getElementById(constraints.currentMethod?.toIds[0] ?? "");
             visual.setComponents([
                 ...constraints.current?.fromIds.map((id, index) => {
                     const elem = elements.getElementById(id);
@@ -71,8 +71,8 @@ export const VisualEditor = () => {
                     })
                 }) ?? [],
                 {
-                    id: `${upperCaseFirst(outPutElem?.type ?? "")}-${constraints.currentMethod?.outputId}-${Math.random().toString(36).substring(2, 15)}`,
-                    label: ` ${upperCaseFirst(outPutElem?.type ?? "")}: ${constraints.currentMethod?.outputId}`,
+                    id: `${upperCaseFirst(outPutElem?.type ?? "")}-${constraints.currentMethod?.toIds[0]}-${Math.random().toString(36).substring(2, 15)}`,
+                    label: ` ${upperCaseFirst(outPutElem?.type ?? "")}: ${constraints.currentMethod?.toIds[0]}`,
                     x: 550,
                     y: 170,
                     width: componentWidth,
@@ -80,7 +80,7 @@ export const VisualEditor = () => {
                     inputs: [
                         {
                             id: `input`,
-                            variable: constraints.currentMethod?.outputId ?? "",
+                            variable: constraints.currentMethod?.toIds[0] ?? "",
                         }
                     ],
                     code: (inputConnections: Connection[], component: any) => {

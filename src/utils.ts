@@ -54,12 +54,12 @@ export function runJs(constraints: Constraint[], elements: any) {
                 ${method.code}
             }`)
 
-            const unionIds = Array.from(new Set([...constraint.fromIds, ...constraint.toIds]));
+            const unionIds = Array.from(new Set([...constraint.fromIds, ...constraint.methods.map((method) => method.toIds).flat()]));
             const methods = constraint.methods.map((method) => {
                 return new Method(
                     unionIds.length,
                     constraint.fromIds.map((id) => unionIds.indexOf(id)),
-                    [unionIds.indexOf(method.outputId)],
+                    method.toIds.map((id) => unionIds.indexOf(id)),
                     [...constraint.fromIds.map(() => maskNone)],
                     func(method));
             });

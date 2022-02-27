@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {Layer, Stage} from 'react-konva';
 import {KonvaEventObject} from "konva/lib/Node";
-import {Constraint, EditorType, Elem, ElemType} from "../../types";
+import {Constraint, EditorType, Elem, ElemType, VMethod} from "../../types";
 import {useElements} from "../../wrappers/ElementsWrapper";
 import {useConstraints} from "../../wrappers/ConstraintsWrapper";
 import {ConstraintEditor} from "../ConstraintEditor";
@@ -15,6 +15,7 @@ import {HEIGHT, restrictPlacement, restrictSize, WIDTH} from "./canvasUtils";
 
 let constraintIds: Array<string> = [];
 let selectedConstraint: Constraint | undefined;
+let selectedMethod: VMethod | undefined;
 
 export const Canvas: FC = () => {
     const elements = useElements();
@@ -27,32 +28,39 @@ export const Canvas: FC = () => {
     }
 
 
-    function onClick(element: Elem | Constraint) {
+    function onClick(element: Elem | Constraint | VMethod) {
         let pushed = false;
         if (constraints.newConstraint) {
-            if (constraintIds.length < 2 || selectedConstraint === undefined) {
-                if ("type" in element) {
+            console.log("ONCLICK");
+            if (constraintIds.length < 2 || selectedConstraint === undefined || selectedMethod === undefined) {
+                if ("binding" in element) {
                     constraintIds.push(element.id);
                     pushed = true;
+                } else if ("code" in element) {
+                    selectedMethod = element;
                 } else {
                     selectedConstraint = element;
                 }
             }
             if (constraintIds.length === 2) {
+                console.log(constraintIds);
                 constraints.setNewConstraint(false);
-                const foundInverseConstraint = constraints.constraints.find((constraint) => constraint.toIds.includes(constraintIds[0]) && constraint.fromIds.includes(constraintIds[1]));
-                const foundExactConstraint = constraints.constraints.find((constraint) => constraint.fromIds.includes(constraintIds[0]) && constraint.toIds.includes(constraintIds[1]));
+                const foundInverseConstraint = constraints.constraints.find((constraint) =>
+                    constraint.methods.some((method) => method.toIds.includes(constraintIds[0]))
+                    && constraint.fromIds.includes(constraintIds[1]));
+                const foundExactConstraint = constraints.constraints.find((constraint) =>
+                    constraint.fromIds.includes(constraintIds[0])
+                    && constraint.methods.some((method) => method.toIds.includes(constraintIds[1])));
                 if (foundInverseConstraint && !foundExactConstraint) {
                     console.log("Found constraint");
                     constraints.updateConstraint(foundInverseConstraint, {
                         ...foundInverseConstraint,
                         fromIds: [...foundInverseConstraint.fromIds, constraintIds[0]],
-                        toIds: [...foundInverseConstraint.toIds, constraintIds[1]],
                         methods: [...foundInverseConstraint.methods, {
                             id: `${constraintIds[1]}`,
                             code: "",
                             type: EditorType.VISUAL,
-                            outputId: constraintIds[1],
+                            toIds: [constraintIds[1]],
                         }]
                     });
                 } else if (!foundExactConstraint) {
@@ -64,13 +72,12 @@ export const Canvas: FC = () => {
                             width: 100,
                             height: 100,
                             fromIds: [constraintIds[0]],
-                            toIds: [constraintIds[1]],
                             methods: [
                                 {
                                     id: `${constraintIds[1]}`,
                                     code: "",
                                     type: EditorType.VISUAL,
-                                    outputId: constraintIds[1],
+                                    toIds: [constraintIds[1]],
                                 }
                             ],
                         }
@@ -79,18 +86,28 @@ export const Canvas: FC = () => {
                     console.warn("Tried to create already existing constraint, aborting");
                 }
                 constraintIds = [];
+            } else if (constraintIds.length === 1 && selectedMethod !== undefined && constraints.current) {
+                constraints.setNewConstraint(false);
+                constraints.updateConstraint(constraints.current, {
+                    ...constraints.current,
+                    methods: [...constraints.current.methods.filter((method) => method.id !== selectedMethod?.id), {
+                        ...selectedMethod,
+                        toIds: [...selectedMethod.toIds, constraintIds[0]]
+                    }]
+                });
+                constraintIds = [];
+                selectedMethod = undefined;
             } else if (constraintIds.length === 1 && selectedConstraint !== undefined) {
                 constraints.setNewConstraint(false);
                 if (pushed) {
                     constraints.setCurrent(
                         constraints.updateConstraint(selectedConstraint, {
                             ...selectedConstraint,
-                            toIds: [...selectedConstraint.toIds, ...constraintIds],
                             methods: [...selectedConstraint.methods, {
                                 id: `${constraintIds[0]}`,
                                 code: "",
                                 type: EditorType.VISUAL,
-                                outputId: constraintIds[0],
+                                toIds: [constraintIds[0]],
                             }]
                         }));
                 } else {
@@ -104,7 +121,10 @@ export const Canvas: FC = () => {
                 selectedConstraint = undefined;
             }
         }
-        if ("type" in element) {
+        if ("code" in element) {
+            //TODO Gjøre noe her?
+            //Do nothing
+        } else if ("binding" in element) {
             elements.setCurrent(element);
             constraints.setCurrent(undefined);
         } else {

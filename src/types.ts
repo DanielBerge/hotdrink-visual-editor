@@ -37,7 +37,7 @@ export interface VMethod {
     id: string;
     code: string;
     type: EditorType;
-    outputId: string;
+    toIds: string[];
     visualJson?: [components: any[], connections: any[]];
 }
 
@@ -47,7 +47,7 @@ export interface Constraint {
     width: number;
     height: number;
     fromIds: string[];
-    toIds: string[];
+    //toIds: string[];
     methods: VMethod[];
 }
 

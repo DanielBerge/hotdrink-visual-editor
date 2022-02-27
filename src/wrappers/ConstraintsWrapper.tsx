@@ -8,19 +8,18 @@ const initialConstraints: Constraint[] = [
         width: 100,
         height: 100,
         fromIds: ["celcius", "fahrenheit"],
-        toIds: ["fahrenheit", "celcius"],
         methods: [
             {
                 id: "1",
                 type: EditorType.VISUAL,
                 code: "return celcius * (9/5) + 32",
-                outputId: "fahrenheit",
+                toIds: ["fahrenheit"],
             },
             {
                 id: "2",
                 type: EditorType.VISUAL,
                 code: "return (fahrenheit - 32) * (5/9)",
-                outputId: "celcius",
+                toIds: ["celcius"],
             },
         ]
     }
@@ -52,7 +51,8 @@ const ConstraintsWrapper: FC = (props) => {
     const [currentMethod, setCurrentMethod] = useState(undefined);
 
     function updateConstraint(oldConstraint: Constraint, newConstraint: Constraint) {
-        const index = constraints.findIndex((constraint) => constraint.fromIds === oldConstraint.fromIds && constraint.toIds === oldConstraint.toIds);
+        //TODO Double check this
+        const index = constraints.findIndex((constraint) => constraint.fromIds === oldConstraint.fromIds && constraint.methods === oldConstraint.methods);
         if (index !== -1) {
             constraints[index] = newConstraint;
             setConstraints(constraints);
@@ -74,13 +74,14 @@ const ConstraintsWrapper: FC = (props) => {
     }
 
     function deleteConstraint(toDelete: Constraint) {
-        const newConstraints = constraints.filter((constraint) => constraint.fromIds !== toDelete.fromIds && constraint.toIds !== toDelete.toIds);
+        // TODO Dobbeltsjekk denne
+        const newConstraints = constraints.filter((constraint) => constraint.fromIds !== toDelete.fromIds && constraint.methods !== toDelete.methods);
         setConstraints(newConstraints);
     }
 
     function deleteConstraintsConnected(elementId: string) {
         //TODO Kan være feil
-        setConstraints(constraints.filter((constraint) => constraint.toIds.includes(elementId) || constraint.fromIds.includes(elementId)));
+        setConstraints(constraints.filter((constraint) => constraint.methods.some((method) => method.toIds.includes(elementId)) || constraint.fromIds.includes(elementId)));
         /**
         constraints.forEach((constraint) => {
             constraint.methods.forEach((method) => {

@@ -11,9 +11,10 @@ interface Props {
     elements: ElementsWrapperProps;
     method: VMethod;
     index: number;
+    onClick: (element: any) => void;
 }
 
-export const CanvasMethodCircle: FC<Props> = ({setOpen, constraints, constraint, elements, method, index}) => {
+export const CanvasMethodCircle: FC<Props> = ({setOpen, constraints, constraint, elements, method, index, onClick}) => {
     const [hover, setHover] = React.useState(false);
 
     return (
@@ -21,10 +22,14 @@ export const CanvasMethodCircle: FC<Props> = ({setOpen, constraints, constraint,
             x={constraint.x + constraint.width / 4}
             y={constraint.y + index * 30 + 10}
             onClick={() => {
-                setOpen(true)
-                constraints.setCurrent(constraint);
-                constraints.setCurrentMethod(method);
-                elements.setCurrent(undefined);
+                if (constraints.newConstraint) {
+                    onClick(method);
+                } else {
+                    setOpen(true)
+                    constraints.setCurrent(constraint);
+                    constraints.setCurrentMethod(method);
+                    elements.setCurrent(undefined);
+                }
             }}
             onMouseOver={() => {
                 constraints.setCurrentMethod(method);

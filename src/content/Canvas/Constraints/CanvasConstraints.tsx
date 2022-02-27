@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import {Group, Layer} from "react-konva";
-import {Constraint, Elem} from "../../../types";
+import {Constraint, Elem, VMethod} from "../../../types";
 import {CanvasConstraintRect} from "./CanvasConstraintRect";
 import {ConstraintsWrapperProps} from "../../../wrappers/ConstraintsWrapper";
 import {ElementsWrapperProps} from "../../../wrappers/ElementsWrapper";
@@ -8,7 +8,7 @@ import {CanvasConstraintArrows} from "./CanvasConstraintArrows";
 import {CanvasMethodCircle} from "./CanvasMethodCircle";
 
 interface Props {
-    onClick: (element: Elem | Constraint) => void;
+    onClick: (element: Elem | Constraint | VMethod) => void;
     setOpen: (open: boolean) => void;
     constraints: ConstraintsWrapperProps;
     elements: ElementsWrapperProps;
@@ -37,6 +37,7 @@ export const CanvasConstraints: FC<Props> = ({onClick, setOpen, constraints, ele
                                 elements={elements}
                                 method={method}
                                 index={index}
+                                onClick={onClick}
                             />
                         })}
                         <CanvasConstraintArrows constraint={constraint} elements={elements} constraints={constraints}/>
