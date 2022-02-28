@@ -25,7 +25,7 @@ export const ComponentProperties = () => {
                         methods: constraint.methods.map(method => {
                             return method.toIds.includes(oldId) ? {
                                 ...method,
-                                toIds: [...method.toIds, e.target.value],
+                                toIds: method.toIds.map(id => id === oldId ? e.target.value : id),
                                 code: method.code.replaceAll(oldId, e.target.value),
                             } : {
                                 ...method,

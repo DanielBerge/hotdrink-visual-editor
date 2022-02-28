@@ -74,29 +74,12 @@ const ConstraintsWrapper: FC = (props) => {
     }
 
     function deleteConstraint(toDelete: Constraint) {
-        // TODO Dobbeltsjekk denne
         const newConstraints = constraints.filter((constraint) => constraint.fromIds !== toDelete.fromIds && constraint.methods !== toDelete.methods);
         setConstraints(newConstraints);
     }
 
     function deleteConstraintsConnected(elementId: string) {
-        //TODO Kan være feil
-        setConstraints(constraints.filter((constraint) => constraint.methods.some((method) => method.toIds.includes(elementId)) || constraint.fromIds.includes(elementId)));
-        /**
-        constraints.forEach((constraint) => {
-            constraint.methods.forEach((method) => {
-                if (method.outputId === elementId) {
-                    setConstraints([
-                        ...constraints,
-                        {
-                            ...constraint,
-                            methods: constraint.methods.filter((m) => m.outputId !== method.outputId)
-                        }
-                    ])
-                }
-            })
-        });
-         **/
+        setConstraints(constraints.filter((constraint) => !constraint.fromIds.includes(elementId) && !constraint.methods.some((method) => method.toIds.includes(elementId))));
     }
 
     return (

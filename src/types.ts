@@ -47,7 +47,6 @@ export interface Constraint {
     width: number;
     height: number;
     fromIds: string[];
-    //toIds: string[];
     methods: VMethod[];
 }
 

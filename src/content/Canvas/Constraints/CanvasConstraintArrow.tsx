@@ -26,6 +26,20 @@ export const CanvasConstraintArrow: FC<Props> = ({
                                                      selected
                                                  }) => {
 
+    function chooseOpacityOneWay() {
+        if (hidden && constraints.currentMethod) {
+            return 0.3;
+        }
+        return (constraints.current && constraints.current === constraint) ? 1 : 0.3;
+    }
+
+    function chooseOpacityMultiway() {
+        if (!selected && constraints.currentMethod) {
+            return 0.3;
+        }
+        return (constraints.current && constraints.current === constraint) ? 1 : 0.3;
+    }
+
     return (
         <>
             <Arrow
@@ -37,11 +51,9 @@ export const CanvasConstraintArrow: FC<Props> = ({
                 points={points}
                 stroke="red"
                 fill="red"
-                opacity={(hidden && constraints.currentMethod) ? 0.15 : 1}
+                opacity={chooseOpacityOneWay()}
                 strokeWidth={5}
             />
-            {//TODO Bug her: kan hende den vises selv om den ikke er valgt
-                 }
             {multiway &&
                 <Arrow
                     key={`${id}-2`}
@@ -53,7 +65,7 @@ export const CanvasConstraintArrow: FC<Props> = ({
                     stroke="red"
                     fill="red"
                     strokeWidth={5}
-                    opacity={!selected && constraints.currentMethod ? 0.15 : 1}
+                    opacity={chooseOpacityMultiway()}
                     pointerAtBeginning={true}
                 />
             }

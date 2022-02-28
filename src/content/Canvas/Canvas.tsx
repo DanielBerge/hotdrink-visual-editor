@@ -31,7 +31,6 @@ export const Canvas: FC = () => {
     function onClick(element: Elem | Constraint | VMethod) {
         let pushed = false;
         if (constraints.newConstraint) {
-            console.log("ONCLICK");
             if (constraintIds.length < 2 || selectedConstraint === undefined || selectedMethod === undefined) {
                 if ("binding" in element) {
                     constraintIds.push(element.id);
@@ -43,7 +42,6 @@ export const Canvas: FC = () => {
                 }
             }
             if (constraintIds.length === 2) {
-                console.log(constraintIds);
                 constraints.setNewConstraint(false);
                 const foundInverseConstraint = constraints.constraints.find((constraint) =>
                     constraint.methods.some((method) => method.toIds.includes(constraintIds[0]))
