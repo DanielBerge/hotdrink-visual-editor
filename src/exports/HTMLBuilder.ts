@@ -81,31 +81,41 @@ export class HTMLBuilder {
         const json = constraintSystemToJson(defaultConstraintSystem);
 
         this.add("<script>");
+        this.add(`async function run() { `)
         this.add(`const system = hd.constraintSystemFromJson(${JSON.stringify(json)});`)
-        this.add(`function bind(element, value, type) {
+        this.add(`const comp = Array.from(system.allComponents())[0];`);
+
+        this.add(`function bind(value, element, type) {
     value.value.subscribe({
         next: val => {
             if (val.hasOwnProperty('value')) {
                 element[type] = val.value;
             }
         }
-    });
+        });
     element.addEventListener('input', () => {
         value.value.set(element[type]);
-    });
-}
-`);
-        let counter = 0;
-        //FIXME Convert to multiple fromIds and toIds
-        for (let i = 0; i < constraints.length; i++) {
+     });
+    }`);
+
+        for (const constraint of constraints) {
+            const unionIds = Array.from(new Set([...constraint.fromIds, ...constraint.methods.map((method) => method.toIds).flat()]));
+            for (const id of unionIds) {
+                const bindingType = elements.getElementById(id).binding;
+                this.add(`await comp.vs["${id}"].currentPromise;`);
+                this.add(`system.update();`);
+                this.add(`bind(comp.vs["${id}"], document.getElementById("${id}"), "${bindingType}");`);
+            }
             /**
-            const fromBindingType = elements.getElementById(constraints[i].fromIds[0]).binding;
-            const toBindingType = elements.getElementById(constraints[i].toIds[0]).binding;
-            this.add(`bind(document.getElementById("${constraints[i].fromIds[0]}"), Array.from(system.variables())[${counter++}]._owner, ${fromBindingType});`)
-            this.add(`bind(document.getElementById("${constraints[i].toIds[0]}"), Array.from(system.variables())[${counter++}]._owner, ${toBindingType});`)
+             const fromBindingType = elements.getElementById(constraints[i].fromIds[0]).binding;
+             const toBindingType = elements.getElementById(constraints[i].toIds[0]).binding;
+             this.add(`bind(document.getElementById("${constraints[i].fromIds[0]}"), Array.from(system.variables())[${counter++}]._owner, ${fromBindingType});`)
+             this.add(`bind(document.getElementById("${constraints[i].toIds[0]}"), Array.from(system.variables())[${counter++}]._owner, ${toBindingType});`)
              **/
         }
 
+        this.add(`}`)
+        this.add(`run();`);
         this.add("</script>")
         return this;
     }

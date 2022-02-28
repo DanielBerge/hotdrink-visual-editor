@@ -3,7 +3,7 @@ import {
     ConstraintSpec,
     constraintSystemToJson,
     defaultConstraintSystem,
-    maskNone,
+    maskNone, maskUpdate,
     Method,
     VariableReference,
 } from "hotdrink";
@@ -44,7 +44,7 @@ export function DOMBind(element: HTMLElement | null, value: VariableReference<an
     return unsubscribe;
 }
 
-export function runJs(constraints: Constraint[], elements: any) {
+export function runJs(constraints: Constraint[], elements: any): any {
     let index = 0;
     const freshIndex = () => ++index;
     try {
@@ -67,7 +67,7 @@ export function runJs(constraints: Constraint[], elements: any) {
             const cspec = new ConstraintSpec(methods);
             const comp = new Component(`Component${freshIndex()}`);
             const vars = unionIds.map((id) => {
-                return comp.emplaceVariable(id, null);
+                return comp.emplaceVariable(id, "");
             })
             comp.emplaceConstraint(`C${freshIndex()}`, cspec, vars, false);
             defaultConstraintSystem.addComponent(comp);
