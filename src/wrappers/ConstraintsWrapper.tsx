@@ -51,7 +51,6 @@ const ConstraintsWrapper: FC = (props) => {
     const [currentMethod, setCurrentMethod] = useState(undefined);
 
     function updateConstraint(oldConstraint: Constraint, newConstraint: Constraint) {
-        //TODO Double check this
         const index = constraints.findIndex((constraint) => constraint.fromIds === oldConstraint.fromIds && constraint.methods === oldConstraint.methods);
         if (index !== -1) {
             constraints[index] = newConstraint;
