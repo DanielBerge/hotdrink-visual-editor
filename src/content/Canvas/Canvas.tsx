@@ -122,7 +122,6 @@ export const Canvas: FC = () => {
             }
         }
         if ("code" in element) {
-            //TODO Gjøre noe her?
             //Do nothing
         } else if ("binding" in element) {
             elements.setCurrent(element);

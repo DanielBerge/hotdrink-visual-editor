@@ -17,18 +17,15 @@ export const ComponentProperties = () => {
             return;
         } else {
             updateKey(e, "id");
-            //TODO Covert this
-            /**
             constraints.constraints.forEach((constraint) => {
-                if (constraint.toIds.includes(oldId) || constraint.fromIds.includes(oldId)) {
+                if (constraint.methods.some((method) => method.toIds.includes(oldId)) || constraint.fromIds.includes(oldId)) {
                     constraints.updateConstraint(constraint, {
                         ...constraint,
-                        toIds: constraint.toIds.map(id => id === oldId ? e.target.value : id),
                         fromIds: constraint.fromIds.map(id => id === oldId ? e.target.value : id),
                         methods: constraint.methods.map(method => {
-                            return method.outputId === oldId ? {
+                            return method.toIds.includes(oldId) ? {
                                 ...method,
-                                outputId: e.target.value,
+                                toIds: [...method.toIds, e.target.value],
                                 code: method.code.replaceAll(oldId, e.target.value),
                             } : {
                                 ...method,
@@ -38,7 +35,6 @@ export const ComponentProperties = () => {
                     })
                 }
             })
-             **/
         }
     }
 

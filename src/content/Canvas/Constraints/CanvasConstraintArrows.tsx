@@ -17,9 +17,15 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
     const [multiWay, setMultiWay] = React.useState<string[]>([]);
 
     useEffect(() => {
-        const multiArr = constraint.fromIds.filter((id) => constraint.methods.some((method) => method.toIds.includes(id)));
-        const fromArr = constraint.fromIds.filter((id) => !constraint.methods.some((method) => method.toIds.includes(id)));
-        const toArr = constraint.methods.map((method) => method.toIds).flat().filter((id) => !constraint.fromIds.includes(id));
+        const multiArr = constraint.fromIds.filter((id) =>
+            constraint.methods.some((method) =>
+                method.toIds.includes(id)));
+        const fromArr = constraint.fromIds.filter((id) =>
+            !constraint.methods.some((method) =>
+                method.toIds.includes(id)));
+        const toArr = constraint.methods.map((method) =>
+            method.toIds).flat().filter((id) =>
+            !constraint.fromIds.includes(id));
         setMultiWay(multiArr);
         setFromOneWay(fromArr);
         setToOneWay(toArr);
@@ -67,7 +73,7 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
                             elements={elements}
                             multiway={false}
                             selected={constraints.current === constraint}
-                            hidden={constraints.current !== constraint ?? false}
+                            hidden={!constraints.currentMethod?.toIds.includes(toElem.id) ?? false}
                         />
                     )
                 })
