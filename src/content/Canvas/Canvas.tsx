@@ -90,6 +90,8 @@ export const Canvas: FC = () => {
                 elements.setCurrent(undefined);
                 constraints.setCurrent(undefined);
                 constraints.setCurrentMethod(undefined);
+                constraints.cancelNewConstraint();
+                constraints.cancelNewMethod();
             }
         };
 
@@ -134,6 +136,9 @@ export const Canvas: FC = () => {
                                             onTransform={onTransform}
                                             onTransformEnd={onTransformEnd}
                                             newConstraint={constraints.newConstraint}
+                                            newMethod={constraints.newMethod}
+                                            currentElements={constraints.currentElements}
+                                            currentConstraint={constraints.current}
                                         />
                                     )
                                 case ElemType.Text:

@@ -46,6 +46,8 @@ export const CanvasConstraintArrow: FC<Props> = ({
                     fill="red"
                     opacity={chooseOpacityOneWay()}
                     strokeWidth={5}
+                    shadowBlur={3}
+                    shadowColor={'red'}
                 /> :
                 <Arrow
                     key={id}
@@ -58,6 +60,8 @@ export const CanvasConstraintArrow: FC<Props> = ({
                     fill="red"
                     opacity={chooseOpacityOneWay()}
                     strokeWidth={5}
+                    shadowBlur={3}
+                    shadowColor={'red'}
                 />
             }
         </>

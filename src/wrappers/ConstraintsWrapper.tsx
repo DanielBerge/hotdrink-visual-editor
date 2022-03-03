@@ -28,6 +28,7 @@ export interface ConstraintsWrapperProps {
     currentMethod: VMethod | undefined;
     setCurrentMethod: (method: VMethod | undefined) => void;
     updateMethod: (oldMethod: VMethod, newMethod: VMethod, constraint: Constraint) => VMethod;
+    deleteMethod: (method: VMethod) => void;
 }
 
 const ConstraintsWrapper: FC = (props) => {
@@ -85,9 +86,21 @@ const ConstraintsWrapper: FC = (props) => {
 
     function createMethod(name: string) {
         if (current) {
-            if (current.methods.some(method => method.toIds.some((element) => currentElements.includes(element)))) {
+            if (current.methods.some(method => currentElements.every((element) => method.toIds.includes(element)))) {
                 alert.setError("A method in the constraint already connects to the selected elements.");
                 setCurrentElements([]);
+                return;
+            }
+            if (currentElements.length === 0) {
+                alert.setError("No elements selected.");
+                return;
+            }
+            if (name.length === 0) {
+                alert.setError("Method name is required");
+                return;
+            }
+            if (current?.methods.some(m => m.id === name)) {
+                alert.setError("Method with this name already exists");
                 return;
             }
             const newMethod = {
@@ -99,14 +112,30 @@ const ConstraintsWrapper: FC = (props) => {
             setCurrentElements([]);
             setCurrentMethod(newMethod);
             setNewMethod(false);
+            setCurrent(
+                updateConstraint(current, {
+                    ...current,
+                    methods: [...current.methods, newMethod]
+                })
+            );
+        }
+    }
+
+    function deleteMethod(method: VMethod) {
+        if (current) {
             updateConstraint(current, {
                 ...current,
-                methods: [...current.methods, newMethod]
+                methods: current.methods.filter(m => m.id !== method.id)
             });
+            setCurrent(undefined);
         }
     }
 
     function createConstraint() {
+        if (currentElements.length === 0) {
+            alert.setError("No elements selected.");
+            return;
+        }
         const newConstraint: Constraint = {
             x: 0,
             y: 0,
@@ -172,6 +201,7 @@ const ConstraintsWrapper: FC = (props) => {
                     toggleElementToNewConstraint,
                     toggleElementToNewMethod,
                     createMethod,
+                    deleteMethod,
                     currentElements,
                     cancelNewConstraint,
                     cancelNewMethod,
@@ -205,6 +235,7 @@ function useConstraints(): ConstraintsWrapperProps {
         cancelNewConstraint,
         cancelNewMethod,
         createMethod,
+        deleteMethod,
     } = useContext(CurrentContext);
 
     return {
@@ -229,6 +260,7 @@ function useConstraints(): ConstraintsWrapperProps {
         setNewMethod,
         toggleElementToNewMethod,
         createMethod,
+        deleteMethod,
     }
 }
 

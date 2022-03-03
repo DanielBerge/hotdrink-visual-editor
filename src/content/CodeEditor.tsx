@@ -35,7 +35,7 @@ export const CodeEditor = () => {
         <div className="flex h-96 flex-col">
             <p
                 className="p-2"
-            >Variables in scope: {constraints.current?.fromIds.join(", ")}</p>
+            >Variables in scope: {constraints.current?.fromIds.join(", ")} Output variables: {constraints.currentMethod?.toIds.join(", ")}</p>
             <Editor
                 height="100%"
                 defaultLanguage={"javascript"}

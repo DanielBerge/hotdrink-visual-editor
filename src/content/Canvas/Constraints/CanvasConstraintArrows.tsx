@@ -16,11 +16,10 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
     const [arrowConnection, setArrowConnection] = React.useState<string[]>([]);
 
     useEffect(() => {
+        const arrowIds = Array.from(new Set([...constraint.methods.map((method) => method.toIds).flat()]));
         const connectionIds = constraint.fromIds.filter((id) =>
             !constraint.methods.some((method) =>
                 method.toIds.includes(id)));
-        const arrowIds = constraint.methods.map((method) =>
-            method.toIds).flat();
         setConnection(connectionIds);
         setArrowConnection(arrowIds);
 

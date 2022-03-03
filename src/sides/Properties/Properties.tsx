@@ -6,8 +6,6 @@ import {HTMLBuilder} from "../../exports/HTMLBuilder";
 import {useConstraints} from "../../wrappers/ConstraintsWrapper";
 import JSZip from "jszip";
 import {saveAs} from 'file-saver';
-import {ComponentProperties} from "./Components/ComponentProperties";
-import {ConstraintProperties} from "./Constraints/ConstraintProperties";
 
 
 export const Properties = () => {
@@ -15,57 +13,36 @@ export const Properties = () => {
     const constraints = useConstraints();
     const [open, setOpen] = useState(false);
 
+    async function exportToZip() {
+        const zip = new JSZip();
+        let builder = new HTMLBuilder();
+        builder.includeHTML(elements.elements).includeJS(constraints.constraints, elements).end();
+        zip.file("index.html", builder.build());
+
+        let response = await fetch("/hotdrink.js", {
+            method: "GET"
+        });
+        zip.file("hotdrink.js", await response.text())
+
+        zip.generateAsync({type: 'blob'}).then(function (content) {
+            saveAs(content, 'program.zip');
+        });
+
+    }
+
     return (
         <>
             <h1 className={"font-bold text-lg"}>Properties</h1>
             <button
-                className="h-10 bg-red-800 text-white p-2 disabled:opacity-50 m-1"
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-1"
                 onClick={() => setOpen(true)}
             >Run
             </button>
             <button
-                className="h-10 bg-red-800 text-white p-2 disabled:opacity-50 m-1"
-                onClick={async () => {
-                    const zip = new JSZip();
-                    let builder = new HTMLBuilder();
-                    builder.includeHTML(elements.elements).includeJS(constraints.constraints, elements).end();
-                    zip.file("index.html", builder.build());
-
-                    let response = await fetch("/hotdrink.js", {
-                        method: "GET"
-                    });
-                    zip.file("hotdrink.js", await response.text())
-
-                    zip.generateAsync({type: 'blob'}).then(function (content) {
-                        saveAs(content, 'program.zip');
-                    });
-
-                }}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-1"
+                onClick={exportToZip}
             >Export
             </button>
-            <ComponentProperties/>
-            {elements.current && (
-                <button
-                    className="h-10 bg-red-800 text-white p-2 disabled:opacity-50 m-1"
-                    onClick={() => {
-                        elements.deleteElement(elements.current.id);
-                        constraints.deleteConstraintsConnected(elements.current.id);
-                        elements.setCurrent(undefined);
-                    }}
-                >Delete component
-                </button>
-            )}
-            <ConstraintProperties/>
-            {constraints.current && (
-                <button
-                    className="h-10 bg-red-800 text-white p-2 disabled:opacity-50 m-1"
-                    onClick={() => {
-                        constraints.deleteConstraint(constraints.current);
-                        constraints.setCurrent(undefined);
-                    }}
-                >Delete constraint
-                </button>
-            )}
             <Modal
                 open={open}
                 onBackdropClick={() => setOpen(false)}

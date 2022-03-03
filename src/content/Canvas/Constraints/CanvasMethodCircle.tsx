@@ -47,11 +47,11 @@ export const CanvasMethodCircle: FC<Props> = ({setOpen, constraints, constraint,
                 cornerRadius={20}
                 height={20}
                 fill={hover ? 'grey' : '#fff'}
-                strokeWidth={2}
-                stroke={"black"}
+                shadowBlur={4}
+                shadowColor={'black'}
             />
             <Text
-                text={`M ${method.id}`}
+                text={`${method.id}`}
                 fill={"black"}
                 x={15}
                 y={5}

@@ -9,6 +9,7 @@ import {ConstraintsWrapper} from "./wrappers/ConstraintsWrapper";
 import {EditorWrapper} from "./wrappers/EditorWrapper";
 import {AlertWrapper} from "./wrappers/AlertWrapper";
 import {AlertBox} from "./content/AlertBox";
+import {RoundBox} from "./sides/RoundBox";
 
 let id = 0;
 
@@ -22,11 +23,12 @@ function App() {
         <AlertWrapper>
             <ElementsWrapper>
                 <ConstraintsWrapper>
-                    <div className="flex space-x-3 h-screen">
+                    <div className="flex space-x-3 max-h-full">
                         <AlertBox/>
                         <Column>
-                            <Components/>
-                            <Constraints/>
+                            <RoundBox>
+                                <Components/>
+                            </RoundBox>
                         </Column>
                         <div className="flex-1">
                             <EditorWrapper>
@@ -34,7 +36,14 @@ function App() {
                             </EditorWrapper>
                         </div>
                         <Column>
-                            <Properties/>
+                            <RoundBox>
+                                <Constraints/>
+                            </RoundBox>
+                            <div className={"absolute bottom-10"}>
+                                <RoundBox>
+                                    <Properties/>
+                                </RoundBox>
+                            </div>
                         </Column>
                     </div>
                 </ConstraintsWrapper>
