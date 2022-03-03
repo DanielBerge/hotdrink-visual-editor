@@ -17,7 +17,7 @@ export function restrictSize(e: any) {
     e.target.height(Math.round(e.target.height() / SNAP_SPACE) * SNAP_SPACE);
 }
 
-export function getPoints(from: Constraint | Elem, to: Constraint | Elem) {
+export function getPoints(from: Constraint | Elem, to: Constraint | Elem, spaceFromEnd: number = 8) {
     let fromX = from.x;
     let fromY = from.y;
     let toX = to.x;
@@ -26,7 +26,6 @@ export function getPoints(from: Constraint | Elem, to: Constraint | Elem) {
     let toHeight = to.height;
     let fromWidth = from.width;
     let toWidth = to.width;
-    const spaceFromEnd = 8;
 
     function calculatePlacement(side: number, from: number, to: number) {
         return side / 2 + Math.max(Math.min(side / 2, (from - to) / 2), -side / 2);

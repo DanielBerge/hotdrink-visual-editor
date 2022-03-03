@@ -12,24 +12,24 @@ interface Props {
 }
 
 export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constraints}) => {
-    const [fromOneWay, setFromOneWay] = React.useState<string[]>([]);
-    const [toOneWay, setToOneWay] = React.useState<string[]>([]);
+    const [connection, setConnection] = React.useState<string[]>([]);
+    const [arrowConnection, setArrowConnection] = React.useState<string[]>([]);
 
     useEffect(() => {
-        const fromArr = constraint.fromIds.filter((id) =>
+        const connectionIds = constraint.fromIds.filter((id) =>
             !constraint.methods.some((method) =>
                 method.toIds.includes(id)));
-        const toArr = constraint.methods.map((method) =>
+        const arrowIds = constraint.methods.map((method) =>
             method.toIds).flat();
-        setFromOneWay(fromArr);
-        setToOneWay(toArr);
+        setConnection(connectionIds);
+        setArrowConnection(arrowIds);
 
     }, [constraint]);
 
     return (
         <>
             {
-                fromOneWay.map((fromId: string) => {
+                connection.map((fromId: string) => {
                     const fromElem = elements.getElementById(fromId);
                     if (fromElem === undefined) {
                         console.error(`Constraint id, does not have matching canvas element: ${fromId}`)
@@ -41,7 +41,7 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
                             id={`From${fromElem.id}`}
                             constraints={constraints}
                             constraint={constraint}
-                            points={getPoints(fromElem, constraint)}
+                            points={getPoints(constraint, fromElem, 0)}
                             elements={elements}
                             connection={true}
                             selected={constraints.current === constraint}
@@ -51,7 +51,7 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
                 })
             }
             {
-                toOneWay.map((toId: string) => {
+                arrowConnection.map((toId: string) => {
                     const toElem = elements.getElementById(toId);
                     if (toElem === undefined) {
                         console.error(`Constraint id, does not have matching canvas element: ${toId}`)

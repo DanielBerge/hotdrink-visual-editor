@@ -29,7 +29,7 @@ export const Constraints: FC = () => {
             {constraints.current &&
                 <div>
                     <button
-                        className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"
+                        className="h-10 bg-red-800 text-white p-2 disabled:opacity-50 m-2"
                         onClick={() => constraints.setNewMethod(true)}
                         disabled={constraints.newMethod}
                     >Create method

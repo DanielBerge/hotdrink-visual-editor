@@ -7,8 +7,8 @@ import {Constraints} from "./sides/Constraints";
 import {ElementsWrapper} from "./wrappers/ElementsWrapper";
 import {ConstraintsWrapper} from "./wrappers/ConstraintsWrapper";
 import {EditorWrapper} from "./wrappers/EditorWrapper";
-import {MessageWrapper} from "./wrappers/MessageWrapper";
-import {MessageBox} from "./content/MessageBox";
+import {AlertWrapper} from "./wrappers/AlertWrapper";
+import {AlertBox} from "./content/AlertBox";
 
 let id = 0;
 
@@ -19,11 +19,11 @@ export function freshId() {
 
 function App() {
     return (
-        <MessageWrapper>
+        <AlertWrapper>
             <ElementsWrapper>
                 <ConstraintsWrapper>
                     <div className="flex space-x-3 h-screen">
-                        <MessageBox/>
+                        <AlertBox/>
                         <Column>
                             <Components/>
                             <Constraints/>
@@ -39,7 +39,7 @@ function App() {
                     </div>
                 </ConstraintsWrapper>
             </ElementsWrapper>
-        </MessageWrapper>
+        </AlertWrapper>
     );
 }
 

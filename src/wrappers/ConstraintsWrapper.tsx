@@ -1,6 +1,6 @@
 import React, {FC, useContext, useState} from "react";
 import {Constraint, EditorType, VMethod} from "../types";
-import {useMessage} from "./MessageWrapper";
+import {useAlert} from "./AlertWrapper";
 
 const ConstraintContext = React.createContext<any>({})
 const NewContext = React.createContext<any>(false);
@@ -31,7 +31,7 @@ export interface ConstraintsWrapperProps {
 }
 
 const ConstraintsWrapper: FC = (props) => {
-    const message = useMessage();
+    const alert = useAlert();
     const [constraints, setConstraints] = useState<Constraint[]>([]);
     const [newConstraint, setNewConstraintValue] = useState(false);
     const [newMethod, setNewMethodValue] = useState<boolean>(false);
@@ -41,18 +41,18 @@ const ConstraintsWrapper: FC = (props) => {
 
     function setNewConstraint(newConstraint: boolean) {
         if (newConstraint) {
-            message.setMessage("Click on the elements you want to add a constraint to.");
+            alert.setMessage("Click on the elements you want to add a constraint to.");
         } else {
-            message.setMessage("");
+            alert.clearMessages();
         }
         setNewConstraintValue(newConstraint);
     }
 
     function setNewMethod(newMethod: boolean) {
         if (newMethod) {
-            message.setMessage("Click on the elements you want to add a method output connection to.");
+            alert.setMessage("Click on the elements you want to add a method output connection to.");
         } else {
-            message.setMessage("");
+            alert.clearMessages();
         }
         setNewMethodValue(newMethod);
     }
@@ -85,8 +85,9 @@ const ConstraintsWrapper: FC = (props) => {
 
     function createMethod(name: string) {
         if (current) {
-            if (current.methods.some(method => method.toIds.every((element) => currentElements.includes(element)))) {
-                console.warn("Method already exists");
+            if (current.methods.some(method => method.toIds.some((element) => currentElements.includes(element)))) {
+                alert.setError("A method in the constraint already connects to the selected elements.");
+                setCurrentElements([]);
                 return;
             }
             const newMethod = {
