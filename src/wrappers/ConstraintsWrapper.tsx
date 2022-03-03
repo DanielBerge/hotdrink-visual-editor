@@ -1,5 +1,6 @@
 import React, {FC, useContext, useState} from "react";
 import {Constraint, EditorType, VMethod} from "../types";
+import {useMessage} from "./MessageWrapper";
 
 const ConstraintContext = React.createContext<any>({})
 const NewContext = React.createContext<any>(false);
@@ -30,12 +31,31 @@ export interface ConstraintsWrapperProps {
 }
 
 const ConstraintsWrapper: FC = (props) => {
+    const message = useMessage();
     const [constraints, setConstraints] = useState<Constraint[]>([]);
-    const [newConstraint, setNewConstraint] = useState(false);
-    const [newMethod, setNewMethod] = useState<boolean>(false);
+    const [newConstraint, setNewConstraintValue] = useState(false);
+    const [newMethod, setNewMethodValue] = useState<boolean>(false);
     const [current, setCurrent] = useState<Constraint | undefined>(undefined);
     const [currentMethod, setCurrentMethod] = useState<VMethod | undefined>(undefined);
     const [currentElements, setCurrentElements] = useState<string[]>([]);
+
+    function setNewConstraint(newConstraint: boolean) {
+        if (newConstraint) {
+            message.setMessage("Click on the elements you want to add a constraint to.");
+        } else {
+            message.setMessage("");
+        }
+        setNewConstraintValue(newConstraint);
+    }
+
+    function setNewMethod(newMethod: boolean) {
+        if (newMethod) {
+            message.setMessage("Click on the elements you want to add a method output connection to.");
+        } else {
+            message.setMessage("");
+        }
+        setNewMethodValue(newMethod);
+    }
 
     function cancelNewConstraint() {
         setCurrentElements([]);
