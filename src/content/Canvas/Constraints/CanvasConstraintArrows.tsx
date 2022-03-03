@@ -14,19 +14,13 @@ interface Props {
 export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constraints}) => {
     const [fromOneWay, setFromOneWay] = React.useState<string[]>([]);
     const [toOneWay, setToOneWay] = React.useState<string[]>([]);
-    const [multiWay, setMultiWay] = React.useState<string[]>([]);
 
     useEffect(() => {
-        const multiArr = constraint.fromIds.filter((id) =>
-            constraint.methods.some((method) =>
-                method.toIds.includes(id)));
         const fromArr = constraint.fromIds.filter((id) =>
             !constraint.methods.some((method) =>
                 method.toIds.includes(id)));
         const toArr = constraint.methods.map((method) =>
-            method.toIds).flat().filter((id) =>
-            !constraint.fromIds.includes(id));
-        setMultiWay(multiArr);
+            method.toIds).flat();
         setFromOneWay(fromArr);
         setToOneWay(toArr);
 
@@ -49,7 +43,7 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
                             constraint={constraint}
                             points={getPoints(fromElem, constraint)}
                             elements={elements}
-                            multiway={false}
+                            connection={true}
                             selected={constraints.current === constraint}
                             hidden={constraints.current !== constraint ?? false}
                         />
@@ -71,31 +65,9 @@ export const CanvasConstraintArrows: FC<Props> = ({constraint, elements, constra
                             constraint={constraint}
                             points={getPoints(constraint, toElem)}
                             elements={elements}
-                            multiway={false}
+                            connection={false}
                             selected={constraints.current === constraint}
                             hidden={!constraints.currentMethod?.toIds.includes(toElem.id) ?? false}
-                        />
-                    )
-                })
-            }
-            {
-                multiWay.map((connection: string) => {
-                    const conn = elements.getElementById(connection);
-                    if (conn === undefined) {
-                        console.error(`Constraint id, does not have matching canvas element: ${connection}`)
-                        return null;
-                    }
-                    return (
-                        <CanvasConstraintArrow
-                            key={`Multiway${conn.id}`}
-                            id={`Multiway${conn.id}`}
-                            constraints={constraints}
-                            constraint={constraint}
-                            points={getPoints(constraint, conn)}
-                            elements={elements}
-                            multiway={true}
-                            selected={constraints.current === constraint}
-                            hidden={!constraints.currentMethod?.toIds.includes(connection) ?? false}
                         />
                     )
                 })

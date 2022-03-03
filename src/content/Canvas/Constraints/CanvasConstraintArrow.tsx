@@ -1,4 +1,4 @@
-import {Arrow} from "react-konva";
+import {Arrow, Line} from "react-konva";
 import React, {FC} from "react";
 import {ConstraintsWrapperProps} from "../../../wrappers/ConstraintsWrapper";
 import {Constraint} from "../../../types";
@@ -11,7 +11,7 @@ interface Props {
     elements: ElementsWrapperProps;
     points: number[];
     selected: boolean;
-    multiway: boolean;
+    connection: boolean;
     hidden: boolean;
 }
 
@@ -21,7 +21,7 @@ export const CanvasConstraintArrow: FC<Props> = ({
                                                      constraint,
                                                      elements,
                                                      points,
-                                                     multiway,
+                                                     connection,
                                                      hidden,
                                                      selected
                                                  }) => {
@@ -33,30 +33,10 @@ export const CanvasConstraintArrow: FC<Props> = ({
         return (constraints.current && constraints.current === constraint) ? 1 : 0.3;
     }
 
-    function chooseOpacityMultiway() {
-        if (!selected && constraints.currentMethod) {
-            return 0.3;
-        }
-        return (constraints.current && constraints.current === constraint) ? 1 : 0.3;
-    }
-
     return (
         <>
-            <Arrow
-                key={id}
-                onClick={() => {
-                    constraints.setCurrent(constraint);
-                    elements.setCurrent(undefined);
-                }}
-                points={points}
-                stroke="red"
-                fill="red"
-                opacity={chooseOpacityOneWay()}
-                strokeWidth={5}
-            />
-            {multiway &&
-                <Arrow
-                    key={`${id}-2`}
+            {connection ? <Line
+                    key={id}
                     onClick={() => {
                         constraints.setCurrent(constraint);
                         elements.setCurrent(undefined);
@@ -64,9 +44,20 @@ export const CanvasConstraintArrow: FC<Props> = ({
                     points={points}
                     stroke="red"
                     fill="red"
+                    opacity={chooseOpacityOneWay()}
                     strokeWidth={5}
-                    opacity={chooseOpacityMultiway()}
-                    pointerAtBeginning={true}
+                /> :
+                <Arrow
+                    key={id}
+                    onClick={() => {
+                        constraints.setCurrent(constraint);
+                        elements.setCurrent(undefined);
+                    }}
+                    points={points}
+                    stroke="red"
+                    fill="red"
+                    opacity={chooseOpacityOneWay()}
+                    strokeWidth={5}
                 />
             }
         </>
