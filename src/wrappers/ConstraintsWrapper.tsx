@@ -35,6 +35,9 @@ export interface ConstraintsWrapperProps {
     updateConstraint: (oldConstraint: Constraint, newConstraint: Constraint) => Constraint;
     newConstraint: boolean;
     setNewConstraint: (newConstraint: boolean) => void;
+    toggleElementToNewConstraint: (id: string) => void;
+    currentElements: string[];
+    createConstraint: () => Constraint;
     deleteConstraint: (constraint: Constraint | undefined) => void;
     current: Constraint | undefined;
     setCurrent: (newConstraint: Constraint | undefined) => void;
@@ -47,8 +50,32 @@ export interface ConstraintsWrapperProps {
 const ConstraintsWrapper: FC = (props) => {
     const [constraints, setConstraints] = useState(initialConstraints);
     const [newConstraint, setNewConstraint] = useState(false);
-    const [current, setCurrent] = useState(undefined);
+    const [current, setCurrent] = useState<Constraint | undefined>(undefined);
     const [currentMethod, setCurrentMethod] = useState(undefined);
+    const [currentElements, setCurrentElements] = useState<string[]>([]);
+
+    function toggleElementToNewConstraint(id: string) {
+        if (currentElements.includes(id)) {
+            setCurrentElements(currentElements.filter(e => e !== id));
+        } else {
+            setCurrentElements([...currentElements, id]);
+        }
+    }
+
+    function createConstraint() {
+        const newConstraint: Constraint = {
+            x: 0,
+            y: 0,
+            width: 100,
+            height: 100,
+            fromIds: currentElements,
+            methods: [],
+        };
+        setCurrentElements([]);
+        setConstraints([...constraints, newConstraint]);
+        setNewConstraint(false);
+        setCurrent(newConstraint);
+    }
 
     function updateConstraint(oldConstraint: Constraint, newConstraint: Constraint) {
         const index = constraints.findIndex((constraint) => constraint.fromIds === oldConstraint.fromIds && constraint.methods === oldConstraint.methods);
@@ -83,9 +110,17 @@ const ConstraintsWrapper: FC = (props) => {
 
     return (
         <ConstraintContext.Provider
-            value={{constraints, setConstraints, updateConstraint, deleteConstraintsConnected, deleteConstraint}}>
+            value={{constraints, setConstraints, updateConstraint, deleteConstraintsConnected, deleteConstraint, createConstraint}}>
             <NewConstraintContext.Provider value={{newConstraint, setNewConstraint}}>
-                <CurrentContext.Provider value={{current, setCurrent, currentMethod, setCurrentMethod, updateMethod}}>
+                <CurrentContext.Provider value={{
+                    current,
+                    setCurrent,
+                    currentMethod,
+                    setCurrentMethod,
+                    updateMethod,
+                    toggleElementToNewConstraint,
+                    currentElements
+                }}>
                     {props.children}
                 </CurrentContext.Provider>
             </NewConstraintContext.Provider>
@@ -99,10 +134,19 @@ function useConstraints(): ConstraintsWrapperProps {
         setConstraints,
         updateConstraint,
         deleteConstraintsConnected,
-        deleteConstraint
+        deleteConstraint,
+        createConstraint,
     } = useContext(ConstraintContext);
     const {newConstraint, setNewConstraint} = useContext(NewConstraintContext);
-    const {current, setCurrent, currentMethod, setCurrentMethod, updateMethod} = useContext(CurrentContext);
+    const {
+        current,
+        setCurrent,
+        currentMethod,
+        setCurrentMethod,
+        updateMethod,
+        toggleElementToNewConstraint,
+        currentElements
+    } = useContext(CurrentContext);
 
     return {
         constraints,
@@ -117,6 +161,9 @@ function useConstraints(): ConstraintsWrapperProps {
         currentMethod,
         setCurrentMethod,
         updateMethod,
+        createConstraint,
+        currentElements,
+        toggleElementToNewConstraint,
     }
 }
 

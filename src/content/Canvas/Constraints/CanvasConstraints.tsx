@@ -8,7 +8,7 @@ import {CanvasConstraintArrows} from "./CanvasConstraintArrows";
 import {CanvasMethodCircle} from "./CanvasMethodCircle";
 
 interface Props {
-    onClick: (element: Elem | Constraint | VMethod) => void;
+    onClick: (element: Constraint) => void;
     setOpen: (open: boolean) => void;
     constraints: ConstraintsWrapperProps;
     elements: ElementsWrapperProps;

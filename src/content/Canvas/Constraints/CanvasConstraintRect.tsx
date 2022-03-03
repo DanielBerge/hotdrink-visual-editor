@@ -10,7 +10,7 @@ interface Props {
     constraint: Constraint;
     constraints: ConstraintsWrapperProps;
     elements: ElementsWrapperProps;
-    onClick: (e: Elem | Constraint) => void;
+    onClick: (e: Constraint) => void;
     selected: boolean;
 }
 

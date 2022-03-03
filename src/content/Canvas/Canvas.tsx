@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {Layer, Stage} from 'react-konva';
 import {KonvaEventObject} from "konva/lib/Node";
-import {Constraint, EditorType, Elem, ElemType, VMethod} from "../../types";
+import {Constraint, Elem, ElemType, VMethod} from "../../types";
 import {useElements} from "../../wrappers/ElementsWrapper";
 import {useConstraints} from "../../wrappers/ConstraintsWrapper";
 import {ConstraintEditor} from "../ConstraintEditor";
@@ -27,10 +27,21 @@ export const Canvas: FC = () => {
         setOpen(false);
     }
 
+    function onClickConstraint(constraint: Constraint) {
+        constraints.setCurrent(constraint);
+        elements.setCurrent(undefined);
+    }
 
-    function onClick(element: Elem | Constraint | VMethod) {
-        let pushed = false;
+    function onClickElem(element: Elem) {
         if (constraints.newConstraint) {
+            constraints.toggleElementToNewConstraint(element.id);
+        } else {
+            elements.setCurrent(element);
+            constraints.setCurrent(undefined);
+        }
+        /**
+         let pushed = false;
+         if (constraints.newConstraint) {
             if (constraintIds.length < 2 || selectedConstraint === undefined || selectedMethod === undefined) {
                 if ("binding" in element) {
                     constraintIds.push(element.id);
@@ -119,15 +130,8 @@ export const Canvas: FC = () => {
                 selectedConstraint = undefined;
             }
         }
-        if ("code" in element) {
-            //Do nothing
-        } else if ("binding" in element) {
-            elements.setCurrent(element);
-            constraints.setCurrent(undefined);
-        } else {
-            constraints.setCurrent(element);
-            elements.setCurrent(undefined);
-        }
+
+         **/
     }
 
 
@@ -193,7 +197,7 @@ export const Canvas: FC = () => {
                 onClick={checkDeselect}
             >
                 <CanvasGrid/>
-                <CanvasConstraints onClick={onClick} setOpen={setOpen} elements={elements} constraints={constraints}/>
+                <CanvasConstraints onClick={onClickConstraint} setOpen={setOpen} elements={elements} constraints={constraints}/>
                 <Layer>
                     {elements.elements.map((element: Elem, key: number) => {
                         switch (element.type) {
@@ -202,12 +206,13 @@ export const Canvas: FC = () => {
                                     <CanvasInput
                                         key={key}
                                         element={element}
-                                        onClick={onClick}
+                                        onClick={onClickElem}
                                         onDragMove={onDragMove}
                                         isSelected={element.id === elements.current?.id}
                                         onTransform={onTransform}
                                         onTransformEnd={onTransformEnd}
                                         newConstraint={constraints.newConstraint}
+                                        currentElements={constraints.currentElements}
                                     />
                                 )
                             case ElemType.Button:
@@ -215,7 +220,7 @@ export const Canvas: FC = () => {
                                     <CanvasButton
                                         key={key}
                                         element={element}
-                                        onClick={onClick}
+                                        onClick={onClickElem}
                                         onDragMove={onDragMove}
                                         isSelected={element.id === elements.current?.id}
                                         onTransform={onTransform}
@@ -228,7 +233,7 @@ export const Canvas: FC = () => {
                                     <CanvasText
                                         key={key}
                                         element={element}
-                                        onClick={onClick}
+                                        onClick={onClickElem}
                                         onDragMove={onDragMove}
                                         newConstraint={constraints.newConstraint}
                                     />

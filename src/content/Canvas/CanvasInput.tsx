@@ -12,6 +12,7 @@ interface Props {
     onTransform: (e: KonvaEventObject<Event>, node: any) => void;
     onTransformEnd: (e: KonvaEventObject<Event>, node: any, element: Elem) => void;
     newConstraint: boolean;
+    currentElements: string[];
 }
 
 export const CanvasInput: FC<Props> = ({
@@ -21,9 +22,20 @@ export const CanvasInput: FC<Props> = ({
                                            isSelected,
                                            onTransform,
                                            onTransformEnd,
-                                           newConstraint
+                                           newConstraint,
+                                           currentElements,
                                        }) => {
     const [shapeRef, trRef] = useTransformer(isSelected);
+
+    function chooseStroke() {
+        if (currentElements.includes(element.id)) {
+            return 'blue';
+        } else if(newConstraint) {
+            return 'green';
+        } else {
+            return 'black';
+        }
+    }
 
     return (
         <>
@@ -37,7 +49,7 @@ export const CanvasInput: FC<Props> = ({
                     x={element.x}
                     y={element.y}
                     fill="white"
-                    stroke={newConstraint ? 'green' : 'black'}
+                    stroke={chooseStroke()}
                     onClick={() => onClick(element)}
                     onDragMove={(e) => onDragMove(e, element)}
                     onTransform={(e) => onTransform(e, shapeRef.current)}
