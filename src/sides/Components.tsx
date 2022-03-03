@@ -2,14 +2,11 @@ import React, {FC} from "react";
 import {freshId} from "../App";
 import {Binding, ElemType, InputType} from "../types";
 import {useElements} from "../wrappers/ElementsWrapper";
-import {ComponentProperties} from "./Properties/Components/ComponentProperties";
-import {useConstraints} from "../wrappers/ConstraintsWrapper";
 
 export const sideOffset = 300;
 
 export const Components: FC = () => {
     const elements = useElements();
-    const constraints = useConstraints();
 
     return (
         <>
@@ -68,19 +65,6 @@ export const Components: FC = () => {
                 })}
             >Text
             </div>
-
-            <ComponentProperties/>
-            {elements.current && (
-                <button
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 m-1"
-                    onClick={() => {
-                        elements.deleteElement(elements.current.id);
-                        constraints.deleteConstraintsConnected(elements.current.id);
-                        elements.setCurrent(undefined);
-                    }}
-                >Delete component
-                </button>
-            )}
         </>
     )
 }

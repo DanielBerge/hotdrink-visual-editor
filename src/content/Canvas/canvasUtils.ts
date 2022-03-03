@@ -1,7 +1,7 @@
 import {Constraint, Elem} from "../../types";
 import {clamp} from "../../utils";
 
-export const WIDTH = window.screen.availWidth - 600;
+export const WIDTH = window.screen.availWidth - 750;
 export const HEIGHT = window.innerHeight;
 export const SNAP_SPACE = 10;
 

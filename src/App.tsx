@@ -10,6 +10,8 @@ import {EditorWrapper} from "./wrappers/EditorWrapper";
 import {AlertWrapper} from "./wrappers/AlertWrapper";
 import {AlertBox} from "./content/AlertBox";
 import {RoundBox} from "./sides/RoundBox";
+import {ConstraintProperties} from "./sides/Properties/ConstraintProperties";
+import {ComponentProperties} from "./sides/Properties/ComponentProperties";
 
 let id = 0;
 
@@ -29,6 +31,7 @@ function App() {
                             <RoundBox>
                                 <Components/>
                             </RoundBox>
+                            <ComponentProperties/>
                         </Column>
                         <div className="flex-1">
                             <EditorWrapper>
@@ -39,6 +42,7 @@ function App() {
                             <RoundBox>
                                 <Constraints/>
                             </RoundBox>
+                            <ConstraintProperties/>
                             <div className={"absolute bottom-10"}>
                                 <RoundBox>
                                     <Properties/>

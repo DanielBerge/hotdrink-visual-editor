@@ -1,9 +1,10 @@
-import {upperCaseFirst} from "../../../utils";
-import {Binding, Elem, InputType} from "../../../types";
+import {upperCaseFirst} from "../../utils";
+import {Binding, Elem, InputType} from "../../types";
 import {ComponentDropDown} from "./ComponentDropDown";
-import {useElements} from "../../../wrappers/ElementsWrapper";
-import {useConstraints} from "../../../wrappers/ConstraintsWrapper";
-import {ChangeEvent} from "react";
+import {useElements} from "../../wrappers/ElementsWrapper";
+import {useConstraints} from "../../wrappers/ConstraintsWrapper";
+import React, {ChangeEvent} from "react";
+import {RoundBox} from "../RoundBox";
 
 export const ComponentProperties = () => {
     const elements = useElements();
@@ -48,7 +49,8 @@ export const ComponentProperties = () => {
     }
 
     return (
-        <>
+        <RoundBox>
+            {!elements.current && <h1 className="font-bold">No selected component</h1>}
             {elements.current && <h1 className="font-bold">Component</h1>}
             {elements.current && Object.keys(elements.current).map((key: string) => {
                 if (inputs.includes(key)) {
@@ -80,6 +82,17 @@ export const ComponentProperties = () => {
                 }
                 return <div key={key}>{upperCaseFirst(key)}: {elements.current[key as keyof Elem]}</div>
             })}
-        </>
+            {elements.current && (
+                <button
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 m-1"
+                    onClick={() => {
+                        elements.deleteElement(elements.current.id);
+                        constraints.deleteConstraintsConnected(elements.current.id);
+                        elements.setCurrent(undefined);
+                    }}
+                >Delete component
+                </button>
+            )}
+        </RoundBox>
     )
 }
