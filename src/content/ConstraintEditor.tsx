@@ -75,26 +75,35 @@ export const ConstraintEditor: FC<Props> = ({open, onClose}) => {
                                  setDialogPosition({x: e.clientX - offset.x, y: e.clientY - offset.y})
                              }}
                         >
-                            <button className="p-5" onClick={() => editor.setType(EditorType.VISUAL)}>Visual</button>
-                            <button className="p-5" onClick={() => editor.setType(EditorType.CODE)}>Code</button>
-                            <button className="p-5 float-right text-red-600" onClick={() => {
-                                if (constraints.currentMethod?.type === EditorType.VISUAL) {
-                                    const code = generateCode(visual.components ?? [], visual.connections ?? []);
-                                    console.log(code);
-                                    if (constraints.current && constraints.currentMethod) {
-                                        constraints.updateMethod(constraints.currentMethod, {
-                                            ...constraints.currentMethod,
-                                            code,
-                                            visualJson: visual.toObject()
-                                        }, constraints.current);
+                            <button
+                                className="p-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 m-1"
+                                onClick={() => editor.setType(EditorType.VISUAL)}
+                            >Visual
+                            </button>
+                            <button
+                                className="p-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 m-1"
+                                onClick={() => editor.setType(EditorType.CODE)}>Code
+                            </button>
+                            <button
+                                className="p-5 float-right bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 m-1"
+                                onClick={() => {
+                                    if (constraints.currentMethod?.type === EditorType.VISUAL) {
+                                        const code = generateCode(visual.components ?? [], visual.connections ?? []);
+                                        console.log(code);
+                                        if (constraints.current && constraints.currentMethod) {
+                                            constraints.updateMethod(constraints.currentMethod, {
+                                                ...constraints.currentMethod,
+                                                code,
+                                                visualJson: visual.toObject()
+                                            }, constraints.current);
+                                        }
+                                        visual.setConnections([]);
+                                        visual.setComponents([]);
+                                        constraints.setCurrent(undefined);
+                                        constraints.setCurrentMethod(undefined);
                                     }
-                                    visual.setConnections([]);
-                                    visual.setComponents([]);
-                                    constraints.setCurrent(undefined);
-                                    constraints.setCurrentMethod(undefined);
-                                }
-                                onClose();
-                            }}>SAVE
+                                    onClose();
+                                }}>Save
                             </button>
                         </div>
                         <div

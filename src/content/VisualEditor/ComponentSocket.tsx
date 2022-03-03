@@ -21,7 +21,7 @@ export const ComponentSocket: FC<Props> = ({component, socket, index, output, se
                 x={output ? component.width : 0}
                 y={socketYAxisPlacement(component, index, output ? component.outputs?.length : component.inputs?.length)}
                 radius={10}
-                fill="green"
+                fill="#EF4444"
                 onClick={() => {
                     if (connection?.fromComponentId === component.id) {
                         setNewConnection(null);

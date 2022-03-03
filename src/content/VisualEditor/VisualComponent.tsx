@@ -56,16 +56,17 @@ export const VisualComponent: FC<Props> = ({
             <Rect
                 width={component.width}
                 height={component.height}
-                fill="gray"
-                strokeWidth={1}
-                stroke={'black'}
+                fill="white"
+                shadowColor={'gray'}
+                shadowBlur={2}
                 cornerRadius={10}
             />
             <Group>
                 <Text
                     x={10}
                     y={10}
-                    fill={'black'}
+                    fill={'gray'}
+                    fontStyle={'bold'}
                     text={component.label}
                     fontSize={20}
                 />

@@ -51,48 +51,51 @@ export const ComponentProperties = () => {
     return (
         <RoundBox>
             {!elements.current && <h1 className="font-bold">No selected component</h1>}
-            {elements.current && <h1 className="font-bold">Component</h1>}
-            {elements.current && Object.keys(elements.current).map((key: string) => {
-                if (inputs.includes(key)) {
-                    return (
-                        <div key={key}>
-                            <label>{upperCaseFirst(key)}: </label>
-                            <input
-                                value={elements.current[key as keyof Elem]}
-                                onChange={(e) => {
-                                    if (key === "id") {
-                                        updateId(e, elements.current.id);
-                                    } else {
-                                        updateKey(e, key);
-                                    }
-                                }}
-                            />
-                        </div>
-                    )
-                }
-                if (key === "subType") {
-                    return (
-                        <ComponentDropDown key={key} elemKey={key} type={InputType}/>
-                    );
-                }
-                if (key === "binding") {
-                    return (
-                        <ComponentDropDown key={key} elemKey={key} type={Binding}/>
-                    );
-                }
-                return <div key={key}>{upperCaseFirst(key)}: {elements.current[key as keyof Elem]}</div>
-            })}
-            {elements.current && (
-                <button
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 m-1"
-                    onClick={() => {
-                        elements.deleteElement(elements.current.id);
-                        constraints.deleteConstraintsConnected(elements.current.id);
-                        elements.setCurrent(undefined);
-                    }}
-                >Delete component
-                </button>
-            )}
+            {elements.current &&
+                <>
+                    <h1 className="font-bold">Component</h1>
+                    {Object.keys(elements.current).map((key: string) => {
+                        if (inputs.includes(key)) {
+                            return (
+                                <div key={key}>
+                                    <label>{upperCaseFirst(key)}: </label>
+                                    <input
+                                        value={elements.current[key as keyof Elem]}
+                                        onChange={(e) => {
+                                            if (key === "id") {
+                                                updateId(e, elements.current.id);
+                                            } else {
+                                                updateKey(e, key);
+                                            }
+                                        }}
+                                        className={"border w-20"}
+                                    />
+                                </div>
+                            )
+                        }
+                        if (key === "subType") {
+                            return (
+                                <ComponentDropDown key={key} elemKey={key} type={InputType}/>
+                            );
+                        }
+                        if (key === "binding") {
+                            return (
+                                <ComponentDropDown key={key} elemKey={key} type={Binding}/>
+                            );
+                        }
+                        return <div key={key}>{upperCaseFirst(key)}: {elements.current[key as keyof Elem]}</div>
+                    })}
+                    <button
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 m-1"
+                        onClick={() => {
+                            elements.deleteElement(elements.current.id);
+                            constraints.deleteConstraintsConnected(elements.current.id);
+                            elements.setCurrent(undefined);
+                        }}
+                    >Delete component
+                    </button>
+                </>
+            }
         </RoundBox>
     )
 }

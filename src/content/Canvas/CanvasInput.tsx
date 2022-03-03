@@ -59,16 +59,6 @@ export const CanvasInput: FC<Props> = ({
                     onTransform={(e) => onTransform(e, shapeRef.current)}
                     onTransformEnd={(e) => onTransformEnd(e, shapeRef.current, element)}
                 />
-                {isSelected &&
-                    <Circle
-                        visible={false}
-                        width={40}
-                        height={40}
-                        x={element.x + element.width / 2}
-                        y={element.y + element.height / 2}
-                        fill="red"
-                    />
-                }
             </Group>
             {isSelected &&
                 <Transformer

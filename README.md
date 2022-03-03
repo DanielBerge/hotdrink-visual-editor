@@ -10,8 +10,7 @@
 * Plassering til new constraint
 * Gjøre constraints større utifra antall methods eller lengden av method.
 * Endre font til navn inni method
-* Fikse sides, slik at de ikke flytter på seg, ha en fixed size
-* I sidene: Components, Constraints, Properties. Lage noe mer fancy med de? Bokser med rounded corners? Inspirasjon fra noe annet?
+* Egen rouned box for methods, delete og edit
 
 * Checkbox?
 * Refaktorer canvas elements

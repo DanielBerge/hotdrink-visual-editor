@@ -99,16 +99,18 @@ export const VisualEditor = () => {
             <div className="w-60 bg-gray p-3">
                 <label>Search: </label>
                 <input
-                    className="border border-black"
+                    className="border border-black w-32"
                     onChange={(e) => setFilter(e.target.value)}
                 />
-                <div className="overflow-scroll h-96">
+                <div className="overflow-y-scroll" style={{
+                    height: "500px"
+                }}>
                     {visual.libraryComponents.filter((component) => component.label.toLowerCase().includes(filter.toLowerCase())).map((component: LibraryComponent) => {
                         return (
                             <div
                                 key={component.id}
-                                style={{width: "100", height: "100", backgroundColor: "gray"}}
-                                className="border border-black p-4 m-4 h-32 rounded-lg font-bold"
+                                style={{width: "100", height: "100", backgroundColor: "white"}}
+                                className="border shadow p-4 m-4 h-32 rounded-lg font-bold"
                                 draggable
                                 onDragEnd={(e) => {
                                     visual.setComponents([...visual.components, {
