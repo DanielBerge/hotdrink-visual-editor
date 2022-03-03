@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import {Circle, Group, Rect, Transformer} from "react-konva";
-import {Elem} from "../../types";
+import {Constraint, Elem} from "../../types";
 import {KonvaEventObject} from "konva/lib/Node";
 import {useTransformer} from "./useTransformer";
 
@@ -12,7 +12,9 @@ interface Props {
     onTransform: (e: KonvaEventObject<Event>, node: any) => void;
     onTransformEnd: (e: KonvaEventObject<Event>, node: any, element: Elem) => void;
     newConstraint: boolean;
+    newMethod: boolean;
     currentElements: string[];
+    currentConstraint: Constraint | undefined;
 }
 
 export const CanvasInput: FC<Props> = ({
@@ -23,14 +25,16 @@ export const CanvasInput: FC<Props> = ({
                                            onTransform,
                                            onTransformEnd,
                                            newConstraint,
+                                           newMethod,
                                            currentElements,
+                                           currentConstraint,
                                        }) => {
     const [shapeRef, trRef] = useTransformer(isSelected);
 
     function chooseStroke() {
         if (currentElements.includes(element.id)) {
             return 'blue';
-        } else if(newConstraint) {
+        } else if (newConstraint || (newMethod && currentConstraint?.fromIds.includes(element.id))) {
             return 'green';
         } else {
             return 'black';

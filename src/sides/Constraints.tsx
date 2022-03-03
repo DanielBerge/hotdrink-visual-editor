@@ -20,10 +20,28 @@ export const Constraints: FC = () => {
                 disabled={constraints.newConstraint}
             >Create constraint
             </button>
-            <CancelConfirm
-                onCancel={() => constraints.setNewConstraint(false)}
-                onConfirm={constraints.createConstraint}
-            />
+            {constraints.newConstraint &&
+                <CancelConfirm
+                    onCancel={() => constraints.cancelNewConstraint()}
+                    onConfirm={constraints.createConstraint}
+                />
+            }
+            {constraints.current &&
+                <div>
+                    <button
+                        className="h-10 bg-red-800 text-white p-2 disabled:opacity-50"
+                        onClick={() => constraints.setNewMethod(true)}
+                        disabled={constraints.newMethod}
+                    >Create method
+                    </button>
+                    {constraints.newMethod &&
+                        <CancelConfirm
+                            onCancel={() => constraints.cancelNewMethod()}
+                            onConfirm={() => constraints.createMethod("name")}
+                        />
+                    }
+                </div>
+            }
         </>
     )
 }

@@ -1,30 +1,5 @@
 import React, {FC, useContext, useState} from "react";
-import {Binding, Elem, ElemType, InputType} from "../types";
-
-const initialElements: Elem[] = [
-    {
-        height: 50,
-        width: 200,
-        x: 170,
-        y: 310,
-        type: ElemType.Input,
-        subType: InputType.Number,
-        binding: Binding.Value,
-        value: "",
-        id: "celcius",
-    },
-    {
-        height: 50,
-        width: 150,
-        x: 830,
-        y: 320,
-        type: ElemType.Input,
-        subType: InputType.Number,
-        binding: Binding.Value,
-        value: "value2",
-        id: "fahrenheit",
-    }
-]
+import {Elem} from "../types";
 
 const ElementContext = React.createContext<any>({})
 const CurrentContext = React.createContext<any>({});
@@ -40,7 +15,7 @@ export interface ElementsWrapperProps {
 }
 
 const ElementsWrapper: FC = (props) => {
-    const [elements, setElements] = useState(initialElements)
+    const [elements, setElements] = useState<Elem[]>([])
     const [current, setCurrent] = useState(undefined);
 
     function addElement(element: Elem) {
