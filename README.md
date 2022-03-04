@@ -9,7 +9,6 @@
 ## Design improvements
 * Plassering til new constraint
 * Gjøre constraints større utifra antall methods eller lengden av method.
-* Endre font til navn inni method
 * Plassering av id i visual programming interface
 
 * Checkbox?

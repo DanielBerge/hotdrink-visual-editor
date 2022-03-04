@@ -112,20 +112,38 @@ const ConstraintsWrapper: FC = (props) => {
             setCurrentElements([]);
             setCurrentMethod(newMethod);
             setNewMethod(false);
+
+            const newMethods = [...current.methods, newMethod];
+            const longestMethodName = getLongestMethodName(newMethods);
+
             setCurrent(
                 updateConstraint(current, {
                     ...current,
-                    methods: [...current.methods, newMethod]
+                    methods: newMethods,
+                    width: longestMethodName > 6 ? longestMethodName * 5 + 100 : 100,
                 })
             );
         }
     }
 
+    function getLongestMethodName(methods: VMethod[]) {
+        return methods.reduce((acc, cur) => {
+            if (cur.id.length > acc) {
+                return cur.id.length;
+            }
+            return acc;
+        }, 0);
+    }
+
+
     function deleteMethod(method: VMethod) {
         if (current) {
+            const newMethods = current.methods.filter(m => m.id !== method.id);
+            const longestMethodName = getLongestMethodName(newMethods);
             updateConstraint(current, {
                 ...current,
-                methods: current.methods.filter(m => m.id !== method.id)
+                methods: newMethods,
+                width: longestMethodName > 6 ? longestMethodName * 5 + 100 : 100,
             });
             setCurrent(undefined);
         }

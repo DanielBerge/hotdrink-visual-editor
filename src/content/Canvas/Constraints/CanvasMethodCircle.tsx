@@ -19,7 +19,7 @@ export const CanvasMethodCircle: FC<Props> = ({setOpen, constraints, constraint,
 
     return (
         <Group
-            x={constraint.x + constraint.width / 4}
+            x={constraint.x + constraint.width / 6}
             y={constraint.y + index * 30 + 10}
             onClick={() => {
                 if (constraints.newConstraint) {
@@ -43,7 +43,7 @@ export const CanvasMethodCircle: FC<Props> = ({setOpen, constraints, constraint,
         >
             <Rect
                 key={method.id}
-                width={constraint.width / 2}
+                width={constraint.width / 1.5}
                 cornerRadius={20}
                 height={20}
                 fill={hover ? 'grey' : '#fff'}
@@ -53,6 +53,7 @@ export const CanvasMethodCircle: FC<Props> = ({setOpen, constraints, constraint,
             <Text
                 text={`${method.id}`}
                 fill={"black"}
+                fontFamily={'Open Sans'}
                 x={15}
                 y={5}
             />

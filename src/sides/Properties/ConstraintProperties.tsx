@@ -14,9 +14,9 @@ export const ConstraintProperties = () => {
             {constraints.current && <>
                 <h1 className="font-bold">Constraint</h1>
                 {Object.keys(constraints.current).map((key: string) => {
-                    if (key === "fromIds" || key === "toIds") {
+                    if (key === "fromIds") {
                         return <div
-                            key={key}>{upperCaseFirst(key)}: {(constraints.current![key as keyof Constraint] as any).join(", ")}</div>
+                            key={key}>InputElements: {(constraints.current![key as keyof Constraint] as any).join(", ")}</div>
                     }
                     if (key === "methods") {
                         return;
