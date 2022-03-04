@@ -120,7 +120,8 @@ const ConstraintsWrapper: FC = (props) => {
                 updateConstraint(current, {
                     ...current,
                     methods: newMethods,
-                    width: longestMethodName > 6 ? longestMethodName * 5 + 100 : 100,
+                    width: longestMethodName > 6 ? (longestMethodName - 6) * 7 + 100 : 100,
+                    height: newMethods.length > 3 ? (newMethods.length - 3) * 30 + 100 : 100,
                 })
             );
         }
@@ -143,7 +144,8 @@ const ConstraintsWrapper: FC = (props) => {
             updateConstraint(current, {
                 ...current,
                 methods: newMethods,
-                width: longestMethodName > 6 ? longestMethodName * 5 + 100 : 100,
+                width: longestMethodName > 6 ? (longestMethodName - 6) * 7 + 100 : 100,
+                height: newMethods.length > 3 ? (newMethods.length - 3) * 30 + 100 : 100,
             });
             setCurrent(undefined);
         }
