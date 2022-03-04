@@ -23,6 +23,16 @@ export const Canvas: FC = () => {
             setOpen(false);
         }
 
+        function chooseStrokeColor(element: Elem) {
+            if (constraints.currentElements.includes(element.id)) {
+                return 'blue';
+            } else if (constraints.newConstraint || (constraints.newMethod && constraints.current?.fromIds.includes(element.id))) {
+                return 'green';
+            } else {
+                return 'black';
+            }
+        }
+
         function onClickConstraint(constraint: Constraint) {
             constraints.setCurrent(constraint);
             elements.setCurrent(undefined);
@@ -119,10 +129,7 @@ export const Canvas: FC = () => {
                                             isSelected={element.id === elements.current?.id}
                                             onTransform={onTransform}
                                             onTransformEnd={onTransformEnd}
-                                            newConstraint={constraints.newConstraint}
-                                            newMethod={constraints.newMethod}
-                                            currentElements={constraints.currentElements}
-                                            currentConstraint={constraints.current}
+                                            chooseStrokeColor={chooseStrokeColor}
                                         />
                                     )
                                 case ElemType.Button:
@@ -135,10 +142,7 @@ export const Canvas: FC = () => {
                                             isSelected={element.id === elements.current?.id}
                                             onTransform={onTransform}
                                             onTransformEnd={onTransformEnd}
-                                            newConstraint={constraints.newConstraint}
-                                            newMethod={constraints.newMethod}
-                                            currentElements={constraints.currentElements}
-                                            currentConstraint={constraints.current}
+                                            chooseStrokeColor={chooseStrokeColor}
                                         />
                                     )
                                 case ElemType.Text:
@@ -148,7 +152,7 @@ export const Canvas: FC = () => {
                                             element={element}
                                             onClick={onClickElem}
                                             onDragMove={onDragMove}
-                                            newConstraint={constraints.newConstraint}
+                                            chooseStrokeColor={chooseStrokeColor}
                                         />
                                     )
                                 default:

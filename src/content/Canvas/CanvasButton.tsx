@@ -1,23 +1,11 @@
 import React, {FC} from "react";
-import {Group, Rect, Text, Transformer} from "react-konva";
-import {Constraint, Elem} from "../../types";
-import {KonvaEventObject} from "konva/lib/Node";
+import {Group, Rect, Text} from "react-konva";
 import {useTransformer} from "./useTransformer";
+import {CanvasTransformer} from "./CanvasTransformer";
+import {CanvasElementProps} from "./CanvasElementProps";
 
-interface Props {
-    element: Elem;
-    onClick: (element: Elem) => void;
-    onDragMove: (e: KonvaEventObject<DragEvent>, element: Elem) => void;
-    isSelected: boolean;
-    onTransform: (e: KonvaEventObject<Event>, node: any) => void;
-    onTransformEnd: (e: KonvaEventObject<Event>, node: any, element: Elem) => void;
-    newConstraint: boolean;
-    newMethod: boolean;
-    currentElements: string[];
-    currentConstraint: Constraint | undefined;
-}
 
-export const CanvasButton: FC<Props> =
+export const CanvasButton: FC<CanvasElementProps> =
     ({
          element,
          onClick,
@@ -25,27 +13,13 @@ export const CanvasButton: FC<Props> =
          isSelected,
          onTransform,
          onTransformEnd,
-         newConstraint,
-         newMethod,
-         currentElements,
-         currentConstraint,
+         chooseStrokeColor,
      }) => {
         const [shapeRef, trRef] = useTransformer(isSelected);
-
-        function chooseStroke() {
-            if (currentElements.includes(element.id)) {
-                return 'blue';
-            } else if (newConstraint || (newMethod && currentConstraint?.fromIds.includes(element.id))) {
-                return 'green';
-            } else {
-                return 'black';
-            }
-        }
 
         return (
             <>
                 <Group
-                    // @ts-ignore
                     ref={(ref) => shapeRef.current = ref}
                     x={element.x}
                     y={element.y}
@@ -56,7 +30,7 @@ export const CanvasButton: FC<Props> =
                     <Rect
                         width={element.width}
                         height={element.height}
-                        fill={chooseStroke()}
+                        fill={chooseStrokeColor(element)}
                         onTransform={(e) => onTransform(e, shapeRef.current)}
                         onTransformEnd={(e) => onTransformEnd(e, shapeRef.current, element)}
                     />
@@ -70,11 +44,7 @@ export const CanvasButton: FC<Props> =
                     />
                 </Group>
                 {isSelected &&
-                    <Transformer
-                        // @ts-ignore
-                        ref={(ref) => trRef.current = ref}
-                        rotateEnabled={false}
-                    />
+                    <CanvasTransformer trRef={trRef}/>
                 }
             </>
         )

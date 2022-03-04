@@ -1,15 +1,13 @@
 import React from "react";
 
 
-export function useTransformer(isSelected: boolean) {
-    const shapeRef = React.useRef(null);
-    const trRef = React.useRef(null);
+export function useTransformer(isSelected: boolean): [any, any] {
+    const shapeRef = React.useRef<any>(null);
+    const trRef = React.useRef<any>(null);
 
     React.useEffect(() => {
         if (isSelected) {
-            // @ts-ignore
             trRef?.current?.nodes([shapeRef.current]);
-            // @ts-ignore
             trRef?.current?.getLayer().batchDraw();
         }
     }, [isSelected]);

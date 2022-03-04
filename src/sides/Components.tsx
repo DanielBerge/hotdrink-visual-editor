@@ -3,7 +3,7 @@ import {freshId} from "../App";
 import {Binding, ElemType, InputType} from "../types";
 import {useElements} from "../wrappers/ElementsWrapper";
 
-export const sideOffset = 300;
+export const sideOffset = 450;
 
 export const Components: FC = () => {
     const elements = useElements();

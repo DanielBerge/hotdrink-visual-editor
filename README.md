@@ -10,6 +10,6 @@
 * Plassering til new constraint
 * Gjøre constraints større utifra antall methods eller lengden av method.
 * Plassering av id i visual programming interface
+* Animasjon ved åpning og lukking av components og constraints?
 
 * Checkbox?
-* Refaktorer canvas elements
