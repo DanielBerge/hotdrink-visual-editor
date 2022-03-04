@@ -12,6 +12,7 @@ import {AlertBox} from "./content/AlertBox";
 import {RoundBox} from "./sides/RoundBox";
 import {ConstraintProperties} from "./sides/Properties/ConstraintProperties";
 import {ComponentProperties} from "./sides/Properties/ComponentProperties";
+import {MethodProperties} from "./sides/Properties/MethodProperties";
 
 let id = 0;
 
@@ -25,31 +26,32 @@ function App() {
         <AlertWrapper>
             <ElementsWrapper>
                 <ConstraintsWrapper>
-                    <div className="flex space-x-3 max-h-full">
-                        <AlertBox/>
-                        <Column>
-                            <RoundBox>
-                                <Components/>
-                            </RoundBox>
-                            <ComponentProperties/>
-                        </Column>
-                        <div className="flex-1">
-                            <EditorWrapper>
-                                <Canvas/>
-                            </EditorWrapper>
-                        </div>
-                        <Column>
-                            <RoundBox>
-                                <Constraints/>
-                            </RoundBox>
-                            <ConstraintProperties/>
-                            <div className={"absolute bottom-10"}>
+                    <EditorWrapper>
+                        <div className="flex space-x-3 max-h-full">
+                            <AlertBox/>
+                            <Column>
                                 <RoundBox>
-                                    <Properties/>
+                                    <Components/>
                                 </RoundBox>
+                                <ComponentProperties/>
+                            </Column>
+                            <div className="flex-1">
+                                <Canvas/>
                             </div>
-                        </Column>
-                    </div>
+                            <Column>
+                                <RoundBox>
+                                    <Constraints/>
+                                </RoundBox>
+                                <ConstraintProperties/>
+                                <MethodProperties/>
+                                <div className={"absolute bottom-10"}>
+                                    <RoundBox>
+                                        <Properties/>
+                                    </RoundBox>
+                                </div>
+                            </Column>
+                        </div>
+                    </EditorWrapper>
                 </ConstraintsWrapper>
             </ElementsWrapper>
         </AlertWrapper>

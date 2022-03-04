@@ -10,7 +10,7 @@
 * Plassering til new constraint
 * Gjøre constraints større utifra antall methods eller lengden av method.
 * Endre font til navn inni method
-* Egen rouned box for methods, delete og edit
+* Plassering av id i visual programming interface
 
 * Checkbox?
 * Refaktorer canvas elements
