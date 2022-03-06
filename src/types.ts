@@ -2,6 +2,7 @@ export enum ElemType {
     Input = "input",
     Button = "button",
     Text = "text",
+    Checkbox = "checkbox",
 }
 
 export enum InputType {
@@ -19,6 +20,7 @@ export enum Binding {
     Value = "value",
     Disabled = "disabled",
     InnerText = "innertext",
+    Checked = "checked",
 }
 
 export interface Elem {

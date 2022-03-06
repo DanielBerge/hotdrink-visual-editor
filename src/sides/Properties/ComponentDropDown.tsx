@@ -12,9 +12,10 @@ export const ComponentDropDown: FC<Props> = ({elemKey, type}) => {
     const elements = useElements();
 
     return (
-        <div key={elemKey} className="flex">
+        <div key={elemKey} className="flex p-1">
             <div>{upperCaseFirst(elemKey)}: </div>
             <select
+                className={"m-1"}
                 value={elements.current[elemKey as keyof Elem]}
                 onChange={(e) => {
                     elements.setCurrent(

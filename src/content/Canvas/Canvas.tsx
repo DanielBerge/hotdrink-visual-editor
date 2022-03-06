@@ -12,6 +12,7 @@ import {VisualWrapper} from '../VisualEditor/VisualWrapper';
 import {CanvasGrid} from "./CanvasGrid";
 import {CanvasConstraints} from "./Constraints/CanvasConstraints";
 import {HEIGHT, restrictPlacement, restrictSize, WIDTH} from "./canvasUtils";
+import { CanvasCheckbox } from './CanvasCheckbox';
 
 export const Canvas: FC = () => {
         const elements = useElements();
@@ -152,6 +153,19 @@ export const Canvas: FC = () => {
                                             element={element}
                                             onClick={onClickElem}
                                             onDragMove={onDragMove}
+                                            chooseStrokeColor={chooseStrokeColor}
+                                        />
+                                    )
+                                case ElemType.Checkbox:
+                                    return (
+                                        <CanvasCheckbox
+                                            key={key}
+                                            element={element}
+                                            onClick={onClickElem}
+                                            onDragMove={onDragMove}
+                                            isSelected={element.id === elements.current?.id}
+                                            onTransform={onTransform}
+                                            onTransformEnd={onTransformEnd}
                                             chooseStrokeColor={chooseStrokeColor}
                                         />
                                     )

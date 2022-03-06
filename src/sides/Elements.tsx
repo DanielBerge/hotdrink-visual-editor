@@ -46,7 +46,7 @@ export const Elements: FC = () => {
             </div>
             <div
                 draggable
-                className="w-24 bg-black text-white p-3 m-1"
+                className="w-24 bg-white border border-black p-3 m-1"
                 onDragEnd={(event => {
                     elements.addElement({
                         id: generateFreshId(ElemType.Button),
@@ -77,6 +77,23 @@ export const Elements: FC = () => {
                     })
                 })}
             >Text
+            </div>
+            <div
+                draggable
+                className="w-24 text-black p-3 m-1 border border-black"
+                onDragEnd={(event => {
+                    elements.addElement({
+                        id: generateFreshId(ElemType.Checkbox),
+                        height: 30,
+                        width: 30,
+                        x: event.clientX - sideOffset,
+                        y: event.clientY,
+                        type: ElemType.Checkbox,
+                        binding: Binding.Checked,
+                        value: "false",
+                    })
+                })}
+            >Checkbox
             </div>
         </>
     )

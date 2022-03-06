@@ -57,7 +57,7 @@ export const ElementProperties  = () => {
                     {Object.keys(elements.current).map((key: string) => {
                         if (inputs.includes(key)) {
                             return (
-                                <div key={key}>
+                                <div key={key} className={"p-1"}>
                                     <label>{upperCaseFirst(key)}: </label>
                                     <input
                                         value={elements.current[key as keyof Elem]}
@@ -83,7 +83,7 @@ export const ElementProperties  = () => {
                                 <ComponentDropDown key={key} elemKey={key} type={Binding}/>
                             );
                         }
-                        return <div key={key}>{upperCaseFirst(key)}: {elements.current[key as keyof Elem]}</div>
+                        return <div className={"p-1"} key={key}>{upperCaseFirst(key)}: {elements.current[key as keyof Elem]}</div>
                     })}
                     <button
                         className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 m-1"

@@ -66,6 +66,20 @@ export class HTMLBuilder {
                             "
                          >${value}</p>`);
                     break;
+                case ElemType.Checkbox:
+                    this.add(`<input 
+                            id=${id}
+                            type="checkbox"
+                            style="
+                                 position:absolute;
+                                 top:${y + relativeY}px;
+                                 left:${x + relativeX}px;
+                                 width:${width}px;
+                                 height:${height}px;
+                            "
+                            checked="${value}"
+                            />`);
+                    break;
             }
         }
         return this;

@@ -6,3 +6,4 @@
 * VisualJson blir ikke oppdatert når man redigerer id på component
 * Select multiple elements and drag.
 * Animasjon ved åpning og lukking av components og constraints
+* BUG: Connections i visual editoren er fucked etter dragging
