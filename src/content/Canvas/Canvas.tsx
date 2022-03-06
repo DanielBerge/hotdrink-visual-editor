@@ -24,7 +24,7 @@ export const Canvas: FC = () => {
         }
 
         function chooseStrokeColor(element: Elem) {
-            if (constraints.currentElements.includes(element.id)) {
+            if (constraints.currentElements.includes(element.id) && (constraints.newMethod || constraints.newConstraint)) {
                 return 'blue';
             } else if (constraints.newConstraint || (constraints.newMethod && constraints.current?.fromIds.includes(element.id))) {
                 return 'green';

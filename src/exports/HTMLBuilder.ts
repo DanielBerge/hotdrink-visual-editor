@@ -37,6 +37,7 @@ export class HTMLBuilder {
                                  width:${width}px;
                                  height:${height}px;
                             "
+                            value="${value}"
                             />`);
                     break;
                 case ElemType.Button:

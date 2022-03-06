@@ -195,6 +195,8 @@ const ConstraintsWrapper: FC = (props) => {
     function deleteConstraint(toDelete: Constraint) {
         const newConstraints = constraints.filter((constraint) => constraint.fromIds !== toDelete.fromIds && constraint.methods !== toDelete.methods);
         setConstraints(newConstraints);
+        setNewConstraint(false);
+        setNewMethod(false);
     }
 
     function deleteConstraintsConnected(elementId: string) {

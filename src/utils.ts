@@ -67,10 +67,11 @@ export function runJs(constraints: Constraint[], elements: any): any {
             const cspec = new ConstraintSpec(methods);
             const comp = new Component(`Component${freshIndex()}`);
             const vars = unionIds.map((id) => {
-                return comp.emplaceVariable(id, "");
+                return comp.emplaceVariable(id, elements.getElementById(id)?.value ?? "");
             })
             comp.emplaceConstraint(`C${freshIndex()}`, cspec, vars, false);
             defaultConstraintSystem.addComponent(comp);
+            defaultConstraintSystem.update();
             try {
                 for (const id of unionIds) {
                     const bindingType = elements.getElementById(id).binding;

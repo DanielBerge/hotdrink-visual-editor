@@ -6,7 +6,7 @@ import {useConstraints} from "../../wrappers/ConstraintsWrapper";
 import React, {ChangeEvent} from "react";
 import {RoundBox} from "../RoundBox";
 
-export const ComponentProperties = () => {
+export const ElementProperties  = () => {
     const elements = useElements();
     const constraints = useConstraints();
     const inputs = ["value", "height", "width", "id"]
@@ -50,10 +50,10 @@ export const ComponentProperties = () => {
 
     return (
         <RoundBox>
-            {!elements.current && <h1 className="font-bold">No selected component</h1>}
+            {!elements.current && <h1 className="font-bold">No selected element</h1>}
             {elements.current &&
                 <>
-                    <h1 className="font-bold">Component</h1>
+                    <h1 className="font-bold">Element</h1>
                     {Object.keys(elements.current).map((key: string) => {
                         if (inputs.includes(key)) {
                             return (
@@ -92,7 +92,7 @@ export const ComponentProperties = () => {
                             constraints.deleteConstraintsConnected(elements.current.id);
                             elements.setCurrent(undefined);
                         }}
-                    >Delete component
+                    >Delete element
                     </button>
                 </>
             }

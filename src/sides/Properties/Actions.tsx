@@ -8,7 +8,7 @@ import JSZip from "jszip";
 import {saveAs} from 'file-saver';
 
 
-export const Properties = () => {
+export const Actions = () => {
     const elements = useElements();
     const constraints = useConstraints();
     const [open, setOpen] = useState(false);
@@ -32,7 +32,7 @@ export const Properties = () => {
 
     return (
         <>
-            <h1 className={"font-bold text-lg"}>Properties</h1>
+            <h1 className={"font-bold text-lg"}>Actions</h1>
             <button
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-1"
                 onClick={() => setOpen(true)}

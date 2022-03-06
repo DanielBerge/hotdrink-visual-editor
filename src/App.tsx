@@ -1,8 +1,8 @@
 import React from 'react';
 import {Canvas} from './content/Canvas/Canvas';
 import {Column} from "./sides/Column";
-import {Components} from "./sides/Components";
-import {Properties} from "./sides/Properties/Properties";
+import {Elements} from "./sides/Elements";
+import {Actions} from "./sides/Properties/Actions";
 import {Constraints} from "./sides/Constraints";
 import {ElementsWrapper} from "./wrappers/ElementsWrapper";
 import {ConstraintsWrapper} from "./wrappers/ConstraintsWrapper";
@@ -11,7 +11,7 @@ import {AlertWrapper} from "./wrappers/AlertWrapper";
 import {AlertBox} from "./content/AlertBox";
 import {RoundBox} from "./sides/RoundBox";
 import {ConstraintProperties} from "./sides/Properties/ConstraintProperties";
-import {ComponentProperties} from "./sides/Properties/ComponentProperties";
+import {ElementProperties} from "./sides/Properties/ElementProperties";
 import {MethodProperties} from "./sides/Properties/MethodProperties";
 
 let id = 0;
@@ -31,9 +31,9 @@ function App() {
                             <AlertBox/>
                             <Column>
                                 <RoundBox>
-                                    <Components/>
+                                    <Elements/>
                                 </RoundBox>
-                                <ComponentProperties/>
+                                <ElementProperties/>
                             </Column>
                             <div className="flex-1">
                                 <Canvas/>
@@ -46,7 +46,7 @@ function App() {
                                 <MethodProperties/>
                                 <div className={"absolute bottom-10"}>
                                     <RoundBox>
-                                        <Properties/>
+                                        <Actions/>
                                     </RoundBox>
                                 </div>
                             </Column>

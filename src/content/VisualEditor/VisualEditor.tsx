@@ -53,7 +53,7 @@ export const VisualEditor = () => {
                     const type = elem?.type ?? "";
                     return ({
                         id: `${upperCaseFirst(type)}-${id}-${Math.random().toString(36).substring(2, 15)}`,
-                        label: `${upperCaseFirst(type)}: ${id}`,
+                        label: `Input: ${id}`,
                         x: 100,
                         y: 200 * index + 20,
                         width: componentWidth,
@@ -72,7 +72,7 @@ export const VisualEditor = () => {
                 }) ?? [],
                 {
                     id: `${upperCaseFirst(outPutElem?.type ?? "")}-${constraints.currentMethod?.toIds[0]}-${Math.random().toString(36).substring(2, 15)}`,
-                    label: ` ${upperCaseFirst(outPutElem?.type ?? "")}: ${constraints.currentMethod?.toIds[0]}`,
+                    label: `Output: ${constraints.currentMethod?.toIds[0]}`,
                     x: 550,
                     y: 170,
                     width: componentWidth,

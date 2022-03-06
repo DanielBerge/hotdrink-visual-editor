@@ -9,3 +9,4 @@
 
 ## Design improvements
 * Plassering til new constraint
+* Bedre setninger på dialog
