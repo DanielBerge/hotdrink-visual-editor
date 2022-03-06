@@ -1,9 +1,11 @@
 import React, {FC} from "react";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
 import {CancelConfirm} from "./CancelConfirm";
+import {useElements} from "../wrappers/ElementsWrapper";
 
 export const Constraints: FC = () => {
     const constraints = useConstraints();
+    const elements = useElements();
     const [name, setName] = React.useState("");
 
     function onCreate() {
@@ -24,7 +26,7 @@ export const Constraints: FC = () => {
             {constraints.newConstraint &&
                 <CancelConfirm
                     onCancel={() => constraints.cancelNewConstraint()}
-                    onConfirm={constraints.createConstraint}
+                    onConfirm={() => constraints.createConstraint(elements.elements)}
                 />
             }
             <div>

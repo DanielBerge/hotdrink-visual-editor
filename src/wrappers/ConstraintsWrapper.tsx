@@ -1,5 +1,5 @@
 import React, {FC, useContext, useState} from "react";
-import {Constraint, EditorType, VMethod} from "../types";
+import {Constraint, EditorType, Elem, VMethod} from "../types";
 import {useAlert} from "./AlertWrapper";
 
 const ConstraintContext = React.createContext<any>({})
@@ -15,7 +15,7 @@ export interface ConstraintsWrapperProps {
     toggleElementToNewConstraint: (id: string) => void;
     currentElements: string[];
     cancelNewConstraint: () => void;
-    createConstraint: () => Constraint;
+    createConstraint: (elements: Elem[]) => Constraint;
     deleteConstraint: (constraint: Constraint | undefined) => void;
     current: Constraint | undefined;
     setCurrent: (newConstraint: Constraint | undefined) => void;
@@ -151,14 +151,18 @@ const ConstraintsWrapper: FC = (props) => {
         }
     }
 
-    function createConstraint() {
+    function createConstraint(elements: Elem[]) {
         if (currentElements.length === 0) {
             alert.setError("No elements selected.");
             return;
         }
+        const selectedElements = elements.filter(e => currentElements.includes(e.id));
+        const xPos = selectedElements.reduce((acc, cur) => acc + cur.x, 0) / selectedElements.length;
+        const yPos = selectedElements.reduce((acc, cur) => acc + cur.y, 0) / selectedElements.length;
+
         const newConstraint: Constraint = {
-            x: 0,
-            y: 0,
+            x: xPos,
+            y: yPos,
             width: 100,
             height: 100,
             fromIds: currentElements,
