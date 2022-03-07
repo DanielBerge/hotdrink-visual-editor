@@ -1,4 +1,4 @@
-import {Arrow, Line} from "react-konva";
+import {Arrow, Group, Line} from "react-konva";
 import React, {FC} from "react";
 import {ConstraintsWrapperProps} from "../../../wrappers/ConstraintsWrapper";
 import {Constraint} from "../../../types";
@@ -49,21 +49,31 @@ export const CanvasConstraintArrow: FC<Props> = ({
                     shadowBlur={3}
                     shadowColor={'red'}
                 /> :
-                <Arrow
-                    key={id}
-                    onClick={() => {
-                        constraints.setCurrent(constraint);
-                        elements.setCurrent(undefined);
-                    }}
-                    points={points}
-                    stroke="red"
-                    fill="red"
-                    opacity={chooseOpacityOneWay()}
-                    strokeWidth={5}
-                    shadowBlur={3}
-                    shadowColor={'red'}
-                />
-            }
+                <Group>
+                    <Arrow
+                        key={id}
+                        onClick={() => {
+                            constraints.setCurrent(constraint);
+                            elements.setCurrent(undefined);
+                        }}
+                        points={points}
+                        stroke="red"
+                        fill="red"
+                        opacity={chooseOpacityOneWay()}
+                        strokeWidth={5}
+                        shadowBlur={3}
+                        shadowColor={'red'}
+                    />
+                    {selected && <Line
+                        points={points}
+                        stroke="red"
+                        fill="red"
+                        opacity={1}
+                        strokeWidth={5}
+                        shadowBlur={3}
+                        shadowColor={'red'}
+                    />}
+                </Group>}
         </>
     )
 }
