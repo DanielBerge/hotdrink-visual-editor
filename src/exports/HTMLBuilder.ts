@@ -36,6 +36,10 @@ export class HTMLBuilder {
                                  left:${x + relativeX}px;
                                  width:${width}px;
                                  height:${height}px;
+                                 border-radius: 10px;
+                                 border-style:solid;
+                                 border-width:1px;
+                                 border-color:black;
                             "
                             value="${value}"
                             />`);
@@ -51,6 +55,7 @@ export class HTMLBuilder {
                                  height:${height}px;
                                  background-color:black;
                                  color: white;
+                                 border-radius: 10px;
                             "
                          >${value}</button>`);
                     break;

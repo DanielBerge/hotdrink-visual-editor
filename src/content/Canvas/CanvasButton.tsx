@@ -31,6 +31,7 @@ export const CanvasButton: FC<CanvasElementProps> =
                         width={element.width}
                         height={element.height}
                         fill={chooseStrokeColor(element)}
+                        cornerRadius={10}
                         onTransform={(e) => onTransform(e, shapeRef.current)}
                         onTransformEnd={(e) => onTransformEnd(e, shapeRef.current, element)}
                     />

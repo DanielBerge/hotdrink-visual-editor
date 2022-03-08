@@ -1,6 +1,6 @@
 import Editor, {Monaco} from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
 import {useConstraints} from "../wrappers/ConstraintsWrapper";
 import {useEditor} from "../wrappers/EditorWrapper";
 import {EditorType} from "../types";
@@ -10,8 +10,20 @@ export const CodeEditor = () => {
     const editor = useEditor();
     const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
+    useEffect(() => {
+        return () => {
+            editorRef.current?.dispose();
+        };
+    }, [editorRef]);
+
+
     function handleBeforeMount(monaco: Monaco) {
         monaco.editor.EditorOptions.formatOnType.defaultValue = true;
+        const libSource = `
+        ${constraints.current?.fromIds.map((id) => `declare var ${id}: any;`).join("\n")}
+        `
+        const libUri = 'ts:filename/inputs.d.ts';
+        monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, libUri);
     }
 
     function handleOnMount(editor: monaco.editor.IStandaloneCodeEditor) {
@@ -35,7 +47,8 @@ export const CodeEditor = () => {
         <div className="flex h-96 flex-col">
             <p
                 className="p-2"
-            ><b>Variables in scope:</b> {constraints.current?.fromIds.join(", ")} <b>Output variables:</b> {constraints.currentMethod?.toIds.join(", ")}</p>
+            ><b>Variables in scope:</b> {constraints.current?.fromIds.join(", ")} <b>Output
+                variables:</b> {constraints.currentMethod?.toIds.join(", ")}</p>
             <Editor
                 height="100%"
                 defaultLanguage={"javascript"}

@@ -16,6 +16,8 @@ export const Elements: FC = () => {
                 return "input" + freshId();
             case ElemType.Text:
                 return "text" + freshId();
+            case ElemType.Checkbox:
+                return "checkbox" + freshId();
             default:
                 return "id" + freshId();
         }
@@ -28,7 +30,7 @@ export const Elements: FC = () => {
             </h1>
             <div
                 draggable
-                className="w-24 bg-white border border-black p-3 m-1"
+                className="w-24 bg-white border border-black p-3 m-1 rounded"
                 onDragEnd={(event => {
                     elements.addElement({
                         id: generateFreshId(ElemType.Input),
@@ -46,12 +48,12 @@ export const Elements: FC = () => {
             </div>
             <div
                 draggable
-                className="w-24 bg-white border border-black p-3 m-1"
+                className="w-24 bg-white border border-black p-3 m-1 rounded"
                 onDragEnd={(event => {
                     elements.addElement({
                         id: generateFreshId(ElemType.Button),
                         height: 50,
-                        width: 200,
+                        width: 150,
                         x: event.clientX - sideOffset,
                         y: event.clientY,
                         type: ElemType.Button,
@@ -63,7 +65,7 @@ export const Elements: FC = () => {
             </div>
             <div
                 draggable
-                className="w-24 text-black p-3 m-1 border border-black"
+                className="w-24 text-black p-3 m-1 border border-black rounded"
                 onDragEnd={(event => {
                     elements.addElement({
                         id: generateFreshId(ElemType.Text),
@@ -80,7 +82,7 @@ export const Elements: FC = () => {
             </div>
             <div
                 draggable
-                className="w-24 text-black p-3 m-1 border border-black"
+                className="w-24 text-black p-3 m-1 border border-black rounded"
                 onDragEnd={(event => {
                     elements.addElement({
                         id: generateFreshId(ElemType.Checkbox),

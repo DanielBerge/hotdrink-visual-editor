@@ -12,7 +12,7 @@ import {VisualWrapper} from '../VisualEditor/VisualWrapper';
 import {CanvasGrid} from "./CanvasGrid";
 import {CanvasConstraints} from "./Constraints/CanvasConstraints";
 import {HEIGHT, restrictPlacement, restrictSize, WIDTH} from "./canvasUtils";
-import { CanvasCheckbox } from './CanvasCheckbox';
+import {CanvasCheckbox} from './CanvasCheckbox';
 
 export const Canvas: FC = () => {
         const elements = useElements();
@@ -115,8 +115,12 @@ export const Canvas: FC = () => {
                     onClick={checkDeselect}
                 >
                     <CanvasGrid/>
-                    <CanvasConstraints onClick={onClickConstraint} setOpen={setOpen} elements={elements}
-                                       constraints={constraints}/>
+                    <CanvasConstraints
+                        onClick={onClickConstraint}
+                        setOpen={setOpen}
+                        elements={elements}
+                        constraints={constraints}
+                    />
                     <Layer>
                         {elements.elements.map((element: Elem, key: number) => {
                             switch (element.type) {

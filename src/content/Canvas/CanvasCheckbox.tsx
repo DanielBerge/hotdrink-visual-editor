@@ -29,6 +29,7 @@ export const CanvasCheckbox: FC<CanvasElementProps> = ({
                     y={element.y}
                     fill="white"
                     stroke={chooseStrokeColor(element)}
+                    strokeWidth={chooseStrokeColor(element) === "blue" ? 3 : 1}
                     onClick={() => onClick(element)}
                     onDragMove={(e) => onDragMove(e, element)}
                     onTransform={(e) => onTransform(e, shapeRef.current)}
