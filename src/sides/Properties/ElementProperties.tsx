@@ -39,11 +39,11 @@ export const ElementProperties  = () => {
         }
     }
 
-    function updateKey(e: ChangeEvent<HTMLInputElement>, key: string) {
+    function updateKey(e: ChangeEvent<HTMLInputElement>, key: string, number?: boolean) {
         elements.setCurrent(
             elements.updateElement(elements.current, {
                 ...elements.current,
-                [key]: e.target.value,
+                [key]: number ? parseInt(e.target.value) : e.target.value,
             })
         );
     }
@@ -58,17 +58,21 @@ export const ElementProperties  = () => {
                         if (inputs.includes(key)) {
                             return (
                                 <div key={key} className={"p-1"}>
-                                    <label>{upperCaseFirst(key)}: </label>
+                                    <label
+                                        className={"w-20"}
+                                    >{upperCaseFirst(key)}: </label>
                                     <input
                                         value={elements.current[key as keyof Elem]}
                                         onChange={(e) => {
                                             if (key === "id") {
                                                 updateId(e, elements.current.id);
+                                            } else if ("value" === key) {
+                                                updateKey(e, key);
                                             } else {
                                                 updateKey(e, key);
                                             }
                                         }}
-                                        className={"border w-20"}
+                                        className={"border w-20 rounded"}
                                     />
                                 </div>
                             )

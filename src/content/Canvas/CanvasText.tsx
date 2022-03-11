@@ -16,8 +16,8 @@ export const CanvasText: FC<Props> =
             <Text
                 text={element.value}
                 fill={chooseStrokeColor(element)}
-                align="center"
-                width={element.width}
+                align="left"
+                width={element.value.length * 12 + 30}
                 height={element.height}
                 padding={15}
                 fontSize={16}

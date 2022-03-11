@@ -7,7 +7,7 @@ const LibraryContext = React.createContext<any>({})
 const ObjectContext = React.createContext<any>({})
 
 const libInput = [{
-    label: "AddWith",inputs:[{variable: "num"}],output: "AddWith", params: [{name: "textBox", type: "number"}],codeLine: "a + textBox"}, {
+    label: "AddWith",inputs:[{variable: "num"}],output: "AddWith", params: [{name: "textBox", type: "number"}],codeLine: "num + textBox"}, {
     label: "Add",inputs:[{variable: "num1"}, {variable: "num2"}],output: "Add", params: [],codeLine: "num1 + num2"}, {
     label: "DivWith",inputs:[{variable: "dividend"}],output: "DivWith", params: [{name: "divisor", type: "number"}],codeLine: "dividend + divisor"}, {
     label: "Division",inputs:[{variable: "divisor"}, {variable: "dividend"}],output: "Division", params: [],codeLine: "dividend / divisor"}, {
@@ -66,6 +66,8 @@ function dslToLib(library: any): LibraryComponent[] {
         lib.id = "lib-" + freshIndex++;
         lib.code = (inputConnections: Connection[], component: VComponent) => {
             lib.inputs.forEach((input: any, index: number) => {
+                console.log(input.variable);
+                console.log(inputConnections[index]?.fromSocket?.variable);
                 codeStr = codeStr.replace(input.variable, inputConnections[index]?.fromSocket?.variable ?? input.variable);
             })
             if (inputConnections.length >= 1 && component.outputs?.length === 1) {

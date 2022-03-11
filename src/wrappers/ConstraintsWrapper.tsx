@@ -2,6 +2,11 @@ import React, {FC, useContext, useState} from "react";
 import {Constraint, EditorType, Elem, VMethod} from "../types";
 import {useAlert} from "./AlertWrapper";
 
+let index: number = 0;
+function freshId(): string {
+    return `M${++index}`;
+}
+
 const ConstraintContext = React.createContext<any>({})
 const NewContext = React.createContext<any>(false);
 const CurrentContext = React.createContext<any>({});
@@ -95,13 +100,12 @@ const ConstraintsWrapper: FC = (props) => {
                 alert.setError("No elements selected.");
                 return;
             }
-            if (name.length === 0) {
-                alert.setError("Method name is required");
-                return;
-            }
             if (current?.methods.some(m => m.id === name)) {
                 alert.setError("Method with this name already exists");
                 return;
+            }
+            if (name.length === 0) {
+                name = freshId();
             }
             const newMethod = {
                 id: name,

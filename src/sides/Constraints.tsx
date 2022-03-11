@@ -44,6 +44,7 @@ export const Constraints: FC = () => {
                             onCancel={() => constraints.cancelNewMethod()}
                             onConfirm={() => {
                                 constraints.createMethod(name);
+                                setName("");
                             }}
                         />
                     </div>

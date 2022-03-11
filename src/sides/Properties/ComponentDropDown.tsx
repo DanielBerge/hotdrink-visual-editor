@@ -15,7 +15,7 @@ export const ComponentDropDown: FC<Props> = ({elemKey, type}) => {
         <div key={elemKey} className="flex p-1">
             <div>{upperCaseFirst(elemKey)}: </div>
             <select
-                className={"m-1"}
+                className={"m-1 rounded-md border border-gray-300 bg-white"}
                 value={elements.current[elemKey as keyof Elem]}
                 onChange={(e) => {
                     elements.setCurrent(

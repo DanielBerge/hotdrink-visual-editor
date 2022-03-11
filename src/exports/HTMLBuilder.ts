@@ -64,9 +64,9 @@ export class HTMLBuilder {
                             id=${id}
                             style="
                                  position:absolute;
-                                 top:${y + relativeY}px;
-                                 left:${x + relativeX}px;
-                                 width:${width}px;
+                                 top:${y + relativeY + 10}px;
+                                 left:${x + relativeX + 15}px;
+                                 width:${value.length * 12 + 30}px;
                                  height:${height}px;
                             "
                          >${value}</p>`);

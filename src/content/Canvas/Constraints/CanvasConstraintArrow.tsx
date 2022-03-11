@@ -32,6 +32,12 @@ export const CanvasConstraintArrow: FC<Props> = ({
         }
         return (constraints.current && constraints.current === constraint) ? 1 : 0.3;
     }
+    function chooseOpacityTwoWay() {
+        if (hidden && constraints.currentMethod) {
+            return 0.0;
+        }
+        return (constraints.current && constraints.current === constraint) ? 1 : 0.3;
+    }
 
     return (
         <>
@@ -50,6 +56,15 @@ export const CanvasConstraintArrow: FC<Props> = ({
                     shadowColor={'red'}
                 /> :
                 <Group>
+                    {hidden && constraints.currentMethod && <Line
+                        points={points}
+                        stroke="red"
+                        fill="red"
+                        opacity={1}
+                        strokeWidth={5}
+                        shadowBlur={3}
+                        shadowColor={'red'}
+                    />}
                     <Arrow
                         key={id}
                         onClick={() => {
@@ -59,7 +74,7 @@ export const CanvasConstraintArrow: FC<Props> = ({
                         points={points}
                         stroke="red"
                         fill="red"
-                        opacity={chooseOpacityOneWay()}
+                        opacity={chooseOpacityTwoWay()}
                         strokeWidth={5}
                         shadowBlur={3}
                         shadowColor={'red'}
