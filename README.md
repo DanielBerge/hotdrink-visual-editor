@@ -1,6 +1,7 @@
 # Getting Started with Create React App
 
 ## Future features
+* Multiple outputs til DSL og visual programming interface? Generere kode med multiple outputs.
 * Visualize constraint flow in HTML run mode
 * Hide/show constraints
 * VisualJson blir ikke oppdatert når man redigerer id på component

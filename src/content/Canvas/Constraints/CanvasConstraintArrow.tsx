@@ -32,8 +32,9 @@ export const CanvasConstraintArrow: FC<Props> = ({
         }
         return (constraints.current && constraints.current === constraint) ? 1 : 0.3;
     }
+
     function chooseOpacityTwoWay() {
-        if (hidden && constraints.currentMethod) {
+        if (hidden && constraints.currentMethod && constraints.current === constraint) {
             return 0.0;
         }
         return (constraints.current && constraints.current === constraint) ? 1 : 0.3;
@@ -56,7 +57,7 @@ export const CanvasConstraintArrow: FC<Props> = ({
                     shadowColor={'red'}
                 /> :
                 <Group>
-                    {hidden && constraints.currentMethod && <Line
+                    {hidden && constraints.currentMethod && constraints.current === constraint && <Line
                         points={points}
                         stroke="red"
                         fill="red"
