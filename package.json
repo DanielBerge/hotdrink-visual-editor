@@ -1,4 +1,5 @@
 {
+  "homepage": "https://danielberge.github.io/hd-visual2/",
   "name": "hd-visual2",
   "version": "0.1.0",
   "private": true,
@@ -17,6 +18,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "file-saver": "^2.0.5",
+    "gh-pages": "^3.2.3",
     "hotdrink": "../hd4",
     "jszip": "^3.7.1",
     "konva": "^8.2.1",
@@ -27,6 +29,7 @@
     "react-konva-utils": "^0.2.0",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
+    "save-dev": "^0.0.1-security",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
@@ -35,7 +38,10 @@
     "eject": "react-scripts eject",
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test"
+    "test": "craco test",
+    "predeploy": "craco build",
+    "deploy": "gh-pages -d build"
+
   },
   "eslintConfig": {
     "extends": [

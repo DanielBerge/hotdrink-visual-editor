@@ -44,9 +44,10 @@ export function DOMBind(element: HTMLElement | null, value: VariableReference<an
     return unsubscribe;
 }
 
+let index = 0;
+const freshIndex = () => ++index;
 export function runJs(constraints: Constraint[], elements: any): any {
-    let index = 0;
-    const freshIndex = () => ++index;
+    Array.from(defaultConstraintSystem.allComponents()).forEach(c => defaultConstraintSystem.removeComponent(c));
     try {
         for (const constraint of constraints) {
 
