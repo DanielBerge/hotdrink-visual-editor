@@ -126,12 +126,6 @@ export class HTMLBuilder {
                 this.add(`system.update();`);
                 this.add(`bind(comp.vs["${id}"], document.getElementById("${id}"), "${bindingType}");`);
             }
-            /**
-             const fromBindingType = elements.getElementById(constraints[i].fromIds[0]).binding;
-             const toBindingType = elements.getElementById(constraints[i].toIds[0]).binding;
-             this.add(`bind(document.getElementById("${constraints[i].fromIds[0]}"), Array.from(system.variables())[${counter++}]._owner, ${fromBindingType});`)
-             this.add(`bind(document.getElementById("${constraints[i].toIds[0]}"), Array.from(system.variables())[${counter++}]._owner, ${toBindingType});`)
-             **/
         }
 
         this.add(`}`)
