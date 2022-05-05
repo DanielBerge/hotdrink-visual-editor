@@ -19,7 +19,7 @@ export const Actions = () => {
         builder.includeHTML(elements.elements).includeJS(constraints.constraints, elements).end();
         zip.file("index.html", builder.build());
 
-        let response = await fetch("/hotdrink.js", {
+        let response = await fetch("/hd-visual2/hotdrink.js", {
             method: "GET"
         });
         zip.file("hotdrink.js", await response.text())
