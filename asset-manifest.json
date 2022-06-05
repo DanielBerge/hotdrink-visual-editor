@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/hd-visual2/static/css/main.8e6dfcce.chunk.css",
-    "main.js": "/hd-visual2/static/js/main.bdbac7ef.chunk.js",
-    "main.js.map": "/hd-visual2/static/js/main.bdbac7ef.chunk.js.map",
-    "runtime-main.js": "/hd-visual2/static/js/runtime-main.77ab6a3f.js",
-    "runtime-main.js.map": "/hd-visual2/static/js/runtime-main.77ab6a3f.js.map",
-    "static/js/2.4aacbc14.chunk.js": "/hd-visual2/static/js/2.4aacbc14.chunk.js",
-    "static/js/2.4aacbc14.chunk.js.map": "/hd-visual2/static/js/2.4aacbc14.chunk.js.map",
-    "static/js/3.54f9e663.chunk.js": "/hd-visual2/static/js/3.54f9e663.chunk.js",
-    "static/js/3.54f9e663.chunk.js.map": "/hd-visual2/static/js/3.54f9e663.chunk.js.map",
-    "index.html": "/hd-visual2/index.html",
-    "static/css/main.8e6dfcce.chunk.css.map": "/hd-visual2/static/css/main.8e6dfcce.chunk.css.map",
-    "static/js/2.4aacbc14.chunk.js.LICENSE.txt": "/hd-visual2/static/js/2.4aacbc14.chunk.js.LICENSE.txt"
+    "main.css": "/hotdrink-visual-editor/static/css/main.8e6dfcce.chunk.css",
+    "main.js": "/hotdrink-visual-editor/static/js/main.bdbac7ef.chunk.js",
+    "main.js.map": "/hotdrink-visual-editor/static/js/main.bdbac7ef.chunk.js.map",
+    "runtime-main.js": "/hotdrink-visual-editor/static/js/runtime-main.218f4f51.js",
+    "runtime-main.js.map": "/hotdrink-visual-editor/static/js/runtime-main.218f4f51.js.map",
+    "static/js/2.4aacbc14.chunk.js": "/hotdrink-visual-editor/static/js/2.4aacbc14.chunk.js",
+    "static/js/2.4aacbc14.chunk.js.map": "/hotdrink-visual-editor/static/js/2.4aacbc14.chunk.js.map",
+    "static/js/3.54f9e663.chunk.js": "/hotdrink-visual-editor/static/js/3.54f9e663.chunk.js",
+    "static/js/3.54f9e663.chunk.js.map": "/hotdrink-visual-editor/static/js/3.54f9e663.chunk.js.map",
+    "index.html": "/hotdrink-visual-editor/index.html",
+    "static/css/main.8e6dfcce.chunk.css.map": "/hotdrink-visual-editor/static/css/main.8e6dfcce.chunk.css.map",
+    "static/js/2.4aacbc14.chunk.js.LICENSE.txt": "/hotdrink-visual-editor/static/js/2.4aacbc14.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.77ab6a3f.js",
+    "static/js/runtime-main.218f4f51.js",
     "static/js/2.4aacbc14.chunk.js",
     "static/css/main.8e6dfcce.chunk.css",
     "static/js/main.bdbac7ef.chunk.js"
